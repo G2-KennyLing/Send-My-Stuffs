@@ -77,7 +77,7 @@ $ "main": "./dist/server.js"
 Inside ‘package.json’ file under the scripts add the following scripts.
 ```bash
 "scripts": {
-    "test": "ts-node ./sms-api/server.ts",
+    "test": "ts-node ./src/server.ts",
     "dev": "tsc && nodemon ./dist/server.js",
     "prod": "tsc && nodemon ./dist/server.js"
   },
