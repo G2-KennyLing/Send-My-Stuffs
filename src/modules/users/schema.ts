@@ -8,7 +8,17 @@ const schema = new UserSchema({
         type: {
             firstName: String,
             lastName: String
-        }
+        },
+        required: [true, 'name user is required'],
+        trim: true
+    },
+    telephone:{
+        type: String,
+        trim: true
+    },
+    mobile:{
+        type:String,
+        trim: true
     },
     email: {
         type: String, 
@@ -16,13 +26,34 @@ const schema = new UserSchema({
         unique: true, 
         required: [true, "can't be blank"], 
         match: [/\S+@\S+\.\S+/, 'is invalid'], 
-        index: true},
-    phoneNumber: String,
-    gender: String,
-    isDeleted: {
-        type: Boolean,
-        default: false
+        index: true,
+        trim: true
     },
+    password:{
+        type: String,
+        required: [true,'password user is required']
+    },
+    dateOfBirth: {
+        type: Date
+    },
+    companyName:{
+        type: String
+    },
+    companyRole:{
+        type: Number,
+        enum: [0,1,2,3,4]
+    },
+    lastActivity:{
+        type: Date
+    },
+    daysSinceLogin:{
+        type:Number
+    },
+    deletedAt:{
+        type:Date,
+        default: undefined
+    }
+    ,
     modificationNotes: [ModificationNote]
 });
 
