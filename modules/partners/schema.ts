@@ -6,46 +6,62 @@ const Schema = mongoose.Schema;
 const Partner = new Schema({
     companyName: {
         type: String,
-        trim: true,
         required: true,
     },
-    companyType: {
-        type: String,
-        trim: true,
-        required: true,
-    },
+    companyType: String,
     country: {
         type: String,
-        trim: true,
-        required: true,        
-    },
-    city:{
-        type: String,
-        trim: true,
-        required: true, 
-    },
-    region:{
-        type: String,
-        trim: true,
-        required: true, 
-    },
-    addressLineFirst:{
-        type: String,
-        trim: true,
         required: true,
     },
-    addressLineSecond:{
+    city: {
         type: String,
-        trim: true,
         required: true,
     },
-    telephoneNumber: String,
+    region: {
+        type: String,
+        required: true,
+    },
+    addressLineFirst: {
+        type: String,
+        required: true,
+    },
+    addressLineSecond: {
+        type: String,
+        required: true,
+    },
+    telephone: String,
     facimile: String,
     domainName: String,
     industry: String,
     taxID: String,
     partnerGroup: String,
-
+    name: {
+        type: {
+            firstName: String,
+            lastName: String,
+        },
+        trim: true,
+        required: true,
+    },
+    dateOfBirth: Date,
+    handphone: String,
+    email: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        required: true,
+        unique: true,
+    },
+    alternateEmail: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        required: true,
+        unique: true,
+    },
+    directLine: String,
+    status: String,
+    icon: String,
     modification_notes: [ModificationNote]
 });
 

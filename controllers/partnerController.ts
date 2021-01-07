@@ -10,19 +10,33 @@ export class PartnerController {
 
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
-        if (req.body.name && req.body.name.first_name && req.body.name.middle_name && req.body.name.last_name &&
-            req.body.email &&
-            req.body.phone_number &&
-            req.body.gender) {
+        const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facimile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, icon } = req.body;
+        const { firstName, lastName } = name || {};
+        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facimile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && icon ) {
             const partnerParams: IPartner = {
+                companyName,
+                companyType,
+                country,
+                city,
+                region,
+                addressLineFirst,
+                addressLineSecond,
+                telephone,
+                facimile,
+                domainName,
+                industry,
+                taxID,
+                partnerGroup,
                 name: {
-                    first_name: req.body.name.first_name,
-                    middle_name: req.body.name.middle_name,
-                    last_name: req.body.name.last_name
+                    firstName,
+                    lastName
                 },
-                email: req.body.email,
-                phone_number: req.body.phone_number,
-                gender: req.body.gender,
+                dateOfBirth,
+                handphone,
+                email,
+                alternateEmail,
+                directLine,
+                icon,
                 modification_notes: [{
                     modified_on: new Date(Date.now()),
                     modified_by: null,

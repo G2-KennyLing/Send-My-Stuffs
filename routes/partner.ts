@@ -7,21 +7,8 @@ export class PartnerRoutes {
 
     public route(app: Application) {
         
-        app.post('/api/user', (req: Request, res: Response) => {
+        app.post('/partner/create', (req: Request, res: Response) => {
             this.partnerController.createPartner(req, res);
         });
-
-        app.get('/api/user/:id', (req: Request, res: Response) => {
-            this.partnerController.getPartner(req, res);
-        });
-
-        app.put('/api/user/:id', (req: Request, res: Response) => {
-            this.partnerController.updatePartner(req, res);
-        });
-
-        app.delete('/api/user/:id', (req: Request, res: Response) => {
-            this.partnerController.deletePartner(req, res);
-        });
-
     }
 }
