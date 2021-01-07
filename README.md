@@ -22,7 +22,7 @@ Inside ‘package.json’ file under the scripts add the following scripts.
 ```
 ## Run
 For the test and dev
-```bash
+```bashd 
 $ npm run test / npm run dev
 ```
 For the production
