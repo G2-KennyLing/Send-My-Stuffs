@@ -1,7 +1,7 @@
 import { Application, Request, Response } from 'express';
 import { PartnerController } from '../controllers/partnerController';
 
-export class PartnerRoutes {
+export class PartnersRoutes {
 
     private partnerController: PartnerController = new PartnerController();
 

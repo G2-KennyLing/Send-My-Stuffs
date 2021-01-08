@@ -39,9 +39,9 @@ export class PartnerController {
                 icon,
                 status,
                 modification_notes: [{
-                    modified_on: new Date(Date.now()),
-                    modified_by: null,
-                    modification_note: 'New partner created'
+                    modifiedOn: new Date(Date.now()),
+                    modifiedBy: null,
+                    modificationNote: 'New partner created'
                 }]
             };
             this.partnerService.createPartner(partnerParams, (err: any, partnerData: IPartner) => {
