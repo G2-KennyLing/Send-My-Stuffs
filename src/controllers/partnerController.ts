@@ -10,9 +10,9 @@ export class PartnerController {
 
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
-        const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facimile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, status, icon } = req.body;
+        const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facismile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, status, icon } = req.body;
         const { firstName, lastName } = name || {};
-        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facimile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon) {
+        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facismile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon) {
             const partnerParams: IPartner = {
                 companyName,
                 companyType,
@@ -22,7 +22,7 @@ export class PartnerController {
                 addressLineFirst,
                 addressLineSecond,
                 telephone,
-                facimile,
+                facismile,
                 domainName,
                 industry,
                 taxID,
@@ -80,9 +80,9 @@ export class PartnerController {
     }
 
     public updatePartner(req: Request, res: Response) {
-        const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facimile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, status, icon } = req.body;
+        const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facismile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, status, icon } = req.body;
         const { firstName, lastName } = name || {};
-        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facimile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon) {
+        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facismile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon) {
             const partnerFilter = { _id: req.params.id };
             this.partnerService.filterPartner(partnerFilter, (err: any, partnerData: IPartner) => {
                 if (err) {
@@ -99,7 +99,7 @@ export class PartnerController {
                         addressLineFirst : addressLineFirst ? req.body.addressLineFirst : partnerData.addressLineFirst,
                         addressLineSecond : addressLineSecond ? req.body.addressLineSecond : partnerData.addressLineSecond,
                         telephone : telephone ? req.body.telephone : partnerData.telephone,
-                        facimile : facimile ? req.body.facimile : partnerData.facimile,
+                        facismile : facismile ? req.body.facismile : partnerData.facismile,
                         domainName : domainName ? req.body.domainName : partnerData.domainName,
                         industry : industry ? req.body.industry : partnerData.industry,
                         taxID : taxID ? req.body.taxID : partnerData.taxID,
@@ -120,7 +120,7 @@ export class PartnerController {
                             {
                                 modifiedOn: new Date(Date.now()),
                                 modifiedBy: null,
-                                modificationNote: "User data updated",
+                                modificationNote: "Partner data updated",
                             },
                         ],
                     };
