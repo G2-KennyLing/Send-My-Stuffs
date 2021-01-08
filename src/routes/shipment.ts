@@ -12,5 +12,8 @@ export default class UsersRoutes {
     app.post("/api/shipment", (req: Request, res: Response) => {
       this.controller.create(req, res);
     });
+    app.put("/api/shipment/:_id", (req: Request, res: Response) => {
+      this.controller.update(req, res);
+    });
   }
 }
