@@ -53,4 +53,12 @@ export class UserController {
             return successResponse("create user successful", newUser, res);
         })
     }
+    public getAllUser(req: Request, res: Response){
+        this.userService.filterUsers({deletedAt: undefined},(err:Error, users:IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            return successResponse("get user list successful", users, res);
+        })
+    }
 }

@@ -10,5 +10,8 @@ export class UsersRoutes {
         app.post('/api/user', (req: Request, res: Response) => {
             this.userController.createUser(req, res);
         });
+        app.get("/api/userList", (req: Request, res: Response) =>{
+            this.userController.getAllUser(req, res);
+        })
     }
 }
