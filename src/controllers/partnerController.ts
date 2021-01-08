@@ -10,9 +10,9 @@ export class PartnerController {
 
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
-        const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facimile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, status , icon } = req.body;
+        const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facimile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, status, icon } = req.body;
         const { firstName, lastName } = name || {};
-        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facimile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon ) {
+        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facimile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon) {
             const partnerParams: IPartner = {
                 companyName,
                 companyType,
@@ -55,5 +55,16 @@ export class PartnerController {
             // error response if some fields are missing in request body
             insufficientParameters(res);
         }
+    }
+
+    public listPartner(req: Request, res: Response) {
+        const partnerFilter = {};
+        this.partnerService.filterAllPartner(partnerFilter, (err: any, partnerData: IPartner) => {
+            if (err) {
+                mongoError(err, res);
+            } else {
+                successResponse("Get list partner successful", partnerData, res);
+            }
+        });
     }
 }

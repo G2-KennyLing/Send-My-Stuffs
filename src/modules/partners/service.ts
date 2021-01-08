@@ -7,4 +7,8 @@ export default class PartnerService {
         const _session = new Partner(partnerParams);
         _session.save(callback);
     }
+
+    public filterAllPartner(query: any, callback: any) {
+        return Partner.find(query, callback);
+      }
 }

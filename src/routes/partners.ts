@@ -10,5 +10,9 @@ export class PartnersRoutes {
         app.post('/partner/create', (req: Request, res: Response) => {
             this.partnerController.createPartner(req, res);
         });
+
+        app.get('/partner/list', (req: Request, res: Response) => {
+            this.partnerController.listPartner(req, res);
+        });
     }
 }
