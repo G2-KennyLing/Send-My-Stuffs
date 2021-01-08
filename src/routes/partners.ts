@@ -18,5 +18,9 @@ export class PartnersRoutes {
         app.get('/partner/:id', (req: Request, res: Response) => {
             this.partnerController.partnerDetail(req, res);
         });
+
+        app.put('/partner/:id', (req: Request, res: Response) => {
+            this.partnerController.updatePartner(req, res);
+        });
     }
 }
