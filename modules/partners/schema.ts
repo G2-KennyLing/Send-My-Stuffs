@@ -60,7 +60,10 @@ const Partner = new Schema({
         unique: true,
     },
     directLine: String,
-    status: String,
+    status: {
+        type: Number,
+        enum: [0,1]
+    },
     icon: String,
     modification_notes: [ModificationNote]
 });
