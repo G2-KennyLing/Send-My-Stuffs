@@ -51,4 +51,32 @@ export class CountryController {
 			}
 		});
 	}
+
+	public updateCountry(req: Request, res: Response) {
+		const updateCountryId = { _id: req.params.id };
+		const { countryCode, countryName, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
+		if (!(countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers)) {
+			return insufficientParameters(res)
+		} const countryParams: ICountry = {
+			_id: req.params.id, 
+			countryCode: countryCode,
+			countryName: countryName,
+			region: region,
+			timeZone: timeZone,
+			seaPorts: seaPorts,
+			airPorts: airPorts,
+			agents: agents,
+			customers: customers
+		}
+		this.countryService.updateCountry(countryParams, (err: any, countryData: ICountry) => {
+			if (err) {
+				return mongoError(err, res)
+			} 
+			if (!countryData) {
+				return failureResponse("Update Country Failed", {}, res)
+			} else {
+				successResponse("Update Country successfull", { countryData }, res)
+			}
+		})
+	}
 }

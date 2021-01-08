@@ -16,5 +16,9 @@ export class CountryRoutes {
 		app.get('/api/detail-country/:id', (req: Request, res: Response) => {
 			this.countryController.getDetailCountry(req, res);
 		})
+
+		app.put('/api/update-country/:id', (req: Request, res: Response) => {
+			this.countryController.updateCountry(req, res);
+		})
 	}
 }
