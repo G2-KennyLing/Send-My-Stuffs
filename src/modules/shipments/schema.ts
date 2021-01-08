@@ -26,6 +26,12 @@ const shipmentSchema = new Schema({
     type: String,
     trim: true,
   },
+  status: {
+    type: Number,
+    enum: [0, 1, 2, 3],
+    required: true,
+    default: 1,
+  },
 });
 
 export default model("shipments", shipmentSchema);

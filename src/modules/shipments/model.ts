@@ -1,3 +1,9 @@
+enum Status {
+  "InActive" = 0,
+  "Active",
+  "Pending",
+  "Past",
+}
 export default interface IShipment {
   _id?: String;
   shipmentNo: String;
@@ -6,4 +12,5 @@ export default interface IShipment {
   vesselName?: String;
   voyage?: String;
   cargoDescription: String;
+  status?: Status;
 }
