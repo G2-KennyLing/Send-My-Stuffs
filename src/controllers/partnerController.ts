@@ -67,4 +67,15 @@ export class PartnerController {
             }
         });
     }
+
+    public partnerDetail(req: Request, res: Response) {
+        const partnerFilter = { _id: req.params.id };
+        this.partnerService.filterPartner(partnerFilter, (err: any, partnerData: IPartner) => {
+            if (err) {
+                mongoError(err, res);
+            } else {
+                successResponse("Get partner detail successful", partnerData, res);
+            }
+        });
+    }
 }

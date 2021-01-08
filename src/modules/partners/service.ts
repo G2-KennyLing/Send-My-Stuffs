@@ -10,5 +10,10 @@ export default class PartnerService {
 
     public filterAllPartner(query: any, callback: any) {
         return Partner.find(query, callback);
-      }
+    }
+
+    public filterPartner(query: any, callback: any) {
+        Partner.findOne(query, callback);
+    }
+    
 }

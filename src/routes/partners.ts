@@ -14,5 +14,9 @@ export class PartnersRoutes {
         app.get('/partner/list', (req: Request, res: Response) => {
             this.partnerController.listPartner(req, res);
         });
+
+        app.get('/partner/:id', (req: Request, res: Response) => {
+            this.partnerController.partnerDetail(req, res);
+        });
     }
 }
