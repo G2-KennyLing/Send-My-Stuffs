@@ -61,4 +61,56 @@ export class UserController {
             return successResponse("get user list successful", users, res);
         })
     }
+    public getUserDetail(req: Request, res: Response){
+        const _id = req.params.id;
+        this.userService.filterUser({_id}, (err: Error, user: IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            if(!user){
+                return failureResponse("user is not found", null, res);
+            }
+            return successResponse("get user detail successful", user, res);
+        })
+    }
+    public updateUser(req: Request, res: Response){
+        const {name,
+            telephone,
+            mobile,
+            password,
+            dateOfBirth,
+            companyName,} = req.body;
+        const _id = req.params.id;
+        this.userService.filterUser({_id},  (err: Error, user: IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            if(!user){
+                return failureResponse("user is not found", null, res);
+            }
+            const userParams :IUser = {
+                _id: user._id,
+                name,
+                telephone,
+                mobile,
+                email: user.email,
+                password: user.password,
+                dateOfBirth,
+                companyName,
+                companyRole: user.companyRole,
+                lastActivity: new Date(),
+                modificationNotes: [{
+                    modifiedBy: null,
+                    modifiedOn: new Date(),
+                    modificationNote: 'update user',
+                }]
+            }
+            this.userService.updateUser(userParams, (err: Error, userData: IUser) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("update user successful", userData, res);
+            })
+        })
+    }
 }
