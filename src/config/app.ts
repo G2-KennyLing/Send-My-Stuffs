@@ -1,6 +1,8 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as mongoose from 'mongoose';
+import * as cors from "cors";
+import * as cookieParser from "cookie-parser";
 import environment from "../environment";
 import { UsersRoutes } from "../routes/users";
 import { CommonRoutes } from "../routes/common";
@@ -30,6 +32,8 @@ class App {
       //support application/x-www-form-urlencoded post data
       this.app.use(bodyParser.urlencoded({ extended: false }));
       require("dotenv").config();
+      this.app.use(cors());
+      this.app.use(cookieParser());
    }
 
    private mongoSetup(): void {

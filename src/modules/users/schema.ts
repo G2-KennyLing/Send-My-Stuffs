@@ -41,7 +41,8 @@ const schema = new UserSchema({
     },
     companyRole:{
         type: Number,
-        enum: [0,1,2,3,4]
+        enum: [0,1,2,3,4],
+        default: 0
     },
     lastActivity:{
         type: Date

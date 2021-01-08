@@ -81,6 +81,9 @@ export class UserController {
             dateOfBirth,
             companyName,} = req.body;
         const _id = req.params.id;
+        if(!(name && telephone && mobile && password && dateOfBirth && companyName  )){
+            return insufficientParameters(res)
+        }
         this.userService.filterUser({_id},  (err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
@@ -94,13 +97,59 @@ export class UserController {
                 telephone,
                 mobile,
                 email: user.email,
-                password: user.password,
+                password,
                 dateOfBirth,
                 companyName,
                 companyRole: user.companyRole,
                 lastActivity: new Date(),
                 modificationNotes: [{
                     modifiedBy: null,
+                    modifiedOn: new Date(),
+                    modificationNote: 'update user',
+                }]
+            }
+            this.userService.updateUser(userParams, (err: Error, userData: IUser) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("update user successful", userData, res);
+            })
+        })
+    }
+    public updateUserByAdmin(req: Request, res: Response){
+        const {name,
+            telephone,
+            mobile,
+            password,
+            dateOfBirth,
+            companyName,
+            companyRole} = req.body;
+        const _id = req.params.id;
+        if(!(name && telephone && mobile && password && dateOfBirth && companyName)){
+            return insufficientParameters(res)
+        }
+        //@ts-ignore
+        const admin = req.user ;
+        this.userService.filterUser({_id},  (err: Error, user: IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            if(!user){
+                return failureResponse("user is not found", null, res);
+            }
+            const userParams :IUser = {
+                _id: user._id,
+                name,
+                telephone,
+                mobile,
+                email: user.email,
+                password,
+                dateOfBirth,
+                companyName,
+                companyRole,
+                lastActivity: new Date(),
+                modificationNotes: [{
+                    modifiedBy: admin,
                     modifiedOn: new Date(),
                     modificationNote: 'update user',
                 }]
