@@ -13,5 +13,8 @@ export class CountryRoutes {
 			this.countryController.getListCountry(req, res);
 		})
 
+		app.get('/api/detail-country/:id', (req: Request, res: Response) => {
+			this.countryController.getDetailCountry(req, res);
+		})
 	}
 }

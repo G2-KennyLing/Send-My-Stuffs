@@ -12,4 +12,8 @@ export default class CountryService {
 		country.find(query, callback);
 	}
 
+	public getDetailCountry(query: any, callback: any) {
+		country.findById(query, callback)
+	}
+
 }

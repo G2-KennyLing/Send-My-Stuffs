@@ -40,4 +40,15 @@ export class CountryController {
 			}
 		})
 	}
+
+	public getDetailCountry(req: Request, res: Response) {
+		const detailCountryId = { _id: req.params.id };
+		this.countryService.getDetailCountry( detailCountryId, (err: any, countryData: ICountry) => {
+			if (!countryData) {
+				failureResponse("Detail Country Not found", countryData, res)
+			}else {
+				successResponse("Get Detail Country Success", countryData, res)
+			}
+		});
+	}
 }
