@@ -9,5 +9,9 @@ export class CountryRoutes {
 			this.countryController.createCountry(req, res);
 		});
 
+		app.get('/api/list-country', (req: Request, res: Response) => {
+			this.countryController.getListCountry(req, res);
+		})
+
 	}
 }

@@ -8,4 +8,8 @@ export default class CountryService {
 		_session.save(callback);
 	}
 
+	public getListCountry(query: any, callback: any) {
+		country.find(query, callback);
+	}
+
 }

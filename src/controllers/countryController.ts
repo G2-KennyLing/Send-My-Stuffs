@@ -30,4 +30,14 @@ export class CountryController {
 			insufficientParameters(res);
 		}
 	}
+
+	public getListCountry(req: Request, res: Response) {
+		this.countryService.getListCountry({}, (err: any, countryData: ICountry) => {
+			if (err) {
+				return mongoError(err, res);
+			}else {
+				successResponse("Get List Country Success", countryData, res)
+			}
+		})
+	}
 }
