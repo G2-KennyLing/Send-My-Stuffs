@@ -47,6 +47,14 @@ export default class ShipmentController {
       return successResponse("Get all shipments successfull", shipments, res);
     });
   }
+  getById(req: Request, res: Response) {
+    const { _id } = req.params;
+    this.Service.getById(_id, (err: Error, shipment: IShipment) => {
+      if (err) return mongoError(err, res);
+      if (!shipment) return failureResponse("Shipment is not found", {}, res);
+      return successResponse("Get shipment successful", shipment, res);
+    });
+  }
   update(req: Request, res: Response) {
     const { _id } = req.params;
     const {
@@ -75,7 +83,6 @@ export default class ShipmentController {
       cargoDescription,
       status,
     };
-    console.log(updatedShipment);
     if (!_id) return insufficientParameters(res);
     this.Service.update(_id, updatedShipment, (error, shipment) => {
       if (error) return mongoError(error, res);
