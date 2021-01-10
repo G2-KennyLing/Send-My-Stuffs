@@ -10,6 +10,7 @@ export class UsersRoutes {
     public route(app: Application) {
         
         app.post('/api/user', (req: Request, res: Response) => {
+            this.authController.isSignin,
             this.userController.createUser(req, res);
         });
         app.get("/api/userList", 
@@ -19,6 +20,7 @@ export class UsersRoutes {
             this.userController.getAllUser(req, res);
         });
         app.get("/api/user/:id", (req: Request, res: Response) =>{
+            this.authController.isSignin,
             this.userController.getUserDetail(req, res);
         });
         app.put("/api/user/:id", 
