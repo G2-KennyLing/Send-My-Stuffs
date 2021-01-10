@@ -3,6 +3,7 @@ import * as bodyParser from "body-parser";
 import * as mongoose from 'mongoose';
 import environment from "../environment";
 import { UsersRoutes } from "../routes/users";
+import { SeaportRoutes } from "../routes/seaport";
 import { CommonRoutes } from "../routes/common";
 
 class App {
@@ -11,6 +12,7 @@ class App {
    public mongoUrl: string = 'mongodb://localhost:27017/' + environment.getDBName();
 
    private UsersRoutes: UsersRoutes = new UsersRoutes();
+   private SeaportRoutes: SeaportRoutes = new SeaportRoutes();
    private commonRoutes: CommonRoutes = new CommonRoutes();
 
    constructor() {
@@ -18,6 +20,7 @@ class App {
       this.config();
       this.mongoSetup();
       this.UsersRoutes.route(this.app);
+      this.SeaportRoutes.route(this.app);
       this.commonRoutes.route(this.app);
    }
 
