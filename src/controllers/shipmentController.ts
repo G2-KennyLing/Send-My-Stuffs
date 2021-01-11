@@ -96,7 +96,8 @@ export default class ShipmentController {
         to &&
         cargoDescription &&
         departureDate &&
-        landingDate
+        landingDate &&
+        status
       )
     )
       return insufficientParameters(res);
