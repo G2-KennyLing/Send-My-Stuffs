@@ -27,7 +27,7 @@ export interface IPartner {
     email: String;
     alternateEmail: String;
     directLine: String;
-    status: status;
+    status?: status;
     icon: String;
     modification_notes: ModificationNote[]
 }

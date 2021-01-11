@@ -82,7 +82,7 @@ export class PartnerController {
     public updatePartner(req: Request, res: Response) {
         const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facismile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, status, icon } = req.body;
         const { firstName, lastName } = name || {};
-        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facismile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon) {
+        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facismile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon)  {
             const partnerFilter = { _id: req.params.id };
             this.partnerService.filterPartner(partnerFilter, (err: any, partnerData: IPartner) => {
                 if (err) {
@@ -106,8 +106,8 @@ export class PartnerController {
                         partnerGroup : partnerGroup ? req.body.partnerGroup : partnerData.partnerGroup,
                         name: name
                         ? {
-                            firstName : firstName ? req.body.firstName :partnerData.name.firstName,
-                            lastName : lastName ? req.body.lastName : partnerData.name.lastName
+                            firstName : name.firstName ? req.body.name.firstName : partnerData.name.firstName,
+                            lastName : name.lastName ? req.body.name.lastName : partnerData.name.lastName
                         } : partnerData.name,
                         dateOfBirth : dateOfBirth ? req.body.dateOfBirth : partnerData.dateOfBirth,
                         handphone : handphone ? req.body.handphone : partnerData.handphone,
