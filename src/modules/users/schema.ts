@@ -9,7 +9,7 @@ const schema = new UserSchema({
             firstName: String,
             lastName: String
         },
-        required: [true, 'name user is required'],
+        required: [true, 'Name user is required'],
         trim: true
     },
     telephone:{
@@ -24,14 +24,14 @@ const schema = new UserSchema({
         type: String, 
         lowercase: true, 
         unique: true, 
-        required: [true, "can't be blank"], 
+        required: [true, "Can't be blank"], 
         match: [/\S+@\S+\.\S+/, 'is invalid'], 
         index: true,
         trim: true
     },
     password:{
         type: String,
-        required: [true,'password user is required']
+        required: [true,'Password user is required']
     },
     dateOfBirth: {
         type: Date

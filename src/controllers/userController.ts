@@ -21,14 +21,14 @@ export class UserController {
             companyRole,
             userType} = req.body;
         if(!(name && telephone && mobile && email && password && dateOfBirth && companyName  )){
-            return insufficientParameters(res)
+            return failureResponse("All fill is requied", null, res);
         }
         this.userService.filterUser({email},(err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
             }
             if(user){
-                return failureResponse("email is already use", null, res);
+                return failureResponse("Email is already use", null, res);
             }
             const userParams: IUser = { 
                 name,

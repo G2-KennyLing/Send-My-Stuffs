@@ -1,6 +1,5 @@
 import { IUser } from './model';
 import users from './schema';
-
 export default class UserService {
     
     public createUser(userParams: IUser, callback: any) {
