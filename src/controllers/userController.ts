@@ -29,28 +29,28 @@ export class UserController {
             if(user){
                 return failureResponse("Email is already use", null, res);
             }
-        })
-        const userParams: IUser = { 
-            name,
-            telephone,
-            mobile,
-            email,
-            password: bcrypt.hashSync(password, 10),
-            dateOfBirth,
-            companyName,
-            companyRole,
-            lastActivity: new Date(),
-            modificationNotes: [{
-                modifiedBy: null,
-                modifiedOn: new Date(),
-                modificationNote: 'Create new user',
-            }]
-        }
-        this.userService.createUser(userParams, (err: Error, newUser: IUser) =>{
-            if(err){
-                return mongoError(err, res);
+            const userParams: IUser = { 
+                name,
+                telephone,
+                mobile,
+                email,
+                password: bcrypt.hashSync(password, 10),
+                dateOfBirth,
+                companyName,
+                companyRole,
+                lastActivity: new Date(),
+                modificationNotes: [{
+                    modifiedBy: null,
+                    modifiedOn: new Date(),
+                    modificationNote: 'Create new user',
+                }]
             }
-            return successResponse("Create user successful", newUser, res);
+            this.userService.createUser(userParams, (err: Error, newUser: IUser) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("Create user successful", newUser, res);
+            })
         })
     }
 }
