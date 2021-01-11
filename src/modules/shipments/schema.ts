@@ -1,5 +1,5 @@
+import { ModificationNote } from "./../common/model";
 import { Schema, model } from "mongoose";
-import { ModificationNote } from "../common/model";
 const shipmentSchema = new Schema({
   shipmentNo: {
     type: String,
@@ -31,6 +31,9 @@ const shipmentSchema = new Schema({
     enum: [0, 1, 2, 3],
     required: true,
     default: 1,
+  },
+  ModificationNote: {
+    type: [ModificationNote],
   },
 });
 

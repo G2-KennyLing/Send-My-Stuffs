@@ -1,3 +1,4 @@
+import { ModificationNote } from "./../common/model";
 enum Status {
   "InActive" = 0,
   "Active",
@@ -13,4 +14,5 @@ export default interface IShipment {
   voyage?: String;
   cargoDescription: String;
   status?: Status;
+  ModificationNote: [ModificationNote];
 }
