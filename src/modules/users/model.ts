@@ -3,9 +3,10 @@ import { ModificationNote } from "../common/model";
 enum role {
     USER = 0,
     SALES,
+    CUSTOMER_SERVICES,
     PANTNER,
     ADMIN,
-    SUPERADMIN
+    SUPERADMIN,
 }
 export interface IUser {
     _id?: String;
