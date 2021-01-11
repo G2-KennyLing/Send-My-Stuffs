@@ -62,7 +62,8 @@ const Partner = new Schema({
     directLine: String,
     status: {
         type: Number,
-        enum: [0,1]
+        enum: [0,1],
+        default: 0
     },
     icon: String,
     modification_notes: [ModificationNote]
