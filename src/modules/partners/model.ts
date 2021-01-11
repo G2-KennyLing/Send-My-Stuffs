@@ -13,7 +13,7 @@ export interface IPartner {
     addressLineFirst: String,
     addressLineSecond: String,
     telephone: String,
-    facimile: String,
+    facismile: String,
     domainName: String,
     industry: String,
     taxID: String,

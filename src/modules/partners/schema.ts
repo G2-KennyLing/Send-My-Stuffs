@@ -30,7 +30,7 @@ const Partner = new Schema({
         required: true,
     },
     telephone: String,
-    facimile: String,
+    facismile: String,
     domainName: String,
     industry: String,
     taxID: String,
