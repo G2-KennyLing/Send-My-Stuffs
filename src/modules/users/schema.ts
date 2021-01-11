@@ -50,6 +50,10 @@ const schema = new UserSchema({
     daysSinceLogin:{
         type:Number
     },
+    userType:{
+        type: Number,
+        enum: [0,1]
+    },
     deletedAt:{
         type:Date,
         default: undefined

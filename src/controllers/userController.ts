@@ -18,7 +18,8 @@ export class UserController {
             password,
             dateOfBirth,
             companyName,
-            companyRole,} = req.body;
+            companyRole,
+            userType} = req.body;
         if(!(name && telephone && mobile && email && password && dateOfBirth && companyName  )){
             return insufficientParameters(res)
         }
@@ -29,29 +30,31 @@ export class UserController {
             if(user){
                 return failureResponse("email is already use", null, res);
             }
-        })
-        const userParams: IUser = { 
-            name,
-            telephone,
-            mobile,
-            email,
-            password: bcrypt.hashSync(password, 10),
-            dateOfBirth,
-            companyName,
-            companyRole,
-            lastActivity: new Date(),
-            modificationNotes: [{
-                modifiedBy: null,
-                modifiedOn: new Date(),
-                modificationNote: 'create new user',
-            }]
-        }
-        this.userService.createUser(userParams, (err: Error, newUser: IUser) =>{
-            if(err){
-                return mongoError(err, res);
+            const userParams: IUser = { 
+                name,
+                telephone,
+                mobile,
+                email,
+                password: bcrypt.hashSync(password, 10),
+                dateOfBirth,
+                companyName,
+                companyRole,
+                userType,
+                lastActivity: new Date(),
+                modificationNotes: [{
+                    modifiedBy: null,
+                    modifiedOn: new Date(),
+                    modificationNote: 'create new user',
+                }]
             }
-            return successResponse("create user successful", newUser, res);
+            this.userService.createUser(userParams, (err: Error, newUser: IUser) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("create user successful", newUser, res);
+            })
         })
+        
     }
     public getAllUser(req: Request, res: Response){
         this.userService.filterUsers({deletedAt: undefined},(err:Error, users:IUser) =>{
@@ -101,6 +104,7 @@ export class UserController {
                 dateOfBirth,
                 companyName,
                 companyRole: user.companyRole,
+                userType: user.userType,
                 lastActivity: new Date(),
                 modificationNotes: [{
                     modifiedBy: null,
@@ -123,7 +127,8 @@ export class UserController {
             password,
             dateOfBirth,
             companyName,
-            companyRole} = req.body;
+            companyRole,
+            userType} = req.body;
         const _id = req.params.id;
         if(!(name && telephone && mobile && password && dateOfBirth && companyName)){
             return insufficientParameters(res)
@@ -147,6 +152,7 @@ export class UserController {
                 dateOfBirth,
                 companyName,
                 companyRole,
+                userType,
                 lastActivity: new Date(),
                 modificationNotes: [{
                     modifiedBy: admin,

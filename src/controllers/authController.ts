@@ -75,16 +75,6 @@ export class AuthController {
     }
     next();
   }
-  public isPantner(req: Request, res: Response, next: NextFunction) {
-    //@ts-ignore
-    const isPantner = req.user.companyRole === 2;
-    if (!isPantner) {
-      return res.status(400).json({
-        message: "You are not Sale, access denied",
-      });
-    }
-    next();
-  }
   public isAdmin(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const user = req.user;
@@ -100,6 +90,26 @@ export class AuthController {
     //@ts-ignore
     const isSuperAdmin = req.user.companyRole === 4;
     if (!isSuperAdmin) {
+      return res.status(400).json({
+        message: "You are not Sale, access denied",
+      });
+    }
+    next();
+  }
+  public isUserTypePantner(req: Request, res: Response, next: NextFunction) {
+    //@ts-ignore
+    const isPantner = req.user.userType === 1;
+    if (!isPantner) {
+      return res.status(400).json({
+        message: "You are not Sale, access denied",
+      });
+    }
+    next();
+  }
+  public isUserTypeUser(req: Request, res: Response, next: NextFunction) {
+    //@ts-ignore
+    const isUser = req.user.userType === 0;
+    if (!isUser) {
       return res.status(400).json({
         message: "You are not Sale, access denied",
       });
