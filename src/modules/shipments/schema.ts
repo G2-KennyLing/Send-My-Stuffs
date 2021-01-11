@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { ModificationNote } from "../common/model";
+
 const shipmentSchema = new Schema({
   shipmentNo: {
     type: String,

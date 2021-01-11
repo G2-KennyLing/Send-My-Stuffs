@@ -1,8 +1,8 @@
 enum Status {
-  "InActive" = 0,
-  "Active",
-  "Pending",
-  "Past",
+  "INACTIVE" = 0,
+  "ACTIVE",
+  "PENDING",
+  "PAST",
 }
 export default interface IShipment {
   _id?: String;
