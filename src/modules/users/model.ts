@@ -3,7 +3,7 @@ import { ModificationNote } from "../common/model";
 enum role {
     USER = 0,
     SALES,
-    CUSTOMER_SERVICES,
+    CUSTOMER_SERVICE,
     PANTNER,
     ADMIN,
     SUPERADMIN,
