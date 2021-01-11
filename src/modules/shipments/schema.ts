@@ -1,5 +1,10 @@
 import { ModificationNote } from "./../common/model";
 import { Schema, model } from "mongoose";
+<<<<<<< HEAD
+=======
+import { ModificationNote } from "../common/model";
+
+>>>>>>> ec87c623141b48290c9edd976dc3fe86a2943c3d
 const shipmentSchema = new Schema({
   shipmentNo: {
     type: String,
