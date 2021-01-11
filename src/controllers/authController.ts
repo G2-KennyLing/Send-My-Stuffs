@@ -7,8 +7,9 @@ import {
 } from "../modules/common/service";
 import { IUser } from "../modules/users/model";
 import UserService from "../modules/users/service";
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 require("dotenv").config();
 
 export class AuthController {
