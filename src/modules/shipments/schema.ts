@@ -1,10 +1,5 @@
 import { ModificationNote } from "./../common/model";
 import { Schema, model } from "mongoose";
-<<<<<<< HEAD
-=======
-import { ModificationNote } from "../common/model";
-
->>>>>>> ec87c623141b48290c9edd976dc3fe86a2943c3d
 const shipmentSchema = new Schema({
   shipmentNo: {
     type: String,
@@ -12,14 +7,22 @@ const shipmentSchema = new Schema({
     required: true,
   },
   from: {
-    type: String,
-    trim: true,
-    require: true,
+    type: Schema.Types.ObjectId,
+    ref: "country",
+    required: true,
   },
   to: {
-    type: String,
-    trim: true,
-    require: true,
+    type: Schema.Types.ObjectId,
+    ref: "country",
+    required: true,
+  },
+  departureDate: {
+    type: Date,
+    required: true,
+  },
+  landingDate: {
+    type: Date,
+    required: true,
   },
   vesselName: {
     type: String,
@@ -39,6 +42,13 @@ const shipmentSchema = new Schema({
   },
   ModificationNote: {
     type: [ModificationNote],
+    default: [
+      {
+        modifiedOn: new Date(),
+        modifiedBy: "",
+        modificationNote: "create new shipment",
+      },
+    ],
   },
 });
 

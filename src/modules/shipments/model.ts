@@ -10,9 +10,11 @@ export default interface IShipment {
   shipmentNo: String;
   from: String;
   to: String;
+  departureDate: Date;
+  landingDate: Date;
   vesselName?: String;
   voyage?: String;
   cargoDescription: String;
   status?: Status;
-  ModificationNote: [ModificationNote];
+  ModificationNote?: [ModificationNote];
 }

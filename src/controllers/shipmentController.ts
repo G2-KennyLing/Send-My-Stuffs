@@ -1,3 +1,4 @@
+import { ModificationNote } from "./../modules/common/model";
 import { Request, Response } from "express";
 import {
   insufficientParameters,
@@ -20,8 +21,19 @@ export default class ShipmentController {
       vesselName,
       voyage,
       cargoDescription,
+      departureDate,
+      landingDate,
     } = req.body;
-    if (!(shipmentNo && from && to && cargoDescription))
+    if (
+      !(
+        shipmentNo &&
+        from &&
+        to &&
+        cargoDescription &&
+        departureDate &&
+        landingDate
+      )
+    )
       return insufficientParameters(res);
     if (!((vesselName && !voyage) || (!vesselName && voyage)))
       return failureResponse(
@@ -30,7 +42,16 @@ export default class ShipmentController {
         res
       );
     this.Service.create(
-      { shipmentNo, from, to, vesselName, voyage, cargoDescription },
+      {
+        shipmentNo,
+        from,
+        to,
+        vesselName,
+        voyage,
+        cargoDescription,
+        departureDate,
+        landingDate,
+      },
       (err, newShipment) => {
         if (err) return mongoError(err, res);
         return successResponse(
@@ -65,8 +86,19 @@ export default class ShipmentController {
       voyage,
       cargoDescription,
       status,
+      departureDate,
+      landingDate,
     } = req.body;
-    if (!(shipmentNo && from && to && cargoDescription))
+    if (
+      !(
+        shipmentNo &&
+        from &&
+        to &&
+        cargoDescription &&
+        departureDate &&
+        landingDate
+      )
+    )
       return insufficientParameters(res);
     if (!((vesselName && !voyage) || (!vesselName && voyage)))
       return failureResponse(
@@ -74,6 +106,11 @@ export default class ShipmentController {
         { voyage, vesselName },
         res
       );
+    const ModificationNote: ModificationNote = {
+      modificationNote: "update shipment",
+      modifiedOn: new Date(),
+      modifiedBy: "",
+    };
     const updatedShipment: IShipment = {
       shipmentNo,
       from,
@@ -82,21 +119,28 @@ export default class ShipmentController {
       voyage,
       cargoDescription,
       status,
+      departureDate,
+      landingDate,
     };
     if (!_id) return insufficientParameters(res);
-    this.Service.update(_id, updatedShipment, (error, shipment) => {
-      if (error) return mongoError(error, res);
-      if (!shipment)
-        return failureResponse(
-          "Shipment with that ID is not exist",
+    this.Service.update(
+      _id,
+      updatedShipment,
+      ModificationNote,
+      (error, shipment) => {
+        if (error) return mongoError(error, res);
+        if (!shipment)
+          return failureResponse(
+            "Shipment with that ID is not exist",
+            shipment,
+            res
+          );
+        return successResponse(
+          `Update shipment${shipment._id} successful`,
           shipment,
           res
         );
-      return successResponse(
-        `Update shipment${shipment._id} successful`,
-        shipment,
-        res
-      );
-    });
+      }
+    );
   }
 }
