@@ -1,7 +1,7 @@
 import { ModificationNote } from "../common/model";
 enum status {
     ACTIVE = 0,
-    PASS = 1
+    INACTIVE
   }
 export interface IPartner {
     _id?: String;
