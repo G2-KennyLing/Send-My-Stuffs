@@ -7,6 +7,7 @@ import {
 } from "../modules/common/service";
 import { IUser } from "../modules/users/model";
 import UserService from "../modules/users/service";
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require("dotenv").config();
@@ -14,7 +15,7 @@ require("dotenv").config();
 export class AuthController{
     private userService : UserService = new UserService();
 
-    public signin(req: Request, res: Response){
+    public signIn(req: Request, res: Response){
         const {email, password} = req.body;
         if(!(email && password)){
             return insufficientParameters(res);
@@ -24,10 +25,10 @@ export class AuthController{
                 return mongoError(err, res)
             }
             if(!user){
-                return failureResponse("email does not exist", null, res)
+                return failureResponse("Email does not exist", null, res)
             }
             if(!bcrypt.compareSync(password, user.password)){
-                return failureResponse("Password and email are not match", null, res)
+                return failureResponse("Password and Email are not match", null, res)
             }
             const token =  jwt.sign({user}, process.env.JWT_TOKEN, {
                 expiresIn: "1d",
@@ -39,7 +40,7 @@ export class AuthController{
             res.cookie("refreshToken", refreshToken, {
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
             });
-            return successResponse("signin successful", {user, token, refreshToken}, res)
+            return successResponse("Sign in successful", {user, token, refreshToken}, res)
         })
     }
 }
