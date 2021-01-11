@@ -144,4 +144,13 @@ export default class ShipmentController {
       }
     );
   }
+  async overview(req: Request, res: Response) {
+    const departure = await this.Service.getOverviewDepature();
+    const landing = await this.Service.getOverviewLanding();
+    const response = {
+      departure: departure.length,
+      landing: landing.length,
+    };
+    successResponse("Overview shipment in past 7 days", response, res);
+  }
 }

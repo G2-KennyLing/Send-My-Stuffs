@@ -36,4 +36,24 @@ export default class ShipmentService {
       .populate("to")
       .exec(callback);
   }
+  getOverviewDepature() {
+    const now = new Date().getTime();
+    const sevenDayPast = now - 1000 * 60 * 60 * 24 * 7;
+    return Shipment.find({
+      departureDate: {
+        $gte: new Date(sevenDayPast).toISOString(),
+        $lte: new Date().toISOString(),
+      },
+    });
+  }
+  getOverviewLanding() {
+    const now = new Date().getTime();
+    const sevenDayPast = now - 1000 * 60 * 60 * 24 * 7;
+    return Shipment.find({
+      landingDate: {
+        $gte: new Date(sevenDayPast).toISOString(),
+        $lte: new Date().toISOString(),
+      },
+    });
+  }
 }

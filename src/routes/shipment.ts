@@ -12,6 +12,9 @@ export default class UsersRoutes {
     app.post("/api/shipment", (req: Request, res: Response) => {
       this.controller.create(req, res);
     });
+    app.get("/api/shipment/overview", (req: Request, res: Response) => {
+      this.controller.overview(req, res);
+    });
     app.get("/api/shipment/:_id", (req: Request, res: Response) => {
       this.controller.getById(req, res);
     });
