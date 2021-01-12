@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 import { ModificationNote } from '../common/model';
 
+const Schema = mongoose.Schema;
 const CountrySchema = mongoose.Schema;
 
 const schema = new CountrySchema ({
@@ -24,11 +25,10 @@ const schema = new CountrySchema ({
 		trim: true,
 		required: true
 	},
-	seaPorts: {
-		type: String,
-		trim: true,
-		required: true
-	},
+	seaPorts: [{
+		type: Schema.Types.ObjectId,
+		ref: 'seaPorts'
+	}],
 	airPorts: {
 		type: String,
 		trim: true,
