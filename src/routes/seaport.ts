@@ -7,7 +7,7 @@ export class SeaportRoutes {
 
     public route(app: Application) {
         app.post('/seaport', (req: Request, res: Response) => {
-            this.seaportController.createSeapor(req, res);
+            this.seaportController.createSeaport(req, res);
         }); 
 
         
