@@ -7,7 +7,7 @@ export class PartnersRoutes {
 
     public route(app: Application) {
         
-        app.post('/partner/create', (req: Request, res: Response) => {
+        app.post('/partner', (req: Request, res: Response) => {
             this.partnerController.createPartner(req, res);
         });
 
