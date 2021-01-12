@@ -8,7 +8,7 @@ export interface IPartner {
     companyName: String,
     domainName: String,
     workGroup: String,
-    companyType: String,
+    partnerType: String,
     industry: String,
     taxID: String,
     country: String,

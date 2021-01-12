@@ -10,13 +10,13 @@ export class PartnerController {
 
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
-        const { companyName, domainName, workGroup, companyType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facismile, salesID, wallet, user, peer, logo, status } = req.body;
-        if (companyName && domainName && workGroup && companyType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facismile && salesID && wallet && user && peer && logo && status ) {
+        const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facismile, salesID, wallet, user, peer, logo, status } = req.body;
+        if (companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facismile && salesID && wallet && user && peer && logo && status ) {
             const partnerParams: IPartner = {
                 companyName,
                 domainName,
                 workGroup,
-                companyType,
+                partnerType,
                 industry,
                 taxID,
                 country,
