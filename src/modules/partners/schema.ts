@@ -4,68 +4,43 @@ import { ModificationNote } from '../common/model';
 const Schema = mongoose.Schema;
 
 const Partner = new Schema({
-    companyName: {
-        type: String,
-        required: true,
+    companyName: { 
+        type: String, 
+        required: true, 
     },
-    companyType: String,
-    country: {
-        type: String,
-        required: true,
-    },
-    city: {
-        type: String,
-        required: true,
-    },
-    region: {
-        type: String,
-        required: true,
-    },
-    addressLineFirst: {
-        type: String,
-        required: true,
-    },
-    addressLineSecond: {
-        type: String,
-        required: true,
-    },
-    telephone: String,
-    facismile: String,
-    domainName: String,
-    industry: String,
-    taxID: String,
-    partnerGroup: String,
-    name: {
-        type: {
-            firstName: String,
-            lastName: String,
-        },
-        trim: true,
-        required: true,
-    },
-    dateOfBirth: Date,
-    handphone: String,
-    email: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        required: true,
-        unique: true,
-    },
-    alternateEmail: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        required: true,
-        unique: true,
-    },
-    directLine: String,
-    status: {
+    domainName: String, 
+    workGroup: String, 
+    partnerType: String, 
+    industry: String, 
+    taxID: String, 
+    country: { 
+        type: String, 
+        required: true, 
+    }, 
+    city: { 
+        type: String, 
+        required: true, 
+    }, 
+    addressLineFirst: { 
+        type: String, 
+        required: true, 
+    }, 
+    addressLineSecond: { 
+        type: String, 
+        required: true, 
+    }, 
+    telephone: String, 
+    facismile: String, 
+    salesID: String, 
+    wallet: String, 
+    user: Number, 
+    peer: Number, 
+    logo: String, 
+    status: { 
         type: Number,
-        enum: [0,1],
-        default: 0
+        enum: [0, 1], 
+        default: 0 
     },
-    icon: String,
     modification_notes: [ModificationNote]
 });
 

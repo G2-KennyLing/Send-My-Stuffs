@@ -10,33 +10,26 @@ export class PartnerController {
 
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
-        const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facismile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, status, icon } = req.body;
-        const { firstName, lastName } = name || {};
-        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facismile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon) {
+        const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facismile, salesID, wallet, user, peer, logo, status } = req.body;
+        if (companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facismile && salesID && wallet && user && peer && logo && status ) {
             const partnerParams: IPartner = {
                 companyName,
-                companyType,
+                domainName,
+                workGroup,
+                partnerType,
+                industry,
+                taxID,
                 country,
                 city,
-                region,
                 addressLineFirst,
                 addressLineSecond,
                 telephone,
                 facismile,
-                domainName,
-                industry,
-                taxID,
-                partnerGroup,
-                name: {
-                    firstName,
-                    lastName
-                },
-                dateOfBirth,
-                handphone,
-                email,
-                alternateEmail,
-                directLine,
-                icon,
+                salesID,
+                wallet,
+                user,
+                peer,
+                logo,
                 status,
                 modification_notes: [{
                     modifiedOn: new Date(Date.now()),
@@ -80,9 +73,8 @@ export class PartnerController {
     }
 
     public updatePartner(req: Request, res: Response) {
-        const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facismile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, status, icon } = req.body;
-        const { firstName, lastName } = name || {};
-        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facismile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon)  {
+        const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facismile, salesID, wallet, user, peer, logo, status } = req.body;
+        if (companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facismile && salesID && wallet && user && peer && logo && status )  {
             const partnerFilter = { _id: req.params.id };
             this.partnerService.filterPartner(partnerFilter, (err: any, partnerData: IPartner) => {
                 if (err) {
@@ -92,29 +84,22 @@ export class PartnerController {
                     const partnerParams: IPartner = {
                         _id: req.params.id,
                         companyName : companyName ? req.body.companyName : partnerData.companyName,
-                        companyType : companyType ? req.body.companyType : partnerData.companyType,
+                        domainName : domainName ? req.body.domainName : partnerData.domainName,
+                        workGroup : workGroup ? req.body.workGroup : partnerData.workGroup,
+                        partnerType : partnerType ? req.body.partnerType : partnerData.partnerType,
+                        industry : industry ? req.body.industry : partnerData.industry,
+                        taxID : taxID ? req.body.taxID : partnerData.taxID,
                         country : country ? req.body.country : partnerData.country,
                         city : city ? req.body.city : partnerData.city,
-                        region : region ? req.body.region : partnerData.region,
                         addressLineFirst : addressLineFirst ? req.body.addressLineFirst : partnerData.addressLineFirst,
                         addressLineSecond : addressLineSecond ? req.body.addressLineSecond : partnerData.addressLineSecond,
                         telephone : telephone ? req.body.telephone : partnerData.telephone,
                         facismile : facismile ? req.body.facismile : partnerData.facismile,
-                        domainName : domainName ? req.body.domainName : partnerData.domainName,
-                        industry : industry ? req.body.industry : partnerData.industry,
-                        taxID : taxID ? req.body.taxID : partnerData.taxID,
-                        partnerGroup : partnerGroup ? req.body.partnerGroup : partnerData.partnerGroup,
-                        name: name
-                        ? {
-                            firstName : name.firstName ? req.body.name.firstName : partnerData.name.firstName,
-                            lastName : name.lastName ? req.body.name.lastName : partnerData.name.lastName
-                        } : partnerData.name,
-                        dateOfBirth : dateOfBirth ? req.body.dateOfBirth : partnerData.dateOfBirth,
-                        handphone : handphone ? req.body.handphone : partnerData.handphone,
-                        email : email ? req.body.email : partnerData.email,
-                        alternateEmail : alternateEmail ? req.body.alternateEmail : partnerData.alternateEmail,
-                        directLine : directLine ? req.body.directLine : partnerData.directLine,
-                        icon : icon ? req.body.icon : partnerData.icon,
+                        salesID : salesID ? req.body.salesID : partnerData.salesID,
+                        wallet : wallet ? req.body.wallet : partnerData.wallet,
+                        user : user ? req.body.user : partnerData.user,
+                        peer : peer ? req.body.peer : partnerData.peer,
+                        logo : logo ? req.body.logo : partnerData.logo,
                         status : status ? req.body.status : partnerData.status,
                         modification_notes: [
                             {
