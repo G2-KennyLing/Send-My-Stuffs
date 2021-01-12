@@ -1,33 +1,27 @@
 import { ModificationNote } from "../common/model";
 enum status {
-    ACTIVE = 0,
-    INACTIVE
-  }
+  ACTIVE = 0,
+  INACTIVE
+}
 export interface IPartner {
-    _id?: String;
-    companyName: String,
-    companyType: String,
-    country: String,
-    city: String,
-    region: String,
-    addressLineFirst: String,
-    addressLineSecond: String,
-    telephone: String,
-    facismile: String,
-    domainName: String,
-    industry: String,
-    taxID: String,
-    partnerGroup: String,
-    name: {
-            firstName: String,
-            lastName: String,
-    },
-    dateOfBirth: Date,
-    handphone: String,
-    email: String,
-    alternateEmail: String,
-    directLine: String,
-    status: status,
-    icon: String,
-    modification_notes: ModificationNote[]
+  _id?: String;
+  companyName: String,
+  domainName: String,
+  workGroup: String,
+  partnerType: String,
+  industry: String,
+  taxID: String,
+  country: String,
+  city: String,
+  addressLineFirst: String,
+  addressLineSecond: String,
+  telephone: String,
+  facismile: String,
+  salesID: String,
+  wallet: String,
+  user: Number,
+  peer: Number,
+  logo: String,
+  status: status,
+  modification_notes: ModificationNote[]
 }
