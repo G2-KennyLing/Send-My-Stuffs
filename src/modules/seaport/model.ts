@@ -4,11 +4,12 @@ export interface ISeaport {
     _id?: String;
     seaportName: String;
     portCode: String;
-    countryName: String; // table country
-    countryCode: String; // table country
+    countryName: String; 
+    countryCode: String; 
     latitude: String;
     longitude: String;
     status?: statusSeaport;
+    country: String;
     isDeleted?: Boolean;
     modificationNotes: ModificationNote[]
 }

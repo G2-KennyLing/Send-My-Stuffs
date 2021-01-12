@@ -9,13 +9,8 @@ export class SeaportController {
 
     public createSeapor(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
-        if (req.body.seaportName&&
-            req.body.portCode &&
-            req.body.countryName &&
-            req.body.countryCode &&
-            req.body.latitude &&
-            req.body.longitude &&
-            req.body.status
+        const {seaportName,portCode,countryName,countryCode,latitude,longitude,status,country} = req.body;
+        if (seaportName && portCode && countryName && countryCode && latitude && longitude && status && country
             ) {
             const seaportParams: ISeaport = {
                 seaportName: req.body.seaportName,
@@ -25,7 +20,7 @@ export class SeaportController {
                 latitude: req.body.latitude,
                 longitude: req.body.longitude,
                 status: req.body.status,
-            
+                country: req.body.params,
                 modificationNotes: [{
                     modifiedOn: new Date(Date.now()),
                     modifiedBy: null,
