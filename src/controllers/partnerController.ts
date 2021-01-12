@@ -10,33 +10,26 @@ export class PartnerController {
 
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
-        const { companyName, companyType, country, city, region, addressLineFirst, addressLineSecond, telephone, facismile, domainName, industry, taxID, partnerGroup, name, dateOfBirth, handphone, email, alternateEmail, directLine, status , icon } = req.body;
-        const { firstName, lastName } = name || {};
-        if (companyName && companyType && country && city && region && addressLineFirst && addressLineSecond && telephone && facismile && domainName && industry && taxID && partnerGroup && firstName && lastName && dateOfBirth && handphone && email && alternateEmail && directLine && status && icon ) {
+        const { companyName, domainName, workGroup, companyType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facismile, salesID, wallet, user, peer, logo, status } = req.body;
+        if (companyName && domainName && workGroup && companyType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facismile && salesID && wallet && user && peer && logo && status ) {
             const partnerParams: IPartner = {
                 companyName,
+                domainName,
+                workGroup,
                 companyType,
+                industry,
+                taxID,
                 country,
                 city,
-                region,
                 addressLineFirst,
                 addressLineSecond,
                 telephone,
                 facismile,
-                domainName,
-                industry,
-                taxID,
-                partnerGroup,
-                name: {
-                    firstName,
-                    lastName
-                },
-                dateOfBirth,
-                handphone,
-                email,
-                alternateEmail,
-                directLine,
-                icon,
+                salesID,
+                wallet,
+                user,
+                peer,
+                logo,
                 status,
                 modification_notes: [{
                     modifiedOn: new Date(Date.now()),
