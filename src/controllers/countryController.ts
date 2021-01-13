@@ -14,7 +14,7 @@ export class CountryController {
 				countryName: req.body.countryName,
 				region: req.body.region,
 				timeZone: req.body.timeZone,
-				seaPorts: req.body.seaPorts,
+				// seaPorts: req.params.seaPorts,
 				airPorts: req.body.airPorts,
 				agents: req.body.agents,
 				customers: req.body.customers,

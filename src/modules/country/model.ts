@@ -6,7 +6,7 @@ export interface ICountry {
 	countryName: String;
 	region: String;
 	timeZone: Date;
-	seaPorts: String;
+	seaPorts?: String
 	airPorts: String;
 	agents: String;
 	customers: String;
