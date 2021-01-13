@@ -25,4 +25,8 @@ export default class UserService {
         users.deleteOne(query, callback);
     }
 
+    public updateUserSync(_id: String ,query: any, callback: any){
+        users.findByIdAndUpdate(_id, query,{new: true}, callback);
+    }
+
 }

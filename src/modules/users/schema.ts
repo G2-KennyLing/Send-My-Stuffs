@@ -54,6 +54,9 @@ const schema = new UserSchema({
         type: Number,
         enum: [0,1]
     },
+    premission:{
+        type: [Number]
+    },
     deletedAt:{
         type:Date,
         default: undefined

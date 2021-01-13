@@ -19,7 +19,7 @@ export class UserController {
             dateOfBirth,
             companyName,
             companyRole,
-            userType} = req.body;
+            userType,premission} = req.body;
         if(!(name && telephone && mobile && email && password && dateOfBirth && companyName  )){
             return failureResponse("All fill is requied", null, res);
         }
@@ -40,6 +40,7 @@ export class UserController {
                 companyName,
                 companyRole,
                 userType,
+                premission,
                 lastActivity: new Date(),
                 modificationNotes: [{
                     modifiedBy: null,
@@ -105,6 +106,7 @@ export class UserController {
                 companyName,
                 companyRole: user.companyRole,
                 userType: user.userType,
+                premission: user.premission,
                 lastActivity: new Date(),
                 modificationNotes: [{
                     modifiedBy: null,
@@ -128,7 +130,7 @@ export class UserController {
             dateOfBirth,
             companyName,
             companyRole,
-            userType} = req.body;
+            userType,premission} = req.body;
         const _id = req.params.id;
         if(!(name && telephone && mobile && password && dateOfBirth && companyName)){
             return insufficientParameters(res)
@@ -153,6 +155,7 @@ export class UserController {
                 companyName,
                 companyRole,
                 userType,
+                premission,
                 lastActivity: new Date(),
                 modificationNotes: [{
                     modifiedBy: admin,
