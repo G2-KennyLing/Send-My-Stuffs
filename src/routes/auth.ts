@@ -5,10 +5,11 @@ export class AuthRoutes{
 
     public route(app: Application) {
         app.post("/auth/login", (req: Request, res: Response) =>{
-            this.authController.signin(req, res);
+            this.authController.signIn(req, res);
         })
-        app.post("/auth/logout", this.authController.isSignIn, (req: Request, res: Response) =>{
-            this.authController.signOut(req, res);
-        })
+
+        // app.post("/auth/logout", this.authController.isSignIn, (req: Request, res: Response) =>{
+        //     this.authController.logout(req, res);
+        // })
     }
 }
