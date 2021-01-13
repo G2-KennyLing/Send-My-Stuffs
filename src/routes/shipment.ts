@@ -11,21 +11,6 @@ export default class UsersRoutes {
     this.Route = Router();
   }
   public route(app: Application) {
-    // this.Route.get("/api/shipment", (req: Request, res: Response) => {
-    //   this.controller.getAll(req, res);
-    // });
-    // this.Route.post("/api/shipment", (req: Request, res: Response) => {
-    //   this.controller.create(req, res);
-    // });
-    // this.Route.get("/api/shipment/overview", (req: Request, res: Response) => {
-    //   this.controller.overview(req, res);
-    // });
-    // this.Route.get("/api/shipment/:_id", (req: Request, res: Response) => {
-    //   this.controller.getById(req, res);
-    // });
-    // this.Route.put("/api/shipment/:_id", (req: Request, res: Response) => {
-    //   this.controller.update(req, res);
-    // });
     this.Route.get("/", (req: Request, res: Response) => {
       this.controller.getAll(req, res);
     });
@@ -41,6 +26,6 @@ export default class UsersRoutes {
     this.Route.put("/:_id", (req: Request, res: Response) => {
       this.controller.update(req, res);
     });
-    app.use("/api/shipment", this.Route);
+    app.use("/api/shipment", this.AuthController.isSignIn, this.Route);
   }
 }
