@@ -5,6 +5,7 @@ import environment from "../environment";
 import { UsersRoutes } from "../routes/users";
 import { CountryRoutes } from "../routes/country";
 import { CommonRoutes } from "../routes/common";
+import { AuthRoutes} from "../routes/auth";
 
 class App {
 
@@ -12,6 +13,7 @@ class App {
    public mongoUrl: string = 'mongodb://localhost:27017/' + environment.getDBName();
 
    private UsersRoutes: UsersRoutes = new UsersRoutes();
+   private AuthRoutes: AuthRoutes = new AuthRoutes();
    private commonRoutes: CommonRoutes = new CommonRoutes();
    private CountryRoutes: CountryRoutes = new CountryRoutes();
 
@@ -29,6 +31,7 @@ class App {
       this.app.use(bodyParser.json());
       //support application/x-www-form-urlencoded post data
       this.app.use(bodyParser.urlencoded({ extended: false }));
+      require("dotenv").config();
    }
 
    private mongoSetup(): void {
