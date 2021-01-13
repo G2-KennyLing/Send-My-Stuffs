@@ -49,6 +49,7 @@ export class AuthController {
       );
     });
   }
+
   public isSignIn(req: Request, res: Response, next: NextFunction) {
     if (!req.cookies) {
       return failureResponse("Unauthorized, access denied", null, res);
@@ -89,22 +90,24 @@ export class AuthController {
     }
     next();
   }
+
   public isSuperAdmin(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const isSuperAdmin = req.user.companyRole === 5;
     if (!isSuperAdmin) {
       return res.status(400).json({
-        message: "You are not Sale, access denied",
+        message: "You are not SuperAdmin, access denied",
       });
     }
     next();
   }
+
   public isCustomerService(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const isCustomerService = req.user.companyRole === 3;
     if (!isCustomerService) {
       return res.status(400).json({
-        message: "You are not Sale, access denied",
+        message: "You are not Customer Service, access denied",
       });
     }
     next();

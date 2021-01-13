@@ -47,26 +47,28 @@ export class UserController {
                 modificationNotes: [{
                     modifiedBy: null,
                     modifiedOn: new Date(),
-                    modificationNote: 'create new user',
+                    modificationNote: 'Create new user',
                 }]
             }
             this.userService.createUser(userParams, (err: Error, newUser: IUser) =>{
                 if(err){
                     return mongoError(err, res);
                 }
-                return successResponse("create user successful", newUser, res);
+                return successResponse("Create user successful", newUser, res);
             })
         })
         
     }
+
     public getAllUser(req: Request, res: Response){
         this.userService.filterUsers({deletedAt: undefined},(err:Error, users:IUser) =>{
             if(err){
                 return mongoError(err, res);
             }
-            return successResponse("get user list successful", users, res);
+            return successResponse("Get user list successful", users, res);
         })
     }
+
     public getUserDetail(req: Request, res: Response){
         const _id = req.params.id;
         this.userService.filterUser({_id}, (err: Error, user: IUser) =>{
@@ -74,11 +76,12 @@ export class UserController {
                 return mongoError(err, res);
             }
             if(!user){
-                return failureResponse("user is not found", null, res);
+                return failureResponse("User is not found", null, res);
             }
-            return successResponse("get user detail successful", user, res);
+            return successResponse("Get user detail successful", user, res);
         })
     }
+
     public updateUser(req: Request, res: Response){
         const {name,
             telephone,
@@ -95,7 +98,7 @@ export class UserController {
                 return mongoError(err, res);
             }
             if(!user){
-                return failureResponse("user is not found", null, res);
+                return failureResponse("User is not found", null, res);
             }
             const userParams :IUser = {
                 _id: user._id,
@@ -112,17 +115,18 @@ export class UserController {
                 modificationNotes: [{
                     modifiedBy: null,
                     modifiedOn: new Date(),
-                    modificationNote: 'update user',
+                    modificationNote: 'Update user',
                 }]
             }
             this.userService.updateUser(userParams, (err: Error, userData: IUser) =>{
                 if(err){
                     return mongoError(err, res);
                 }
-                return successResponse("update user successful", userData, res);
+                return successResponse("Update user successful", userData, res);
             })
         })
     }
+
     public updateUserByAdmin(req: Request, res: Response){
         const {name,
             telephone,
@@ -143,7 +147,7 @@ export class UserController {
                 return mongoError(err, res);
             }
             if(!user){
-                return failureResponse("user is not found", null, res);
+                return failureResponse("User is not found", null, res);
             }
             const userParams :IUser = {
                 _id: user._id,
@@ -160,17 +164,18 @@ export class UserController {
                 modificationNotes: [{
                     modifiedBy: admin,
                     modifiedOn: new Date(),
-                    modificationNote: 'update user',
+                    modificationNote: 'Update user',
                 }]
             }
             this.userService.updateUser(userParams, (err: Error, userData: IUser) =>{
                 if(err){
                     return mongoError(err, res);
                 }
-                return successResponse("update user successful", userData, res);
+                return successResponse("Update user successful", userData, res);
             })
         })
     }
+
     public async forgotPassword(req: Request, res: Response) {
         try {
           const { email } = req.body;
