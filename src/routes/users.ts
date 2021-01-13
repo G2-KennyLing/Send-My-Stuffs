@@ -25,26 +25,6 @@ export class UsersRoutes {
             this.authController.isSignin,
             this.userController.getUserDetail(req, res);
         });
-        app.put("/api/user/:id", 
-        this.authController.isSignin,
-         (req: Request, res: Response) =>{
-            this.userController.updateUser(req, res);
-        });
-        app.put("/api/user/byAdmin/:id",
-        this.authController.isSignin, 
-        this.authController.isAdmin, 
-        (req: Request, res: Response) =>{
-            this.userController.updateUserByAdmin(req, res);
-        });
-        app.put("/api/user/premission/:id", 
-        this.authController.isSignin, 
-        (req: Request, res: Response) =>{
-            this.premissionController.updatePremission(req, res);
-        });
-        app.get("/api/user/premission/:id", 
-        this.authController.isSignin, 
-        (req: Request, res: Response) =>{
-            this.premissionController.getPremission(req, res);
-        })
+        
     }
 }
