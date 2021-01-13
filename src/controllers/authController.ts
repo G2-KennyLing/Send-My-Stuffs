@@ -7,6 +7,7 @@ import {
 } from "../modules/common/service";
 import { IUser } from "../modules/users/model";
 import UserService from "../modules/users/service";
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -48,7 +49,7 @@ export class AuthController {
       );
     });
   }
-  public isSignin(req: Request, res: Response, next: NextFunction) {
+  public isSignIn(req: Request, res: Response, next: NextFunction) {
     if (!req.cookies) {
       return failureResponse("Unauthorized, access denied", null, res);
     }
@@ -65,6 +66,7 @@ export class AuthController {
       next();
     });
   }
+
   public isSales(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const isSales = req.user.companyRole === 1;
@@ -75,6 +77,7 @@ export class AuthController {
     }
     next();
   }
+
   public isAdmin(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const user = req.user;
@@ -106,6 +109,7 @@ export class AuthController {
     }
     next();
   }
+
   public isPantner(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const isPantner = req.user.companyRole === 2;
@@ -116,7 +120,7 @@ export class AuthController {
     }
     next();
   }
-  p
+  
   public isUserTypePantner(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const isPantner = req.user.userType === 1;
@@ -127,6 +131,7 @@ export class AuthController {
     }
     next();
   }
+
   public isUserTypeUser(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const isUser = req.user.userType === 0;

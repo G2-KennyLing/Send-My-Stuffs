@@ -10,26 +10,26 @@ export class UsersRoutes {
     public route(app: Application) {
         
         app.post('/api/user', (req: Request, res: Response) => {
-            this.authController.isSignin,
+            this.authController.isSignIn,
             this.userController.createUser(req, res);
         });
         app.get("/api/userList", 
-        this.authController.isSignin, 
+        this.authController.isSignIn, 
         this.authController.isAdmin,
         (req: Request, res: Response) =>{
             this.userController.getAllUser(req, res);
         });
         app.get("/api/user/:id", (req: Request, res: Response) =>{
-            this.authController.isSignin,
+            this.authController.isSignIn,
             this.userController.getUserDetail(req, res);
         });
         app.put("/api/user/:id", 
-        this.authController.isSignin,
+        this.authController.isSignIn,
          (req: Request, res: Response) =>{
             this.userController.updateUser(req, res);
         });
         app.put("/api/user/byAdmin/:id",
-        this.authController.isSignin, 
+        this.authController.isSignIn, 
         this.authController.isAdmin, 
         (req: Request, res: Response) =>{
             this.userController.updateUserByAdmin(req, res);
