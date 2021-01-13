@@ -2,11 +2,12 @@ import * as mongoose from 'mongoose';
 import { ModificationNote } from '../common/model';
 const Schema = mongoose.Schema;
 
-// const CountrySchema = mongoose.Schema;
+// const CountrySchema = mongoose.Schema;		
 const CountrySchema = new Schema ({
 	countryCode: {
 		type: String,
 		trim: true,
+		uppercase: true,
 		required: true,
 		unique: true
 	},
