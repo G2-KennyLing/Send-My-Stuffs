@@ -12,24 +12,35 @@ export class UsersRoutes {
     public route(app: Application) {
         
         app.post('/api/user', (req: Request, res: Response) => {
-            this.authController.isSignin,
+            this.authController.isSignIn,
             this.userController.createUser(req, res);
         });
-        app.get("/api/userList", 
-        this.authController.isSignin, 
+        app.get("user", 
+        this.authController.isSignIn, 
         this.authController.isAdmin,
         (req: Request, res: Response) =>{
             this.userController.getAllUser(req, res);
         });
-        app.get("/api/user/:id", 
-        this.authController.isSignin,
-        (req: Request, res: Response) =>{
+        app.get("/user/:id", (req: Request, res: Response) =>{
+            this.authController.isSignIn,
             this.userController.getUserDetail(req, res);
         });
-        app.get("/api/user/userType/:uerType", 
-        this.authController.isSignin, 
+        app.put("/user/:id", 
+        this.authController.isSignIn,
+         (req: Request, res: Response) =>{
+            this.userController.updateUser(req, res);
+        });
+        app.put("/user/byAdmin/:id",
+        this.authController.isSignIn, 
+        this.authController.isAdmin, 
         (req: Request, res: Response) =>{
-            this.userController.getAllUserType(req, res);
+            this.userController.updateUserByAdmin(req, res);
+        });
+        app.post("/user/forgotPassword", (req: Request, res: Response) =>{
+            this.userController.forgotPassword(req, res);
+        })
+        app.post("/user/resetPassword", (req: Request, res: Response) =>{
+            this.userController.resetPassword(req, res);
         })
     }
 }
