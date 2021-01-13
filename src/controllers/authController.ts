@@ -78,7 +78,7 @@ export class AuthController {
   public isAdmin(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const user = req.user;
-    const isAdmin = user.companyRole === 3;
+    const isAdmin = user.companyRole === 4;
     if (!isAdmin) {
       return res.status(400).json({
         message: "You are not Admin, access denied",
@@ -88,7 +88,7 @@ export class AuthController {
   }
   public isSuperAdmin(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
-    const isSuperAdmin = req.user.companyRole === 4;
+    const isSuperAdmin = req.user.companyRole === 5;
     if (!isSuperAdmin) {
       return res.status(400).json({
         message: "You are not Sale, access denied",
@@ -96,12 +96,33 @@ export class AuthController {
     }
     next();
   }
+  public isCustomerService(req: Request, res: Response, next: NextFunction) {
+    //@ts-ignore
+    const isCustomerService = req.user.companyRole === 3;
+    if (!isCustomerService) {
+      return res.status(400).json({
+        message: "You are not Sale, access denied",
+      });
+    }
+    next();
+  }
+  public isPantner(req: Request, res: Response, next: NextFunction) {
+    //@ts-ignore
+    const isPantner = req.user.companyRole === 2;
+    if (!isPantner) {
+      return res.status(400).json({
+        message: "You are not Pantner access denied",
+      });
+    }
+    next();
+  }
+  p
   public isUserTypePantner(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const isPantner = req.user.userType === 1;
     if (!isPantner) {
       return res.status(400).json({
-        message: "You are not Sale, access denied",
+        message: "You are not Pantner access denied",
       });
     }
     next();
@@ -111,7 +132,7 @@ export class AuthController {
     const isUser = req.user.userType === 0;
     if (!isUser) {
       return res.status(400).json({
-        message: "You are not Sale, access denied",
+        message: "You are not User, access denied",
       });
     }
     next();
