@@ -3,6 +3,7 @@ import * as bodyParser from "body-parser";
 import * as mongoose from 'mongoose';
 import environment from "../environment";
 import { UsersRoutes } from "../routes/users";
+import { CountryRoutes } from "../routes/country";
 import { CommonRoutes } from "../routes/common";
 import { AuthRoutes} from "../routes/auth";
 
@@ -14,12 +15,14 @@ class App {
    private UsersRoutes: UsersRoutes = new UsersRoutes();
    private AuthRoutes: AuthRoutes = new AuthRoutes();
    private commonRoutes: CommonRoutes = new CommonRoutes();
+   private CountryRoutes: CountryRoutes = new CountryRoutes();
 
    constructor() {
       this.app = express();
       this.config();
       this.mongoSetup();
       this.UsersRoutes.route(this.app);
+      this.CountryRoutes.route(this.app);
       this.AuthRoutes.route(this.app);
       this.commonRoutes.route(this.app);
    }
