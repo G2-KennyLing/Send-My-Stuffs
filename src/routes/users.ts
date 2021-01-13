@@ -21,30 +21,15 @@ export class UsersRoutes {
         (req: Request, res: Response) =>{
             this.userController.getAllUser(req, res);
         });
-        app.get("/api/user/:id", (req: Request, res: Response) =>{
-            this.authController.isSignin,
+        app.get("/api/user/:id", 
+        this.authController.isSignin,
+        (req: Request, res: Response) =>{
             this.userController.getUserDetail(req, res);
         });
-        app.put("/api/user/:id", 
-        this.authController.isSignin,
-         (req: Request, res: Response) =>{
-            this.userController.updateUser(req, res);
-        });
-        app.put("/api/user/byAdmin/:id",
-        this.authController.isSignin, 
-        this.authController.isAdmin, 
-        (req: Request, res: Response) =>{
-            this.userController.updateUserByAdmin(req, res);
-        });
-        app.put("/api/user/premission/:id", 
+        app.get("/api/user/userType/:uerType", 
         this.authController.isSignin, 
         (req: Request, res: Response) =>{
-            this.premissionController.updatePremission(req, res);
-        });
-        app.get("/api/user/premission/:id", 
-        this.authController.isSignin, 
-        (req: Request, res: Response) =>{
-            this.premissionController.getPremission(req, res);
+            this.userController.getAllUserType(req, res);
         })
     }
 }

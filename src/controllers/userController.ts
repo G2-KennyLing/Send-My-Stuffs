@@ -65,6 +65,15 @@ export class UserController {
             return successResponse("get user list successful", users, res);
         })
     }
+    public getAllUserType(req: Request, res: Response){
+        const userType = req.params.userType;
+        this.userService.filterUser({deletedAt: undefined, userType},  (err: Error, user: IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            return successResponse("Get all user by user type successful", user, res);
+        })
+    }
     public getUserDetail(req: Request, res: Response){
         const _id = req.params.id;
         this.userService.filterUser({_id}, (err: Error, user: IUser) =>{
