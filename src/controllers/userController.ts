@@ -20,11 +20,7 @@ export class UserController {
             companyName,
             companyRole,} = req.body;
         if(!(name && telephone && mobile && email && password && dateOfBirth && companyName  )){
-<<<<<<< HEAD
-            return insufficientParameters(res)
-=======
             return failureResponse("All fill is requied", null, res);
->>>>>>> develop
         }
         this.userService.filterUser({email},(err: Error, user: IUser) =>{
             if(err){
