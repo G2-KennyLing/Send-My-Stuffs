@@ -11,30 +11,25 @@ export class UsersRoutes {
 
     public route(app: Application) {
         
-        app.post('/api/user', (req: Request, res: Response) => {
-            this.authController.isSignIn,
+        app.post('/api/user', 
+        this.authController.isSignIn,
+        (req: Request, res: Response) => {
             this.userController.createUser(req, res);
         });
-        app.get("user", 
+        app.get("/user/:userType", 
         this.authController.isSignIn, 
-        this.authController.isAdmin,
         (req: Request, res: Response) =>{
             this.userController.getAllUser(req, res);
         });
-        app.get("/user/:id", (req: Request, res: Response) =>{
+        app.get("/user/:id", 
             this.authController.isSignIn,
+            (req: Request, res: Response) =>{
             this.userController.getUserDetail(req, res);
         });
-        app.put("/user/:id", 
-        this.authController.isSignIn,
-         (req: Request, res: Response) =>{
-            this.userController.updateUser(req, res);
-        });
-        app.put("/user/byAdmin/:id",
+        app.put("/user/:id",
         this.authController.isSignIn, 
-        this.authController.isAdmin, 
         (req: Request, res: Response) =>{
-            this.userController.updateUserByAdmin(req, res);
+            this.userController.updateUser(req, res);
         });
         app.post("/user/forgotPassword", (req: Request, res: Response) =>{
             this.userController.forgotPassword(req, res);
