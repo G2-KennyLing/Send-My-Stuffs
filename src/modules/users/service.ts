@@ -17,7 +17,7 @@ export default class UserService {
 
     public updateUser(userParams: IUser, callback: any) {
         const query = { _id: userParams._id };
-        users.findOneAndUpdate(query, userParams, callback);
+        users.findOneAndUpdate(query, userParams,{new: true}, callback);
     }
 
     public deleteUser(_id: String, callback: any) {
