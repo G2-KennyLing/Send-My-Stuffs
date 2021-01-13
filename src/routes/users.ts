@@ -1,11 +1,13 @@
 import { Application, Request, Response } from 'express';
 import { UserController } from '../controllers/userController';
 import { AuthController } from '../controllers/authController';
+import { PremissionController } from '../controllers/premissionController';
 
 export class UsersRoutes {
 
     private userController: UserController = new UserController();
     private authController: AuthController = new AuthController();
+    private premissionController: PremissionController = new PremissionController();
 
     public route(app: Application) {
         

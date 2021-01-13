@@ -11,7 +11,14 @@ enum role {
 enum userType {
     USER =0,
     PANTNER
+};
+enum premission{
+    CREATE = 0,
+    VIEW,
+    UPDATE,
+    DELETE
 }
+
 export interface IUser {
     _id?: String;
     name: {
@@ -28,6 +35,7 @@ export interface IUser {
     lastActivity?: Date;
     daysSinceLogin?: Number;
     userType: userType;
+    premission: any[premission];
     deletedAt?: Date;
     modificationNotes: ModificationNote[]
 }
