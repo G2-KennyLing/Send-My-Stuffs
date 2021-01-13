@@ -3,11 +3,20 @@ import { ModificationNote } from "../common/model";
 enum role {
     USER = 0,
     SALES,
-    CUSTOMER_SERVICE,
-    PANTNER,
     ADMIN,
-    SUPERADMIN,
+    SUPERADMIN
+};
+enum userType {
+    USER =0,
+    PANTNER
+};
+enum premission{
+    CREATE = 0,
+    VIEW,
+    UPDATE,
+    DELETE
 }
+
 export interface IUser {
     _id?: String;
     name: {
@@ -23,6 +32,8 @@ export interface IUser {
     companyRole: role;
     lastActivity?: Date;
     daysSinceLogin?: Number;
+    userType: userType;
+    premission: any[premission];
     deletedAt?: Date;
     modificationNotes: ModificationNote[]
 }

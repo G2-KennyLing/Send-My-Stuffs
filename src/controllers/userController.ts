@@ -18,7 +18,8 @@ export class UserController {
             password,
             dateOfBirth,
             companyName,
-            companyRole,} = req.body;
+            companyRole,
+            userType,premission} = req.body;
         if(!(name && telephone && mobile && email && password && dateOfBirth && companyName  )){
             return failureResponse("All fill is requied", null, res);
         }
@@ -38,20 +39,23 @@ export class UserController {
                 dateOfBirth,
                 companyName,
                 companyRole,
+                userType,
+                premission,
                 lastActivity: new Date(),
                 modificationNotes: [{
                     modifiedBy: null,
                     modifiedOn: new Date(),
-                    modificationNote: 'Create new user',
+                    modificationNote: 'create new user',
                 }]
             }
             this.userService.createUser(userParams, (err: Error, newUser: IUser) =>{
                 if(err){
                     return mongoError(err, res);
                 }
-                return successResponse("Create user successful", newUser, res);
+                return successResponse("create user successful", newUser, res);
             })
         })
+        
     }
     public getAllUser(req: Request, res: Response){
         this.userService.filterUsers({deletedAt: undefined},(err:Error, users:IUser) =>{
@@ -59,6 +63,112 @@ export class UserController {
                 return mongoError(err, res);
             }
             return successResponse("get user list successful", users, res);
+        })
+    }
+    public getUserDetail(req: Request, res: Response){
+        const _id = req.params.id;
+        this.userService.filterUser({_id}, (err: Error, user: IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            if(!user){
+                return failureResponse("user is not found", null, res);
+            }
+            return successResponse("get user detail successful", user, res);
+        })
+    }
+    public updateUser(req: Request, res: Response){
+        const {name,
+            telephone,
+            mobile,
+            password,
+            dateOfBirth,
+            companyName,} = req.body;
+        const _id = req.params.id;
+        if(!(name && telephone && mobile && password && dateOfBirth && companyName  )){
+            return insufficientParameters(res)
+        }
+        this.userService.filterUser({_id},  (err: Error, user: IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            if(!user){
+                return failureResponse("user is not found", null, res);
+            }
+            const userParams :IUser = {
+                _id: user._id,
+                name,
+                telephone,
+                mobile,
+                email: user.email,
+                password,
+                dateOfBirth,
+                companyName,
+                companyRole: user.companyRole,
+                userType: user.userType,
+                premission: user.premission,
+                lastActivity: new Date(),
+                modificationNotes: [{
+                    modifiedBy: null,
+                    modifiedOn: new Date(),
+                    modificationNote: 'update user',
+                }]
+            }
+            this.userService.updateUser(userParams, (err: Error, userData: IUser) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("update user successful", userData, res);
+            })
+        })
+    }
+    public updateUserByAdmin(req: Request, res: Response){
+        const {name,
+            telephone,
+            mobile,
+            password,
+            dateOfBirth,
+            companyName,
+            companyRole,
+            userType,premission} = req.body;
+        const _id = req.params.id;
+        if(!(name && telephone && mobile && password && dateOfBirth && companyName)){
+            return insufficientParameters(res)
+        }
+        //@ts-ignore
+        const admin = req.user ;
+        this.userService.filterUser({_id},  (err: Error, user: IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            if(!user){
+                return failureResponse("user is not found", null, res);
+            }
+            const userParams :IUser = {
+                _id: user._id,
+                name,
+                telephone,
+                mobile,
+                email: user.email,
+                password,
+                dateOfBirth,
+                companyName,
+                companyRole,
+                userType,
+                premission,
+                lastActivity: new Date(),
+                modificationNotes: [{
+                    modifiedBy: admin,
+                    modifiedOn: new Date(),
+                    modificationNote: 'update user',
+                }]
+            }
+            this.userService.updateUser(userParams, (err: Error, userData: IUser) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("update user successful", userData, res);
+            })
         })
     }
 }
