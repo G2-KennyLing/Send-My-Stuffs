@@ -22,7 +22,7 @@ export class UserController {
             dateOfBirth,
             companyName,
             companyRole,
-            userType,premission} = req.body;
+            userType} = req.body;
         if(!(name && telephone && mobile && email && password && dateOfBirth && companyName  )){
             return failureResponse("All fill is requied", null, res);
         }
@@ -54,7 +54,6 @@ export class UserController {
                 companyName,
                 companyRole,
                 userType,
-                premission,
                 lastActivity: new Date(),
                 modificationNotes: [{
                     modifiedBy: byUser,
@@ -74,15 +73,15 @@ export class UserController {
 
     public getAllUser(req: Request, res: Response){
         const userType = req.params.userType;
-        this.userService.filterUser({deletedAt: undefined, userType},  (err: Error, user: IUser) =>{
+        this.userService.filterUsers({deletedAt: undefined, userType},  (err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
             }
-            return successResponse("Get all user by user type successful", user, res);
+            return successResponse("Get all users successful", user, res);
         })
     }
 
-    public getUserDetail(req: Request, res: Response){
+    public getUser(req: Request, res: Response){
         const _id = req.params.id;
         this.userService.filterUser({_id}, (err: Error, user: IUser) =>{
             if(err){
@@ -102,7 +101,7 @@ export class UserController {
             dateOfBirth,
             companyName,
             companyRole,
-            userType,premission} = req.body;
+            userType} = req.body;
         const _id = req.params.id;
         if(!(name && telephone && mobile && password && dateOfBirth && companyName)){
             return insufficientParameters(res)
@@ -136,7 +135,6 @@ export class UserController {
                 companyName,
                 companyRole,
                 userType,
-                premission,
                 lastActivity: new Date(),
                 modificationNotes: [{
                     modifiedBy: byUser,
@@ -193,6 +191,7 @@ export class UserController {
           mongoError(error, res);
         }
     }
+
     public resetPassword(req: Request, res: Response) {
         const { newPasword, token } = req.body;
         jwt.verify(token, process.env.JWT_FORGOTPASSWORD_TOKEN, (err, decoded) => {
