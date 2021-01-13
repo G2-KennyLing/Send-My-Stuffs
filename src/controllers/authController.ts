@@ -8,19 +8,14 @@ import {
 import { IUser } from "../modules/users/model";
 import UserService from "../modules/users/service";
 
-<<<<<<< HEAD
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-=======
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
->>>>>>> develop
 require("dotenv").config();
 
 export class AuthController {
   private userService: UserService = new UserService();
 
-  public signin(req: Request, res: Response) {
+  public signIn(req: Request, res: Response) {
     const { email, password } = req.body;
     if (!(email && password)) {
       return insufficientParameters(res);
@@ -30,7 +25,7 @@ export class AuthController {
         return mongoError(err, res);
       }
       if (!user) {
-        return failureResponse("email does not exist", null, res);
+        return failureResponse("Email does not exist", null, res);
       }
       if (!bcrypt.compareSync(password, user.password)) {
         return failureResponse("Password and email are not match", null, res);
@@ -48,7 +43,7 @@ export class AuthController {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       });
       return successResponse(
-        "signin successful",
+        "Sign In successful",
         { user, token, refreshToken },
         res
       );
@@ -129,25 +124,4 @@ export class AuthController {
     next();
   }
   
-  public isUserTypePantner(req: Request, res: Response, next: NextFunction) {
-    //@ts-ignore
-    const isPantner = req.user.userType === 1;
-    if (!isPantner) {
-      return res.status(400).json({
-        message: "You are not Pantner access denied",
-      });
-    }
-    next();
-  }
-
-  public isUserTypeUser(req: Request, res: Response, next: NextFunction) {
-    //@ts-ignore
-    const isUser = req.user.userType === 0;
-    if (!isUser) {
-      return res.status(400).json({
-        message: "You are not User, access denied",
-      });
-    }
-    next();
-  }
 }
