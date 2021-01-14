@@ -4,6 +4,8 @@ const shipmentSchema = new Schema({
   shipmentNo: {
     type: String,
     trim: true,
+    uppercase: true,
+    unique: true,
     required: true,
   },
   from: {

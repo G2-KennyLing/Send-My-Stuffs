@@ -11,21 +11,21 @@ export default class UsersRoutes {
     this.Route = Router();
   }
   public route(app: Application) {
-    this.Route.get("/", (req: Request, res: Response) => {
+    this.Route.get("shipments/", (req: Request, res: Response) => {
       this.controller.getAll(req, res);
     });
-    this.Route.post("/", (req: Request, res: Response) => {
+    this.Route.post("shipment/", (req: Request, res: Response) => {
       this.controller.create(req, res);
     });
-    this.Route.get("/overview", (req: Request, res: Response) => {
+    this.Route.get("shipments/overview", (req: Request, res: Response) => {
       this.controller.overview(req, res);
     });
-    this.Route.get("/:_id", (req: Request, res: Response) => {
+    this.Route.get("shipment/:_id", (req: Request, res: Response) => {
       this.controller.getById(req, res);
     });
-    this.Route.put("/:_id", (req: Request, res: Response) => {
+    this.Route.put("shipment/:_id", (req: Request, res: Response) => {
       this.controller.update(req, res);
     });
-    app.use("/api/shipment", this.AuthController.isSignIn, this.Route);
+    app.use("/", this.AuthController.isSignIn, this.Route);
   }
 }
