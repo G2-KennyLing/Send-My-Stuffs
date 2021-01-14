@@ -5,6 +5,7 @@ import * as cors from "cors";
 import * as cookieParser from "cookie-parser";
 import environment from "../environment";
 import { UsersRoutes } from "../routes/users";
+import { PartnersRoutes } from "../routes/partners";
 import { CountryRoutes } from "../routes/country";
 import { CommonRoutes } from "../routes/common";
 import ShipmentRoute from "../routes/shipment";
@@ -20,6 +21,7 @@ class App {
   private commonRoutes: CommonRoutes = new CommonRoutes();
   private CountryRoutes: CountryRoutes = new CountryRoutes();
   private ShipmentRoutes: ShipmentRoute = new ShipmentRoute();
+  private PartnersRoutes: PartnersRoutes = new PartnersRoutes();
   constructor() {
     this.app = express();
     this.config();
@@ -28,6 +30,7 @@ class App {
     this.CountryRoutes.route(this.app);
     this.AuthRoutes.route(this.app);
     this.ShipmentRoutes.route(this.app);
+    this.PartnersRoutes.route(this.app);
     this.commonRoutes.route(this.app);
   }
 
