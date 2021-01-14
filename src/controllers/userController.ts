@@ -72,7 +72,7 @@ export class UserController {
     }
 
     public getAllUser(req: Request, res: Response){
-        const userType = req.params.userType;
+        const {userType} = req.query;
         this.userService.filterUsers({deletedAt: undefined, userType},  (err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
