@@ -104,6 +104,7 @@ export class UserController {
             return successResponse("Get user detail successful", user, res);
         })
     }
+    
     public updateUser(req: Request, res: Response){
         const {name,
             telephone,
