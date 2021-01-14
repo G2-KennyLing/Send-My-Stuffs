@@ -6,13 +6,25 @@ const Schema = mongoose.Schema;
 const Partner = new Schema({
     companyName: {
         type: String,
+        trim: true,
         required: true,
+        unique: true
     },
-    domainName: String,
+    domainName: {
+        type: String,
+        trim: true,
+        required: true,
+        unique: true
+    },
     workGroup: String,
     partnerType: String,
     industry: String,
-    taxID: String,
+    taxID: {
+        type: String,
+        trim: true,
+        required: true,
+        unique: true
+    },
     country: {
         type: String,
         required: true,
@@ -30,7 +42,12 @@ const Partner = new Schema({
         required: true,
     },
     telephone: String,
-    facismile: String,
+    facismile: {
+        type: String,
+        trim: true,
+        required: true,
+        unique: true
+    },
     salesID: String,
     wallet: String,
     user: Number,
@@ -44,4 +61,4 @@ const Partner = new Schema({
     modification_notes: [ModificationNote]
 });
 
-export default mongoose.model('Partner', Partner);
+export default mongoose.model('Partners', Partner);
