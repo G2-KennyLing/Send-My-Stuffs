@@ -7,7 +7,7 @@ export class SeaportController {
 
     private seaportService: SeaportService = new SeaportService();
 
-    public createSeapor(req: Request, res: Response) {
+    public createSeaport(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
         const {seaportName,portCode,countryName,countryCode,latitude,longitude,status,country} = req.body;
         if (seaportName && portCode && countryName && countryCode && latitude && longitude && status && country
