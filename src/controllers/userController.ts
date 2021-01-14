@@ -26,6 +26,17 @@ export class UserController {
         if(!(name && telephone && mobile && email && password && dateOfBirth && companyName  )){
             return failureResponse("All fill is requied", null, res);
         }
+        //@ts-ignore
+        const byUser = req.user ;
+        if(byUser.userType === 0){
+            switch (byUser.companyRole) {
+                case 5: break;
+                case 4:
+                    if(companyRole >= 3) return failureResponse("Access denied, you can't create", null, res);
+                    break;
+                default: return failureResponse("Access denied, you can't create", null, res);
+            }
+        }
         this.userService.filterUser({email},(err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
@@ -45,7 +56,7 @@ export class UserController {
                 userType,
                 lastActivity: new Date(),
                 modificationNotes: [{
-                    modifiedBy: null,
+                    modifiedBy: byUser,
                     modifiedOn: new Date(),
                     modificationNote: 'Create new user',
                 }]
@@ -60,7 +71,7 @@ export class UserController {
         
     }
 
-    public getUsers(req: Request, res: Response){
+    public getAllUser(req: Request, res: Response){
         const userType = req.params.userType;
         this.userService.filterUsers({deletedAt: undefined, userType},  (err: Error, user: IUser) =>{
             if(err){
@@ -82,17 +93,29 @@ export class UserController {
             return successResponse("Get user detail successful", user, res);
         })
     }
-
     public updateUser(req: Request, res: Response){
         const {name,
             telephone,
             mobile,
             password,
             dateOfBirth,
-            companyName,} = req.body;
+            companyName,
+            companyRole,
+            userType} = req.body;
         const _id = req.params.id;
-        if(!(name && telephone && mobile && password && dateOfBirth && companyName  )){
+        if(!(name && telephone && mobile && password && dateOfBirth && companyName)){
             return insufficientParameters(res)
+        }
+        //@ts-ignore
+        const byUser = req.user ;
+        if(byUser.userType === 0){
+            switch (byUser.companyRole) {
+                case 5: break;
+                case 4:
+                    if(companyRole >= 4) return failureResponse("Access denied, you can't update", null, res);
+                    break;
+                default: return failureResponse("Access denied, you can't update", null, res);
+            }
         }
         this.userService.filterUser({_id},  (err: Error, user: IUser) =>{
             if(err){
@@ -107,14 +130,14 @@ export class UserController {
                 telephone,
                 mobile,
                 email: user.email,
-                password,
+                password: bcrypt.hashSync(password, 10),
                 dateOfBirth,
                 companyName,
-                companyRole: user.companyRole,
-                userType: user.userType,
+                companyRole,
+                userType,
                 lastActivity: new Date(),
                 modificationNotes: [{
-                    modifiedBy: null,
+                    modifiedBy: byUser,
                     modifiedOn: new Date(),
                     modificationNote: 'Update user',
                 }]
