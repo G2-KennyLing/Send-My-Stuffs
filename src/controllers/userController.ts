@@ -72,8 +72,19 @@ export class UserController {
     }
 
     public getAllUser(req: Request, res: Response){
-        const userType = req.params.userType;
-        this.userService.filterUsers({deletedAt: undefined, userType},  (err: Error, user: IUser) =>{
+        const {userType} = req.query;
+        let query = {};
+        if(userType) {
+            if(Array.isArray(userType)) {
+                query = {"$in": [0,1]};
+            }
+            else {
+                query = userType==="USER" ? 0 : userType === "PARTNER"?1: userType;
+            }
+        }else{
+            query = {};
+        }
+        this.userService.filterUsers({deletedAt: undefined, userType: query},  (err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
             }
