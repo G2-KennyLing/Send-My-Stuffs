@@ -17,7 +17,7 @@ export class UsersRoutes {
         });
 
         app.get("/users", isSignIn, (req: Request, res: Response) =>{
-            this.userController.getUsers(req, res);
+            this.userController.getAllUser(req, res);
         });
 
         app.get("/user/:id", isSignIn, (req: Request, res: Response) =>{
