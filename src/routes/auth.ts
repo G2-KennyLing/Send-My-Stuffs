@@ -9,7 +9,7 @@ export class AuthRoutes{
         })
 
         app.post("/auth/logout", this.authController.isSignIn, (req: Request, res: Response) =>{
-            this.authController.logout(req, res);
+            this.authController.signOut(req, res);
         })
     }
 }

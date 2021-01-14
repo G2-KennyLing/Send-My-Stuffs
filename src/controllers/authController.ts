@@ -123,5 +123,9 @@ export class AuthController {
     }
     next();
   }
-  
+  public signOut(req: Request, res: Response){
+    res.clearCookie("token");
+    res.clearCookie("refreshToken");
+    return successResponse("Sign out successful", null, res);
+  }
 }
