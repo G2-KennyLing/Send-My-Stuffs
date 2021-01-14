@@ -1,6 +1,11 @@
+
 import { Application, Request, Response } from 'express';
 import { PartnerController } from '../controllers/partnerController';
 import { AuthController } from '../controllers/authController';
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
 
 export class PartnersRoutes {
 
