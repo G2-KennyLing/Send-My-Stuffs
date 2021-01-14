@@ -3,7 +3,6 @@ import { Application, Request, Response } from 'express';
 import { PartnerController } from '../controllers/partnerController';
 import { AuthController } from '../controllers/authController';
 
-
 export class PartnersRoutes {
 
     private partnerController: PartnerController = new PartnerController();
@@ -14,6 +13,11 @@ export class PartnersRoutes {
         app.post('/partner', (req: Request, res: Response) => {
             this.authController.isSignIn,
             this.partnerController.createPartner(req, res);
+        });
+
+        app.get('/partner/list', (req: Request, res: Response) => {
+            this.authController.isSignIn,
+            this.partnerController.listPartner(req, res);
         });
     }
 }

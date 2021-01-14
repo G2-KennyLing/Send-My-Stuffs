@@ -49,4 +49,15 @@ export class PartnerController {
             insufficientParameters(res);
         }
     }
+
+    public listPartner(req: Request, res: Response) {
+        const partnerFilter = {};
+        this.partnerService.filterAllPartner(partnerFilter, (err: any, partnerData: IPartner) => {
+            if (err) {
+                mongoError(err, res);
+            } else {
+                successResponse("Get list partner successful", partnerData, res);
+            }
+        });
+    }
 }
