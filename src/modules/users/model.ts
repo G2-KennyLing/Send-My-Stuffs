@@ -4,20 +4,15 @@ enum role {
     USER = 0,
     SALES,
     PANTNER,
-    CUSTOMERSERVICE,
+    CUSTOMER_SERVICE,
     ADMIN,
     SUPERADMIN
 };
+
 enum userType {
     USER =0,
     PANTNER
 };
-enum premission{
-    CREATE = 0,
-    VIEW,
-    UPDATE,
-    DELETE
-}
 
 export interface IUser {
     _id?: String;
@@ -35,7 +30,6 @@ export interface IUser {
     lastActivity?: Date;
     daysSinceLogin?: Number;
     userType: userType;
-    premission: any[premission];
     deletedAt?: Date;
     modificationNotes: ModificationNote[]
 }
