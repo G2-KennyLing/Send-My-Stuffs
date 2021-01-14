@@ -8,14 +8,14 @@ import {
 import { IUser } from "../modules/users/model";
 import UserService from "../modules/users/service";
 
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 export class AuthController {
   private userService: UserService = new UserService();
 
-  public signin(req: Request, res: Response) {
+  public signIn(req: Request, res: Response) {
     const { email, password } = req.body;
     if (!(email && password)) {
       return insufficientParameters(res);
@@ -25,7 +25,7 @@ export class AuthController {
         return mongoError(err, res);
       }
       if (!user) {
-        return failureResponse("email does not exist", null, res);
+        return failureResponse("Email does not exist", null, res);
       }
       if (!bcrypt.compareSync(password, user.password)) {
         return failureResponse("Password and email are not match", null, res);
@@ -43,13 +43,14 @@ export class AuthController {
         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
       });
       return successResponse(
-        "signin successful",
+        "Sign In successful",
         { user, token, refreshToken },
         res
       );
     });
   }
-  public isSignin(req: Request, res: Response, next: NextFunction) {
+
+  public isSignIn(req: Request, res: Response, next: NextFunction) {
     if (!req.cookies) {
       return failureResponse("Unauthorized, access denied", null, res);
     }
@@ -66,6 +67,7 @@ export class AuthController {
       next();
     });
   }
+
   public isSales(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const isSales = req.user.companyRole === 1;
@@ -76,10 +78,11 @@ export class AuthController {
     }
     next();
   }
+
   public isAdmin(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
     const user = req.user;
-    const isAdmin = user.companyRole === 3;
+    const isAdmin = user.companyRole === 4;
     if (!isAdmin) {
       return res.status(400).json({
         message: "You are not Admin, access denied",
@@ -87,34 +90,42 @@ export class AuthController {
     }
     next();
   }
+
   public isSuperAdmin(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
-    const isSuperAdmin = req.user.companyRole === 4;
+    const isSuperAdmin = req.user.companyRole === 5;
     if (!isSuperAdmin) {
       return res.status(400).json({
-        message: "You are not Sale, access denied",
+        message: "You are not SuperAdmin, access denied",
       });
     }
     next();
   }
-  public isUserTypePantner(req: Request, res: Response, next: NextFunction) {
+
+  public isCustomerService(req: Request, res: Response, next: NextFunction) {
     //@ts-ignore
-    const isPantner = req.user.userType === 1;
+    const isCustomerService = req.user.companyRole === 3;
+    if (!isCustomerService) {
+      return res.status(400).json({
+        message: "You are not Customer Service, access denied",
+      });
+    }
+    next();
+  }
+
+  public isPantner(req: Request, res: Response, next: NextFunction) {
+    //@ts-ignore
+    const isPantner = req.user.companyRole === 2;
     if (!isPantner) {
       return res.status(400).json({
-        message: "You are not Sale, access denied",
+        message: "You are not Pantner access denied",
       });
     }
     next();
   }
-  public isUserTypeUser(req: Request, res: Response, next: NextFunction) {
-    //@ts-ignore
-    const isUser = req.user.userType === 0;
-    if (!isUser) {
-      return res.status(400).json({
-        message: "You are not Sale, access denied",
-      });
-    }
-    next();
+  public signOut(req: Request, res: Response){
+    res.clearCookie("token");
+    res.clearCookie("refreshToken");
+    return successResponse("Sign out successful", null, res);
   }
 }
