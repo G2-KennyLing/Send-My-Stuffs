@@ -82,7 +82,7 @@ export class UserController {
                 query = userType==="USER" ? 0 : userType === "PARTNER"?1: userType;
             }
         }else{
-            query = {};
+            query = {"$in": [0,1]};
         }
         this.userService.filterUsers({deletedAt: undefined, userType: query},  (err: Error, user: IUser) =>{
             if(err){
