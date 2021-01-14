@@ -13,6 +13,12 @@ enum userType {
     USER =0,
     PANTNER
 };
+enum premission{
+    CREATE=0,
+    VIEW,
+    UPDATE,
+    DELETE
+}
 
 export interface IUser {
     _id?: String;
