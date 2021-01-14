@@ -17,7 +17,7 @@ export default class UsersRoutes {
     this.Route.post("shipment/", (req: Request, res: Response) => {
       this.controller.create(req, res);
     });
-    this.Route.get("shipments/overview", (req: Request, res: Response) => {
+    this.Route.get("shipment/overview", (req: Request, res: Response) => {
       this.controller.overview(req, res);
     });
     this.Route.get("shipment/:_id", (req: Request, res: Response) => {
