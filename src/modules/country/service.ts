@@ -8,4 +8,17 @@ export default class CountryService {
 		_session.save(callback);
 	}
 
+	public getListCountry(query: any, callback: any) {
+		country.find(query, callback);
+	}
+
+	public getDetailCountry(query: any, callback: any) {
+		country.findById(query, callback)
+	}
+
+	public updateCountry(countryParams: ICountry, callback: any) {
+		const query = { _id: countryParams._id };
+		country.findOneAndUpdate(query, countryParams, callback)
+	}
+
 }

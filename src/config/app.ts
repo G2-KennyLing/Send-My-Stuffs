@@ -19,7 +19,7 @@ class App {
   private AuthRoutes: AuthRoutes = new AuthRoutes();
   private commonRoutes: CommonRoutes = new CommonRoutes();
   private CountryRoutes: CountryRoutes = new CountryRoutes();
-  private ShipmentRoute: ShipmentRoute = new ShipmentRoute();
+  private ShipmentRoutes: ShipmentRoute = new ShipmentRoute();
   constructor() {
     this.app = express();
     this.config();
@@ -27,7 +27,7 @@ class App {
     this.UsersRoutes.route(this.app);
     this.CountryRoutes.route(this.app);
     this.AuthRoutes.route(this.app);
-    this.ShipmentRoute.route(this.app);
+    this.ShipmentRoutes.route(this.app);
     this.commonRoutes.route(this.app);
   }
 
