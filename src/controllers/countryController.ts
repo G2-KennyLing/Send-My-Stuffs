@@ -75,7 +75,7 @@ export class CountryController {
 			if (!countryData) {
 				return failureResponse("Update Country Failed", {}, res)
 			} else {
-				successResponse("Update Country successfull", { countryData }, res)
+				successResponse("Update Country successful", { countryData }, res)
 			}
 		})
 	}
