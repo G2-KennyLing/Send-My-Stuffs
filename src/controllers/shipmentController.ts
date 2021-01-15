@@ -13,7 +13,7 @@ export default class ShipmentController {
   constructor() {
     this.Service = new ShipmentService();
   }
-  create(req: Request, res: Response) {
+  createShipment(req: Request, res: Response) {
     const {
       shipmentNo,
       from,
@@ -62,13 +62,13 @@ export default class ShipmentController {
       }
     );
   }
-  getAll(req: Request, res: Response) {
+  getAllShipments(req: Request, res: Response) {
     this.Service.getAll((error, shipments) => {
       if (error) return mongoError(error, res);
       return successResponse("Get all shipments successfull", shipments, res);
     });
   }
-  getById(req: Request, res: Response) {
+  getShipment(req: Request, res: Response) {
     const { _id } = req.params;
     this.Service.getById(_id, (err: Error, shipment: IShipment) => {
       if (err) return mongoError(err, res);
@@ -76,7 +76,7 @@ export default class ShipmentController {
       return successResponse("Get shipment successful", shipment, res);
     });
   }
-  update(req: Request, res: Response) {
+  updateShipment(req: Request, res: Response) {
     const { _id } = req.params;
     const {
       shipmentNo,
@@ -144,7 +144,7 @@ export default class ShipmentController {
       }
     );
   }
-  async overview(req: Request, res: Response) {
+  async overviewShipment(req: Request, res: Response) {
     const departure = await this.Service.getOverviewDepature();
     const landing = await this.Service.getOverviewLanding();
     const response = {
