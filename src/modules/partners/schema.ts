@@ -50,7 +50,7 @@ const Partner = new Schema({
         type: Number,
         required: true,
         unique: true,
-        trim: true
+        trim: true,
     },
     salesID: {
         type: Schema.Types.ObjectId,
@@ -64,7 +64,7 @@ const Partner = new Schema({
     status: {
         type: Number,
         enum: [0,1],
-        default: 0
+        default: 0,
     },
     modification_notes: [ModificationNote]
 });

@@ -27,16 +27,16 @@ export class UserController {
             return failureResponse("All fill is requied", null, res);
         }
         //@ts-ignore
-        const byUser = req.user ;
-        if(byUser.userType === 0){
-            switch (byUser.companyRole) {
-                case 5: break;
-                case 4:
-                    if(companyRole >= 3) return failureResponse("Access denied, you can't create", null, res);
-                    break;
-                default: return failureResponse("Access denied, you can't create", null, res);
-            }
-        }
+        // const byUser = req.user ;
+        // if(byUser.userType === 0){
+        //     switch (byUser.companyRole) {
+        //         case 5: break;
+        //         case 4:
+        //             if(companyRole >= 3) return failureResponse("Access denied, you can't create", null, res);
+        //             break;
+        //         default: return failureResponse("Access denied, you can't create", null, res);
+        //     }
+        // }
         this.userService.filterUser({email},(err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
@@ -56,7 +56,7 @@ export class UserController {
                 userType,
                 lastActivity: new Date(),
                 modificationNotes: [{
-                    modifiedBy: byUser,
+                    modifiedBy: null,
                     modifiedOn: new Date(),
                     modificationNote: 'Create new user',
                 }]
