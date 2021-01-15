@@ -16,4 +16,9 @@ export default class CountryService {
 		Country.findOne(query, callback)
 	}
 
+	public updateCountry(countryParams: ICountry, callback: any) {
+		const query = { _id: countryParams._id };
+		Country.findOneAndUpdate(query, countryParams, callback)
+	}
+
 }

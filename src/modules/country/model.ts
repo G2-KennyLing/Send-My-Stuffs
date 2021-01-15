@@ -1,7 +1,7 @@
 import { ModificationNote } from "../common/model";
 
 export interface ICountry {
-	id?: String;
+	_id?: String;
 	countryCode: String;
 	countryName: String;
 	region: String;
