@@ -6,31 +6,35 @@ const Schema = mongoose.Schema;
 const Partner = new Schema({
     companyName: {
         type: String,
-        trim: true,
+        uppercase: true,
         required: true,
-        unique: true
+        unique: true,
+        trim: true,
     },
     domainName: {
         type: String,
-        trim: true,
+        lowercase: true,
         required: true,
-        unique: true
+        unique: true,
+        trim: true,
     },
     workGroup: String,
     partnerType: String,
     industry: String,
     taxID: {
-        type: String,
-        trim: true,
+        type: Number,
         required: true,
-        unique: true
+        unique: true,
+        trim: true,
     },
     country: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "country",
         required: true,
     },
     city: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "country",
         required: true,
     },
     addressLineFirst: {
@@ -42,14 +46,18 @@ const Partner = new Schema({
         required: true,
     },
     telephone: String,
-    facismile: {
-        type: String,
-        trim: true,
+    facsimile: {
+        type: Number,
         required: true,
-        unique: true
+        unique: true,
+        trim: true
     },
-    salesID: String,
-    wallet: String,
+    salesID: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+        required: true,
+    },
+    wallet: Number,
     user: Number,
     peer: Number,
     logo: String,

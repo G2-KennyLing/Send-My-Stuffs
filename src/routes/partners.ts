@@ -9,24 +9,22 @@ export class PartnersRoutes {
     private authController: AuthController = new AuthController();
 
     public route(app: Application) {
+
+        const isSignIn = this.authController.isSignIn;
         
-        app.post('/partner', (req: Request, res: Response) => {
-            this.authController.isSignIn,
+        app.post('/partner',isSignIn, (req: Request, res: Response) => {
             this.partnerController.createPartner(req, res);
         });
 
-        app.get('/partners', (req: Request, res: Response) => {
-            this.authController.isSignIn,
+        app.get('/partners',isSignIn, (req: Request, res: Response) => {
             this.partnerController.getPartners(req, res);
         });
 
-        app.get('/partner/:id', (req: Request, res: Response) => {
-            this.authController.isSignIn,
+        app.get('/partner/:id',isSignIn, (req: Request, res: Response) => {
             this.partnerController.partnerDetail(req, res);
         });
 
-        app.put('/partner/:id', (req: Request, res: Response) => {
-            this.authController.isSignIn,
+        app.put('/partner/:id',isSignIn, (req: Request, res: Response) => {
             this.partnerController.updatePartner(req, res);
         });
     }
