@@ -8,7 +8,7 @@ export default class PartnerService {
         _session.save(callback);
     }
 
-    public filterAllPartner(query: any, callback: any) {
+    public filterAllPartners(query: any, callback: any) {
         return Partner.find(query, callback);
     }
 
