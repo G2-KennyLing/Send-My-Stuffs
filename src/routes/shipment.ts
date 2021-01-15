@@ -21,6 +21,6 @@ export default class UsersRoutes {
     this.Route.put("/shipment/:_id", (req: Request, res: Response) => {
       this.ShipmentController.updateShipment(req, res);
     });
-    app.use("/", this.Route);
+    app.use("/", this.AuthController.isSignIn, this.Route);
   }
 }
