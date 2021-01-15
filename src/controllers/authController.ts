@@ -5,8 +5,8 @@ import {
   successResponse,
   failureResponse,
 } from "../modules/common/service";
-import { IUser } from "../modules/users/model";
-import UserService from "../modules/users/service";
+import { IUser } from "../modules/user/model";
+import UserService from "../modules/user/service";
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
