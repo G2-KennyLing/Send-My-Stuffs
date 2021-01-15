@@ -8,4 +8,7 @@ export default class SeaportService {
         _session.save(callback);
     }
 
+    public filterSeaport(query: any, callback: any) {
+		seaports.find(query, callback);
+	}
 }
