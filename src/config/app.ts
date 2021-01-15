@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 import * as cors from "cors";
 import * as cookieParser from "cookie-parser";
 import environment from "../environment";
@@ -10,15 +10,16 @@ import { PartnerRoutes } from "../routes/partner";
 import { CountryRoutes } from "../routes/country";
 import { SeaportRoutes } from "../routes/seaport";
 import { CommonRoutes } from "../routes/common";
+import ShipmentRoute from "../routes/shipment";
 
 class App {
-
-   public app: express.Application;
-   public mongoUrl: string = 'mongodb://localhost:27017/' + environment.getDBName();
+  public app: express.Application;
+  public mongoUrl: string = "mongodb://localhost:27017/" + environment.getDBName();
 
    private AuthRoutes: AuthRoutes = new AuthRoutes();
    private UserRoutes: UserRoutes = new UserRoutes();
    private PartnerRoutes: PartnerRoutes = new PartnerRoutes();
+   private ShipmentRoutes: ShipmentRoute = new ShipmentRoute();
    private CountryRoutes: CountryRoutes = new CountryRoutes();
    private SeaportRoutes: SeaportRoutes = new SeaportRoutes();
    private commonRoutes: CommonRoutes = new CommonRoutes();
@@ -46,6 +47,5 @@ class App {
    private mongoSetup(): void {
       mongoose.connect(this.mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false });
    }
-
 }
 export default new App().app;
