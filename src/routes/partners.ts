@@ -15,9 +15,9 @@ export class PartnersRoutes {
             this.partnerController.createPartner(req, res);
         });
 
-        app.get('/partner/list', (req: Request, res: Response) => {
+        app.get('/partners', (req: Request, res: Response) => {
             this.authController.isSignIn,
-            this.partnerController.listPartner(req, res);
+            this.partnerController.getPartners(req, res);
         });
 
         app.get('/partner/:id', (req: Request, res: Response) => {
