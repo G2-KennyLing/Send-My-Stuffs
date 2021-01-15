@@ -14,5 +14,10 @@ export default class SeaportService {
     
     public filterDetailSeaport(query: any, callback: any) {
 		seaports.findOne(query, callback);
-	}
+    }
+    
+    public updateSeaport(seaportParams: ISeaport, callback: any) {
+        const query = { _id: seaportParams._id };
+        seaports.findOneAndUpdate(query, seaportParams,{new: true}, callback);
+    }
 }
