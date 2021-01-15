@@ -1,19 +1,24 @@
 import { Application, Request, Response } from "express";
 import { CountryController } from '../controllers/countryController';
+import { AuthController } from '../controllers/authController';
 
 export class CountryRoutes {
 	private countryController: CountryController = new CountryController();
+	private authController: AuthController = new AuthController();
+	
 	public route(app: Application) {
 
-		app.post('/api/country', (req: Request, res: Response) => {
+		const isSignIn = this.authController.isSignIn;
+
+		app.post('/country', isSignIn, (req: Request, res: Response) => {
 			this.countryController.createCountry(req, res);
 		});
 
-		app.get('/api/list-country', (req: Request, res: Response) => {
+		app.get('/countries', isSignIn, (req: Request, res: Response) => {
 			this.countryController.getListCountry(req, res);
 		})
 
-		app.get('/api/detail-country/:id', (req: Request, res: Response) => {
+		app.get('/detail-country/:id', (req: Request, res: Response) => {
 			this.countryController.getDetailCountry(req, res);
 		})
 	}

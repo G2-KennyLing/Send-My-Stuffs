@@ -1,6 +1,5 @@
 import { IUser } from './model';
 import users from './schema';
-
 export default class UserService {
     
     public createUser(userParams: IUser, callback: any) {
@@ -12,14 +11,22 @@ export default class UserService {
         users.findOne(query, callback);
     }
 
+    public filterUsers(query: any, callback){
+        users.find(query, callback);
+    }
+
     public updateUser(userParams: IUser, callback: any) {
         const query = { _id: userParams._id };
-        users.findOneAndUpdate(query, userParams, callback);
+        users.findOneAndUpdate(query, userParams,{new: true}, callback);
     }
 
     public deleteUser(_id: String, callback: any) {
         const query = { _id: _id };
         users.deleteOne(query, callback);
+    }
+
+    public updateUserSync(_id: String ,query: any, callback: any){
+        users.findByIdAndUpdate(_id, query,{new: true}, callback);
     }
 
 }
