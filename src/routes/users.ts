@@ -12,7 +12,7 @@ export class UsersRoutes {
         const isSignIn = this.authController.isSignIn;
         const isAdmin = this.authController.isAdmin;
         const isSuperAdmin = this.authController.isSuperAdmin;
-        
+
         app.post('/user', isSignIn, (req: Request, res: Response) => {
             this.userController.createUser(req, res);
         });
@@ -24,6 +24,13 @@ export class UsersRoutes {
         app.get("/user/:id", isSignIn, (req: Request, res: Response) =>{
             this.userController.getUser(req, res);
         });
+
+        app.post("/user/forgot-password", (req: Request, res: Response) =>{
+            this.userController.forgotPassword(req, res);
+        })
         
+        app.post("/user/reset-password", (req: Request, res: Response) =>{
+            this.userController.resetPassword(req, res);
+        })
     }
 }
