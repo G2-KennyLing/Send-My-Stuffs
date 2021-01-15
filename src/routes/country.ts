@@ -15,11 +15,11 @@ export class CountryRoutes {
 		});
 
 		app.get('/countries', isSignIn, (req: Request, res: Response) => {
-			this.countryController.getListCountry(req, res);
+			this.countryController.getListCountries(req, res);
 		})
 
-		app.get('/detail-country/:id', (req: Request, res: Response) => {
-			this.countryController.getDetailCountry(req, res);
+		app.get('/detail-country/:id', isSignIn, (req: Request, res: Response) => {
+			this.countryController.getCountry(req, res);
 		})
 	}
 }
