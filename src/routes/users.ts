@@ -24,17 +24,6 @@ export class UsersRoutes {
         app.get("/user/:id", isSignIn, (req: Request, res: Response) =>{
             this.userController.getUser(req, res);
         });
-
-        app.put("/user/:id", isSignIn, (req: Request, res: Response) =>{
-            this.userController.updateUser(req, res);
-        });
-
-        app.post("/user/forgot-password", isSignIn, (req: Request, res: Response) =>{
-            this.userController.forgotPassword(req, res);
-        })
-
-        app.post("/user/reset-password", isSignIn, (req: Request, res: Response) =>{
-            this.userController.resetPassword(req, res);
-        })
+        
     }
 }
