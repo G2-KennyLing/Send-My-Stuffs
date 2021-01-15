@@ -205,13 +205,13 @@ export class UserController {
     }
 
     public resetPassword(req: Request, res: Response) {
-        const { newPasword, token } = req.body;
+        const { newPassword, token } = req.body;
         jwt.verify(token, process.env.JWT_FORGOTPASSWORD_TOKEN, (err, decoded) => {
           if (err) {
             return failureResponse("Forgot password token is not valid", null, res);
           }
           const user = decoded.user;
-          user.password = bcrypt.hashSync(newPasword, 10);
+          user.password = bcrypt.hashSync(newPassword, 10);
           this.userService.updateUser(user, (err: Error, userData: IUser) => {
             if (err) {
               return mongoError(err, res);
