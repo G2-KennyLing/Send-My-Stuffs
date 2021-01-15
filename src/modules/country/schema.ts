@@ -32,9 +32,8 @@ const CountrySchema = new Schema ({
 		ref: 'seaPort'
 	}],
 	airPorts: {
-		type: String,
-		trim: true,
-		required: true
+		type: Schema.Types.ObjectId,
+		ref: 'airPort'
 	},
 	agents: {
 		type: String,
