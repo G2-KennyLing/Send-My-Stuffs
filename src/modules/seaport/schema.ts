@@ -9,14 +9,18 @@ const schema = new seaportSchema({
         type: String,
         trim: true,
         required: true,
+        unique: true
     },
     portCode: {
         type: String,
         trim: true,
         required: true,
+        unique: true
     },
-    countryName: String,
-    countryCode: String,
+    country: [{
+        type: Schema.Types.ObjectId, 
+        ref: 'countries',
+    }],
     latitude: String,
     longitude: String,
     status: {
@@ -24,18 +28,11 @@ const schema = new seaportSchema({
 		enum: [0, 1],
 		default: 0
     },
-    country: [{
-        type: Schema.Types.ObjectId, 
-        ref: 'country',
-        trim: true,
-        required: true,
-    }],
-   
     isDeleted: {
         type: Boolean,
         default: false
     },
     modificationNotes: [ModificationNote]
 });
-// const country = mongoose.model('country', schema);
+
 export default mongoose.model('seaports', schema);

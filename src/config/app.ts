@@ -15,11 +15,12 @@ class App {
    public app: express.Application;
    public mongoUrl: string = 'mongodb://localhost:27017/' + environment.getDBName();
 
-   private UsersRoutes: UsersRoutes = new UsersRoutes();
-   private AuthRoutes: AuthRoutes = new AuthRoutes();
+   
    private commonRoutes: CommonRoutes = new CommonRoutes();
    private CountryRoutes: CountryRoutes = new CountryRoutes();
    private SeaportRoutes: SeaportRoutes = new SeaportRoutes();
+   private AuthRoutes: AuthRoutes = new AuthRoutes();
+   private UsersRoutes: UsersRoutes = new UsersRoutes();
    
 
    constructor() {
