@@ -3,7 +3,7 @@ import { ModificationNote } from "../common/model";
 enum role {
     USER = 0,
     SALES,
-    PANTNER,
+    PARTNER,
     CUSTOMER_SERVICE,
     ADMIN,
     SUPERADMIN
@@ -11,7 +11,7 @@ enum role {
 
 enum userType {
     USER =0,
-    PANTNER
+    PARTNER
 };
 enum premission{
     CREATE=0,

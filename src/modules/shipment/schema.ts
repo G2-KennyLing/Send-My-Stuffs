@@ -1,4 +1,4 @@
-import { ModificationNote } from "./../common/model";
+import { ModificationNote } from "../common/model";
 import { Schema, model } from "mongoose";
 const shipmentSchema = new Schema({
   shipmentNo: {

@@ -1,16 +1,18 @@
-import { ModificationNote } from "./../common/model";
+import { ModificationNote } from "../common/model";
 import IShipment from "./model";
 import Shipment from "./schema";
 
 export default class ShipmentService {
-  create(shipment: IShipment, callback?: any) {
+  public create(shipment: IShipment, callback?: any) {
     const newShipment = new Shipment(shipment);
     return newShipment.save(callback);
   }
-  getAll(callback?: any) {
+
+  public filterShipments(callback?: any) {
     return Shipment.find({}).populate("from").populate("to").exec(callback);
   }
-  update(
+
+  public updateShipment(
     _id: String,
     updateFields: IShipment,
     modifyNote: ModificationNote,
@@ -30,13 +32,15 @@ export default class ShipmentService {
       .populate("to")
       .exec(callback);
   }
-  getById(_id: String, callback) {
+
+  public filterShipment(_id: String, callback) {
     return Shipment.findById(_id)
       .populate("from")
       .populate("to")
       .exec(callback);
   }
-  getOverviewDepature() {
+
+  public getOverviewDepature() {
     const now = new Date().getTime();
     const sevenDayPast = now - 1000 * 60 * 60 * 24 * 7;
     return Shipment.find({
@@ -46,7 +50,8 @@ export default class ShipmentService {
       },
     });
   }
-  getOverviewLanding() {
+
+  public getOverviewLanding() {
     const now = new Date().getTime();
     const sevenDayPast = now - 1000 * 60 * 60 * 24 * 7;
     return Shipment.find({

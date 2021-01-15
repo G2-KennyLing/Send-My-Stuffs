@@ -6,14 +6,17 @@ import {
   successResponse,
   failureResponse,
 } from "../modules/common/service";
-import ShipmentService from "../modules/shipments/service";
-import IShipment from "../modules/shipments/model";
+import ShipmentService from "../modules/shipment/service";
+import IShipment from "../modules/shipment/model";
 export default class ShipmentController {
+
   private Service: ShipmentService;
+
   constructor() {
     this.Service = new ShipmentService();
   }
-  createShipment(req: Request, res: Response) {
+
+  public createShipment(req: Request, res: Response) {
     const {
       shipmentNo,
       from,
@@ -62,21 +65,24 @@ export default class ShipmentController {
       }
     );
   }
-  getAllShipments(req: Request, res: Response) {
-    this.Service.getAll((error, shipments) => {
+  
+  public getListShipments(req: Request, res: Response) {
+    this.Service.filterShipments((error, shipments) => {
       if (error) return mongoError(error, res);
       return successResponse("Get all shipments successfull", shipments, res);
     });
   }
-  getShipment(req: Request, res: Response) {
+
+  public getShipment(req: Request, res: Response) {
     const { _id } = req.params;
-    this.Service.getById(_id, (err: Error, shipment: IShipment) => {
+    this.Service.filterShipment(_id, (err: Error, shipment: IShipment) => {
       if (err) return mongoError(err, res);
       if (!shipment) return failureResponse("Shipment is not found", {}, res);
       return successResponse("Get shipment successful", shipment, res);
     });
   }
-  updateShipment(req: Request, res: Response) {
+
+  public updateShipment(req: Request, res: Response) {
     const { _id } = req.params;
     const {
       shipmentNo,
@@ -124,7 +130,7 @@ export default class ShipmentController {
       landingDate,
     };
     if (!_id) return insufficientParameters(res);
-    this.Service.update(
+    this.Service.updateShipment(
       _id,
       updatedShipment,
       ModificationNote,
@@ -144,6 +150,7 @@ export default class ShipmentController {
       }
     );
   }
+
   async overviewShipment(req: Request, res: Response) {
     const departure = await this.Service.getOverviewDepature();
     const landing = await this.Service.getOverviewLanding();

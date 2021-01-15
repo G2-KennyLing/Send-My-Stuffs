@@ -1,4 +1,4 @@
-import { ModificationNote } from "./../common/model";
+import { ModificationNote } from "../common/model";
 enum Status {
   "INACTIVE" = 0,
   "ACTIVE",

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { insufficientParameters, mongoError, successResponse, failureResponse } from '../modules/common/service';
-import { IUser } from '../modules/users/model';
-import UserService from '../modules/users/service';
+import { IUser } from '../modules/user/model';
+import UserService from '../modules/user/service';
 import Nodemailer from "../helpers/verifyEmail";
 const jwt = require("jsonwebtoken");
 import e = require('express');
@@ -71,9 +71,20 @@ export class UserController {
         
     }
 
-    public getAllUser(req: Request, res: Response){
-        const userType = req.params.userType;
-        this.userService.filterUsers({deletedAt: undefined, userType},  (err: Error, user: IUser) =>{
+    public getListUsers(req: Request, res: Response){
+        const {userType} = req.query;
+        let query = {};
+        if(userType) {
+            if(Array.isArray(userType)) {
+                query = {"$in": [0,1]};
+            }
+            else {
+                query = userType==="USER" ? 0 : userType === "PARTNER"?1: userType;
+            }
+        }else{
+            query = {"$in": [0,1]};
+        }
+        this.userService.filterUsers({deletedAt: undefined, userType: query},  (err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
             }
@@ -93,6 +104,7 @@ export class UserController {
             return successResponse("Get user detail successful", user, res);
         })
     }
+    
     public updateUser(req: Request, res: Response){
         const {name,
             telephone,
@@ -193,13 +205,13 @@ export class UserController {
     }
 
     public resetPassword(req: Request, res: Response) {
-        const { newPasword, token } = req.body;
+        const { newPassword, token } = req.body;
         jwt.verify(token, process.env.JWT_FORGOTPASSWORD_TOKEN, (err, decoded) => {
           if (err) {
             return failureResponse("Forgot password token is not valid", null, res);
           }
           const user = decoded.user;
-          user.password = bcrypt.hashSync(newPasword, 10);
+          user.password = bcrypt.hashSync(newPassword, 10);
           this.userService.updateUser(user, (err: Error, userData: IUser) => {
             if (err) {
               return mongoError(err, res);
