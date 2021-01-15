@@ -1,31 +1,38 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "Server - Rest API",
-  "main": "./dist/server.js",
-  "scripts": {
-    "test": "ts-node ./src/server.ts",
-    "dev": "tsc && nodemon ./src/server.ts",
-    "prod": "tsc && nodemon ./src/server.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/send-my-stuffs/api.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://gitlab.com/send-my-stuffs/api/issues"
-  },
-  "homepage": "https://gitlab.com/send-my-stuffs/api#readme",
-  "dependencies": {
-    "@types/express": "^4.17.9",
-    "@types/mongoose": "^5.10.0",
-    "body-parser": "^1.19.0",
-    "country-state-city": "^2.0.0",
-    "express": "^4.17.1",
-    "mongoose": "^5.10.15",
-    "nodemon": "^2.0.6"
-  }
+    "name": "server",
+    "version": "1.0.0",
+    "description": "Server - Rest API",
+    "main": "./dist/server.js",
+    "scripts": {
+        "test": "ts-node ./src/server.ts",
+        "dev": "tsc && nodemon ./src/server.ts",
+        "prod": "tsc && nodemon ./src/server.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@gitlab.com/send-my-stuffs/api.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://gitlab.com/send-my-stuffs/api/issues"
+    },
+    "homepage": "https://gitlab.com/send-my-stuffs/api#readme",
+    "dependencies": {
+        "@types/express": "^4.17.9",
+        "@types/mongoose": "^5.10.0",
+        "bcrypt": "^5.0.0",
+        "body-parser": "^1.19.0",
+        "brcypt": "^1.0.1",
+        "cookie-parser": "^1.4.5",
+        "cors": "^2.8.5",
+        "country-state-city": "^2.0.0",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.10.15",
+        "nodemailer": "^6.4.17",
+        "nodemon": "^2.0.6"
+    }
 }
