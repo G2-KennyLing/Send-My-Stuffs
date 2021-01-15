@@ -5,14 +5,10 @@ import * as cors from "cors";
 import * as cookieParser from "cookie-parser";
 import environment from "../environment";
 import { UsersRoutes } from "../routes/users";
-<<<<<<< HEAD
-import { SeaportRoutes } from "../routes/seaport";
-=======
-import { PartnersRoutes } from "../routes/partners";
->>>>>>> develop
 import { CountryRoutes } from "../routes/country";
 import { CommonRoutes } from "../routes/common";
 import { AuthRoutes} from "../routes/auth";
+import { SeaportRoutes } from "../routes/seaport";
 
 class App {
 
@@ -20,25 +16,18 @@ class App {
    public mongoUrl: string = 'mongodb://localhost:27017/' + environment.getDBName();
 
    private UsersRoutes: UsersRoutes = new UsersRoutes();
-<<<<<<< HEAD
-   private SeaportRoutes: SeaportRoutes = new SeaportRoutes();
-=======
-   private PartnersRoutes: PartnersRoutes = new PartnersRoutes();
->>>>>>> develop
    private AuthRoutes: AuthRoutes = new AuthRoutes();
    private commonRoutes: CommonRoutes = new CommonRoutes();
    private CountryRoutes: CountryRoutes = new CountryRoutes();
+   private SeaportRoutes: SeaportRoutes = new SeaportRoutes();
+   
 
    constructor() {
       this.app = express();
       this.config();
       this.mongoSetup();
       this.UsersRoutes.route(this.app);
-<<<<<<< HEAD
       this.SeaportRoutes.route(this.app);
-=======
-      this.PartnersRoutes.route(this.app);
->>>>>>> develop
       this.CountryRoutes.route(this.app);
       this.AuthRoutes.route(this.app);
       this.commonRoutes.route(this.app);
