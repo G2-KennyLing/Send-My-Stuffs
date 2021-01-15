@@ -14,7 +14,7 @@ export class CountryRoutes {
 			this.countryController.createCountry(req, res);
 		});
 
-		app.get('/countries', (req: Request, res: Response) => {
+		app.get('/countries', isSignIn, (req: Request, res: Response) => {
 			this.countryController.getListCountry(req, res);
 		})
 
