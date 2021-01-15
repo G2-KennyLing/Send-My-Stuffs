@@ -1,32 +1,32 @@
 import { IUser } from './model';
-import users from './schema';
+import Users from './schema';
 export default class UserService {
     
     public createUser(userParams: IUser, callback: any) {
-        const _session = new users(userParams);
+        const _session = new Users(userParams);
         _session.save(callback);
     }
 
     public filterUser(query: any, callback: any) {
-        users.findOne(query, callback);
+        Users.findOne(query, callback);
     }
 
     public filterUsers(query: any, callback){
-        users.find(query, callback);
+        Users.find(query, callback);
     }
 
     public updateUser(userParams: IUser, callback: any) {
         const query = { _id: userParams._id };
-        users.findOneAndUpdate(query, userParams,{new: true}, callback);
+        Users.findOneAndUpdate(query, userParams,{new: true}, callback);
     }
 
     public deleteUser(_id: String, callback: any) {
         const query = { _id: _id };
-        users.deleteOne(query, callback);
+        Users.deleteOne(query, callback);
     }
 
     public updateUserSync(_id: String ,query: any, callback: any){
-        users.findByIdAndUpdate(_id, query,{new: true}, callback);
+        Users.findByIdAndUpdate(_id, query,{new: true}, callback);
     }
 
 }

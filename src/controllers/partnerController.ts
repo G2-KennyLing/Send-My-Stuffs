@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { insufficientParameters, mongoError, successResponse, failureResponse } from '../modules/common/service';
-import { IPartner } from '../modules/partners/model';
-import PartnerService from '../modules/partners/service';
+import { IPartner } from '../modules/partner/model';
+import PartnerService from '../modules/partner/service';
 import e = require('express');
 
 export class PartnerController {
@@ -10,8 +10,8 @@ export class PartnerController {
 
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
-        const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facismile, salesID, wallet, user, peer, logo, status } = req.body;
-        if (companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facismile && salesID && wallet && user && peer && logo && status ) {
+        const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
+        if (companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo && status ) {
             const partnerParams: IPartner = {
                 companyName,
                 domainName,
@@ -24,7 +24,7 @@ export class PartnerController {
                 addressLineFirst,
                 addressLineSecond,
                 telephone,
-                facismile,
+                facsimile,
                 salesID,
                 wallet,
                 user,
@@ -52,7 +52,7 @@ export class PartnerController {
 
     public getListPartners(req: Request, res: Response) {
         const partnerFilter = {};
-        this.partnerService.filterAllPartners(partnerFilter, (err: any, partnerData: IPartner) => {
+        this.partnerService.filterPartners(partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
                 mongoError(err, res);
             } else {
@@ -73,8 +73,8 @@ export class PartnerController {
     }
 
     public updatePartner(req: Request, res: Response) {
-        const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facismile, salesID, wallet, user, peer, logo, status } = req.body;
-        if (companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facismile && salesID && wallet && user && peer && logo && status )  {
+        const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
+        if (companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo && status )  {
             const partnerFilter = { _id: req.params.id };
             this.partnerService.filterPartner(partnerFilter, (err: any, partnerData: IPartner) => {
                 if (err) {
@@ -94,7 +94,7 @@ export class PartnerController {
                         addressLineFirst : addressLineFirst ? req.body.addressLineFirst : partnerData.addressLineFirst,
                         addressLineSecond : addressLineSecond ? req.body.addressLineSecond : partnerData.addressLineSecond,
                         telephone : telephone ? req.body.telephone : partnerData.telephone,
-                        facismile : facismile ? req.body.facismile : partnerData.facismile,
+                        facsimile : facsimile ? req.body.facsimile : partnerData.facsimile,
                         salesID : salesID ? req.body.salesID : partnerData.salesID,
                         wallet : wallet ? req.body.wallet : partnerData.wallet,
                         user : user ? req.body.user : partnerData.user,
