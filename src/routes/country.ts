@@ -3,13 +3,13 @@ import { CountryController } from '../controllers/countryController';
 
 export class CountryRoutes {
 	private countryController: CountryController = new CountryController();
-	public route(app: Application) {
 
-		app.post('/api/country', (req: Request, res: Response) => {
+	public route(app: Application) {
+		app.post('/country', (req: Request, res: Response) => {
 			this.countryController.createCountry(req, res);
 		});
 
-		app.get('/api/list-country', (req: Request, res: Response) => {
+		app.get('/list-country', (req: Request, res: Response) => {
 			this.countryController.getListCountry(req, res);
 		})
 
