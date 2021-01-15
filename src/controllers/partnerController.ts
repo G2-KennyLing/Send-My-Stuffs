@@ -41,7 +41,7 @@ export class PartnerController {
                 if (err) {
                     mongoError(err, res);
                 } else {
-                    successResponse('create partner successfull', partnerData, res);
+                    successResponse('Create partner successfull', partnerData, res);
                 }
             });
         } else {
@@ -50,7 +50,7 @@ export class PartnerController {
         }
     }
 
-    public getPartners(req: Request, res: Response) {
+    public getListPartners(req: Request, res: Response) {
         const partnerFilter = {};
         this.partnerService.filterAllPartners(partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
@@ -61,7 +61,7 @@ export class PartnerController {
         });
     }
 
-    public partnerDetail(req: Request, res: Response) {
+    public getPartner(req: Request, res: Response) {
         const partnerFilter = { _id: req.params.id };
         this.partnerService.filterPartner(partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
