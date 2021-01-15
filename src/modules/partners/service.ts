@@ -15,5 +15,10 @@ export default class PartnerService {
     public filterPartner(query: any, callback: any) {
         Partner.findOne(query, callback);
     }
-    
+
+    public updatePartner(partnerParams: IPartner, callback: any) {
+        const query = { _id: partnerParams._id };
+        Partner.findOneAndUpdate(query, partnerParams, callback);
+    }
+
 }

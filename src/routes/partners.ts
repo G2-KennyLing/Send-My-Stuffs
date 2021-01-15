@@ -22,5 +22,10 @@ export class PartnersRoutes {
         app.get('/partner/:id', isSignIn, (req: Request, res: Response) => {
             this.partnerController.getPartner(req, res);
         });
+
+        app.put('/partner/:id', (req: Request, res: Response) => {
+            this.authController.isSignIn,
+            this.partnerController.updatePartner(req, res);
+        });
     }
 }
