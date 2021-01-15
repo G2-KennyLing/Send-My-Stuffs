@@ -49,5 +49,17 @@ export class SeaportController {
 		})
     }
 
+    public getDetailSeaport(req: Request, res: Response) {
+        const seaportFilter = { _id: req.params.id };
+        this.seaportService.filterDetailSeaport(seaportFilter, (err: any, seaportData: ISeaport) => {
+            if (err) {
+                mongoError(err, res);
+            } else {
+                successResponse('get seaport successfull', seaportData, res);
+            }
+        });
+    
+}
+
   
 }

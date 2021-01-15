@@ -17,5 +17,8 @@ export class SeaportRoutes {
             this.seaportController.getListSeaport(req, res);
         }); 
         
+        app.get('/seaport/:id', isSignIn,(req: Request, res: Response) => {
+            this.seaportController.getDetailSeaport(req, res);
+        }); 
     }
 }
