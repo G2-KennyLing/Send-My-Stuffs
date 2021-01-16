@@ -40,7 +40,7 @@ export class SeaportController {
    
     public getListSeaport(req: Request, res: Response) {
         const seaport_Filter = {};
-		this.seaportService.filterSeaport(seaport_Filter, (err: any, seaportData: ISeaport) => {
+		this.seaportService.filterSeaports(seaport_Filter, (err: any, seaportData: ISeaport) => {
 			if (err) {
 				return mongoError(err, res);
 			}else {
