@@ -33,6 +33,7 @@ class App {
       this.PartnerRoutes.route(this.app);
       this.CountryRoutes.route(this.app);
       this.SeaportRoutes.route(this.app);
+      this.ShipmentRoutes.route(this.app);
       this.commonRoutes.route(this.app);
    }
 

@@ -1,13 +1,15 @@
 import { AuthController } from "./../controllers/authController";
 import ShipmentController from "../controllers/shipmentController";
 import { Request, Response, Application, Router } from "express";
+
 export default class ShipmentRoutes {
   private ShipmentController: ShipmentController = new ShipmentController();
-  private AuthController: AuthController = new AuthController();
+  private authController: AuthController = new AuthController();
   private Route: Router = Router();
 
   public route(app: Application) {
-    this.Route.post("/shipment", (req: Request, res: Response) => {
+    const isSignIn = this.authController.isSignIn;
+    this.Route.post('/shipment',isSignIn, (req: Request, res: Response) => {
       this.ShipmentController.createShipment(req, res);
     });
 
@@ -27,6 +29,6 @@ export default class ShipmentRoutes {
       this.ShipmentController.updateShipment(req, res);
     });
     
-    app.use("/", this.AuthController.isSignIn, this.Route);
+    app.use("/", this.authController.isSignIn, this.Route);
   }
 }
