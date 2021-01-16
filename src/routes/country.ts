@@ -21,5 +21,9 @@ export class CountryRoutes {
 		app.get('/detail-country/:id', isSignIn, (req: Request, res: Response) => {
 			this.countryController.getCountry(req, res);
 		})
+
+		app.put('/update-country/:id', isSignIn, (req: Request, res: Response) => {
+			this.countryController.updateCountry(req, res);
+		})
 	}
 }
