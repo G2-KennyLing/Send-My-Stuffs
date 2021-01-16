@@ -65,7 +65,7 @@ export class SeaportController {
         const {seaportName,portCode,latitude,longitude,status,country} = req.body;
         if (seaportName && portCode && latitude && longitude && status && country )  {
             const seaportfilter  = { _id: req.params.id };
-            this.seaportService.filterDetailSeaport(seaportfilter, (err: any, seaportData: ISeaport) => {
+            this.seaportService.filterSeaport(seaportfilter, (err: any, seaportData: ISeaport) => {
                 if (err) {
                     return mongoError(err, res);
                 }
