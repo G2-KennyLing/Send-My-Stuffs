@@ -13,6 +13,6 @@ export default class SeaportService {
     }
     
     public filterDetailSeaport(query: any, callback: any) {
-		seaports.findOne(query, callback);
+		Seaports.findOne(query, callback);
 	}
 }
