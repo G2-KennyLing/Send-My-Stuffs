@@ -1,10 +1,10 @@
 import { ISeaport } from './model';
-import seaports from './schema';
+import Seaports from './schema';
 
 export default class SeaportService {
     
     public createSeaport(seaportParams: ISeaport, callback: any) {
-        const _session = new seaports(seaportParams);
+        const _session = new Seaports(seaportParams);
         _session.save(callback);
     }
 

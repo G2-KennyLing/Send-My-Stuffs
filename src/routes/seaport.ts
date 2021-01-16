@@ -8,7 +8,9 @@ export class SeaportRoutes {
     private authController: AuthController = new AuthController();
 
     public route(app: Application) {
+
         const isSignIn = this.authController.isSignIn;
+
         app.post('/seaport', isSignIn,(req: Request, res: Response) => {
             this.seaportController.createSeaport(req, res);
         }); 
