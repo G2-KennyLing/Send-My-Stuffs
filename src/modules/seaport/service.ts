@@ -8,16 +8,15 @@ export default class SeaportService {
         _session.save(callback);
     }
 
+    public filterSeaports(query: any, callback: any) {
+		Seaports.find(query, callback);
+    }
     public filterSeaport(query: any, callback: any) {
-		seaports.find(query, callback);
+        Seaports.findOne(query, callback);
     }
-    
-    public filterDetailSeaport(query: any, callback: any) {
-		seaports.findOne(query, callback);
-    }
-    
     public updateSeaport(seaportParams: ISeaport, callback: any) {
         const query = { _id: seaportParams._id };
         Seaports.findOneAndUpdate(query, seaportParams,{new: true}, callback);
     }
+   
 }
