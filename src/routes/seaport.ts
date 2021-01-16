@@ -22,5 +22,9 @@ export class SeaportRoutes {
         app.get('/seaport/:id', isSignIn,(req: Request, res: Response) => {
             this.seaportController.getSeaport(req, res);
         }); 
+
+        app.put('/seaport/:id', isSignIn,(req: Request, res: Response) => {
+            this.seaportController.updateSeaport(req, res);
+        }); 
     }
 }
