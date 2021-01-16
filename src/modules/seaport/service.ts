@@ -10,5 +10,9 @@ export default class SeaportService {
 
     public filterSeaports(query: any, callback: any) {
 		Seaports.find(query, callback);
-	}
+    }
+    
+    public filterSeaport(query: any, callback: any) {
+        Seaports.findOne(query, callback);
+    }
 }
