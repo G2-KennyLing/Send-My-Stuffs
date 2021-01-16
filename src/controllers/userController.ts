@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { insufficientParameters, mongoError, successResponse, failureResponse } from '../modules/common/service';
-import { IUser } from '../modules/users/model';
-import UserService from '../modules/users/service';
+import { IUser } from '../modules/user/model';
+import UserService from '../modules/user/service';
 import Nodemailer from "../helpers/verifyEmail";
 const jwt = require("jsonwebtoken");
 import e = require('express');
@@ -27,16 +27,16 @@ export class UserController {
             return failureResponse("All fill is requied", null, res);
         }
         //@ts-ignore
-        // const byUser = req.user ;
-        // if(byUser.userType === 0){
-        //     switch (byUser.companyRole) {
-        //         case 5: break;
-        //         case 4:
-        //             if(companyRole >= 3) return failureResponse("Access denied, you can't create", null, res);
-        //             break;
-        //         default: return failureResponse("Access denied, you can't create", null, res);
-        //     }
-        // }
+        const byUser = req.user ;
+        if(byUser.userType === 0){
+            switch (byUser.companyRole) {
+                case 5: break;
+                case 4:
+                    if(companyRole >= 3) return failureResponse("Access denied, you can't create", null, res);
+                    break;
+                default: return failureResponse("Access denied, you can't create", null, res);
+            }
+        }
         this.userService.filterUser({email},(err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
@@ -56,7 +56,7 @@ export class UserController {
                 userType,
                 lastActivity: new Date(),
                 modificationNotes: [{
-                    modifiedBy: null,
+                    modifiedBy: byUser,
                     modifiedOn: new Date(),
                     modificationNote: 'Create new user',
                 }]
@@ -71,7 +71,7 @@ export class UserController {
         
     }
 
-    public getAllUser(req: Request, res: Response){
+    public getListUsers(req: Request, res: Response){
         const {userType} = req.query;
         let query = {};
         if(userType) {
