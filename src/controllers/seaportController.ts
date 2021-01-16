@@ -22,7 +22,7 @@ export class SeaportController {
                 modificationNotes: [{
                     modifiedOn: new Date(Date.now()),
                     modifiedBy: null,
-                    modificationNote: 'New Seaport created'
+                    modificationNote: 'New seaport created'
                 }]
             };
             this.seaportService.createSeaport(seaportParams, (err: any, seaportData: ISeaport) => {
@@ -44,7 +44,7 @@ export class SeaportController {
 			if (err) {
 				return mongoError(err, res);
 			}else {
-				successResponse("Get List seaport Success", seaportData, res)
+				successResponse("Get List seaport successfull", seaportData, res)
 			}
 		})
     }
@@ -55,7 +55,7 @@ export class SeaportController {
             if (err) {
                 mongoError(err, res);
             } else {
-                successResponse('get seaport successfull', seaportData, res);
+                successResponse('Get seaport successfull', seaportData, res);
             }
         });
     
