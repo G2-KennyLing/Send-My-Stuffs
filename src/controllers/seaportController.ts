@@ -38,6 +38,16 @@ export class SeaportController {
         }
     }
    
+    public getListSeaport(req: Request, res: Response) {
+        const seaport_Filter = {};
+		this.seaportService.filterSeaports(seaport_Filter, (err: any, seaportData: ISeaport) => {
+			if (err) {
+				return mongoError(err, res);
+			}else {
+				successResponse("Get List seaport Success", seaportData, res)
+			}
+		})
+    }
 
   
 }
