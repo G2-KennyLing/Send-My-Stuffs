@@ -9,6 +9,7 @@ import { UserRoutes } from "../routes/user";
 import { PartnerRoutes } from "../routes/partner";
 import { CountryRoutes } from "../routes/country";
 import { SeaportRoutes } from "../routes/seaport";
+import { AriportRoutes } from "../routes/ariport";
 import { CommonRoutes } from "../routes/common";
 import ShipmentRoute from "../routes/shipment";
 
@@ -22,6 +23,7 @@ class App {
    private ShipmentRoutes: ShipmentRoute = new ShipmentRoute();
    private CountryRoutes: CountryRoutes = new CountryRoutes();
    private SeaportRoutes: SeaportRoutes = new SeaportRoutes();
+   private AriportRoutes: AriportRoutes = new AriportRoutes();
    private commonRoutes: CommonRoutes = new CommonRoutes();
 
    constructor() {
@@ -33,6 +35,7 @@ class App {
       this.PartnerRoutes.route(this.app);
       this.CountryRoutes.route(this.app);
       this.SeaportRoutes.route(this.app);
+      this.AriportRoutes.route(this.app);
       this.ShipmentRoutes.route(this.app);
       this.commonRoutes.route(this.app);
    }
