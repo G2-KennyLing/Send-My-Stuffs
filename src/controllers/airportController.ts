@@ -45,6 +45,18 @@ export class AirportController {
         
     }
 
+    public getListAirports(req: Request, res: Response) {
+        const airport_Filter = {};
+		this.airportService.filterAriports(airport_Filter, (err: any, airportData: IAirport) => {
+			if (err) {
+				return mongoError(err, res);
+			}else {
+				successResponse("Get List Ariport Successfull", airportData, res)
+			}
+		})
+    }
+
+
 }
 
 

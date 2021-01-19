@@ -12,5 +12,9 @@ export default class AirportService {
         Airports.findOne(query, callback);
     }
 
+    public filterAriports(query: any, callback: any) {
+		Airports.find(query, callback);
+    }
+
    
 }
