@@ -10,7 +10,8 @@ const schema = new airportSchema({
         trim: true,
         required: true,
         unique: true,
-        lowercase:true
+        // lowercase:true
+        uppercase: true
     },
     portCode: { 
         type: String,
