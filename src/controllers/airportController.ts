@@ -1,29 +1,29 @@
 import { Request, Response } from 'express';
 import { insufficientParameters, mongoError, successResponse, failureResponse } from '../modules/common/service';
-import { IAriport } from '../modules/ariport/model';
-import AriportService from '../modules/ariport/service';
+import { IAirport } from '../modules/airport/model';
+import AirportService from '../modules/airport/service';
 import e = require('express');
 
-export class AriportController {
+export class AirportController {
 
-    private ariportService: AriportService = new AriportService();
+    private airportService: AirportService = new AirportService();
 
-    public createAriport(req: Request, res: Response){
-        const {ariportName,portCode,latitude,longitude,status,country} = req.body;
+    public createAirport(req: Request, res: Response){
+        const {airportName,portCode,latitude,longitude,status,country} = req.body;
         
-        if(!(ariportName && portCode && latitude && longitude && status && country)){
+        if(!(airportName && portCode && latitude && longitude && status && country)){
             return failureResponse("All fill is requied", null, res);
         }
       
-        this.ariportService.filterAriport({ariportName},(err: Error, ariportData: IAriport) =>{
+        this.airportService.filterAirport({airportName},(err: Error, airportData: IAirport) =>{
             if(err){
                 return mongoError(err, res);
             }
-            if(ariportData){
+            if(airportData){
                 return failureResponse("Ariport is already", null, res);
             }
-            const ariportParams: IAriport = {
-                ariportName: req.body.ariportName,
+            const airportParams: IAirport = {
+                airportName: req.body.airportName,
                 portCode: req.body.portCode,
                 latitude: req.body.latitude,
                 longitude: req.body.longitude,
@@ -35,11 +35,11 @@ export class AriportController {
                     modificationNote: 'New ariport created'
                 }]
             };
-            this.ariportService.createAriport(ariportParams, (err: Error, ariportData: IAriport) =>{
+            this.airportService.createAirport(airportParams, (err: Error, airportData: IAirport) =>{
                 if(err){
                     return mongoError(err, res);
                 }
-                return successResponse("Create Ariport successful", ariportData, res);
+                return successResponse("Create Airport successful", airportData, res);
             })
         })
         

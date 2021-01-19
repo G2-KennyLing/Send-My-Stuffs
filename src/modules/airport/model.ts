@@ -5,9 +5,9 @@ export enum statusAriport {
 	INACTIVE
 }
 
-export interface IAriport {
+export interface IAirport {
 	_id?: String;
-	ariportName: String;
+	airportName: String;
 	portCode: String;
 	latitude: string;
 	longitude?: String

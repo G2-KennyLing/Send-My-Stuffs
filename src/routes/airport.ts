@@ -1,18 +1,18 @@
 import { Application, Request, Response } from 'express';
 import { AuthController } from '../controllers/authController';
-import { AriportController } from '../controllers/ariportController';
+import { AirportController } from '../controllers/airportController';
 
-export class AriportRoutes {
+export class AirportRoutes {
 
-    private ariportController: AriportController = new AriportController();
+    private airportController: AirportController = new AirportController();
     private authController: AuthController = new AuthController();
 
     public route(app: Application) {
 
         const isSignIn = this.authController.isSignIn;
 
-        app.post('/ariport', isSignIn, (req: Request, res: Response) => {
-            this.ariportController.createAriport(req, res);
+        app.post('/airport', isSignIn, (req: Request, res: Response) => {
+            this.airportController.createAirport(req, res);
         });      
     }
 }

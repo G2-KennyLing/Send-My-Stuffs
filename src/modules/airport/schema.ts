@@ -2,10 +2,10 @@ import * as mongoose from 'mongoose';
 import { ModificationNote } from '../common/model';
 
 const Schema = mongoose.Schema;
-const ariportSchema = mongoose.Schema;
+const airportSchema = mongoose.Schema;
 
-const schema = new ariportSchema({
-    ariportName: {
+const schema = new airportSchema({
+    airportName: {
         type: String,
         trim: true,
         required: true,
@@ -37,4 +37,4 @@ const schema = new ariportSchema({
     modificationNotes: [ModificationNote]
 });
 
-export default mongoose.model('ariports', schema);
+export default mongoose.model('airports', schema);
