@@ -56,6 +56,18 @@ export class AirportController {
 		})
     }
 
+    public getAirport(req: Request, res: Response) {
+        const airport_Filter = { _id: req.params.id };
+        this.airportService.filterAirport(airport_Filter, (err: any, airportData: IAirport) => {
+            if (err) {
+                mongoError(err, res);
+            } else {
+                successResponse('Get Airport successfull', airportData, res);
+            }
+        });
+    
+    } 
+
 
 }
 
