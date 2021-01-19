@@ -19,7 +19,7 @@ export default class ShipmentService {
   public updateShipment(shipmentParams: IShipment, callback: any) {
     const query = { _id: shipmentParams._id };
     Shipment.findOneAndUpdate(query, shipmentParams, callback);
-}
+  }
 
   public getOverviewDepature() {
     const now = new Date().getTime();

@@ -12,34 +12,43 @@ export default class ShipmentController {
   public createShipment(req: Request, res: Response) {
     const { shipmentNo, from, to, vesselName, voyage, cargoDescription, departureDate, landingDate, } = req.body;
     if (!(shipmentNo && from && to && cargoDescription && departureDate && landingDate))
-      return insufficientParameters(res);
+      return failureResponse("All fill is requied", null, res);
 
     if (!((vesselName && !voyage) || (!vesselName && voyage)))
       return failureResponse("Can not choose both transport method", { voyage, vesselName }, res);
 
-    const shipmentParams: IShipment = {
-      shipmentNo,
-      from,
-      to,
-      vesselName,
-      voyage,
-      cargoDescription,
-      departureDate,
-      landingDate,
-      ModificationNote: [{
-        modifiedOn: new Date(Date.now()),
-        modifiedBy: null,
-        modificationNote: 'New partner created'
-      }]
-    };
-    this.shipmentService.createShipment(shipmentParams, (err: any, shipmentData: IShipment) => {
+    this.shipmentService.filterShipment({ shipmentNo }, (err: Error, shipmentData: IShipment) => {
       if (err) {
-        mongoError(err, res);
-      } else {
-        successResponse('Create shipment successfull', shipmentData, res);
+        return mongoError(err, res);
       }
-    });
+      if (shipmentData) {
+        return failureResponse("Shipment already exists", null, res);
+      }
+      const shipmentParams: IShipment = {
+        shipmentNo,
+        from,
+        to,
+        vesselName,
+        voyage,
+        cargoDescription,
+        departureDate,
+        landingDate,
+        ModificationNote: [{
+          modifiedOn: new Date(Date.now()),
+          modifiedBy: null,
+          modificationNote: 'New shipment created'
+        }]
+      };
+      this.shipmentService.createShipment(shipmentParams, (err: any, shipmentData: IShipment) => {
+        if (err) {
+          mongoError(err, res);
+        } else {
+          successResponse('Create shipment successfull', shipmentData, res);
+        }
+      })
+    })
   }
+
 
   public getListShipments(req: Request, res: Response) {
     const shipmentFilter = {};
@@ -68,10 +77,7 @@ export default class ShipmentController {
     if (!(shipmentNo && from && to && cargoDescription && departureDate && landingDate && status !== undefined))
       return insufficientParameters(res);
     if (!((vesselName && !voyage) || (!vesselName && voyage)))
-      return failureResponse(
-        "can not choose both transport method",
-        { voyage, vesselName },
-        res
+      return failureResponse("can not choose both transport method",{ voyage, vesselName },res
       );
     const shipmentFilter = { _id: req.params.id };
     this.shipmentService.filterShipment(shipmentFilter, (err: any, shipmentData: IShipment) => {
@@ -87,8 +93,9 @@ export default class ShipmentController {
           vesselName: vesselName ? req.body.vesselName : shipmentData.vesselName,
           voyage: voyage ? req.body.voyage : shipmentData.voyage,
           cargoDescription: cargoDescription ? req.body.cargoDescription : shipmentData.cargoDescription,
-          departureDate: departureDate ? req.body.depatureDate : shipmentData.departureDate,
+          departureDate: departureDate ? req.body.departureDate : shipmentData.departureDate,
           landingDate: landingDate ? req.body.landingDate : shipmentData.landingDate,
+          status: status ? req.body.status : shipmentData.status,
           ModificationNote: [{
             modifiedOn: new Date(Date.now()),
             modifiedBy: null,
