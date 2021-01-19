@@ -33,4 +33,14 @@ export class StateController {
 			insufficientParameters(res)
 		}
 	}
+
+	public getListStates(req: Request, res: Response) {
+		this.stateService.filterStates({}, (err: any, stateData: IState) => {
+			if (err) {
+				return mongoError(err, res)
+			}else {
+				successResponse("Get list state successful", stateData, res)
+			}
+		})
+	}
 }

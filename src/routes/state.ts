@@ -8,5 +8,9 @@ export class StateRoutes {
 		app.post('/state', (req: Request, res: Response) => {
 			this.statesController.createStates(req, res);
 		})
+
+		app.get('/states', (req: Request, res: Response) => {
+			this.statesController.getListStates(req, res)
+		})
 	}
 }

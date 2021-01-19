@@ -7,4 +7,9 @@ export default class StateService {
 		const _session = new State(stateParams);
 		_session.save(callback);
 	}
+
+	public filterStates(query: any, callback: any) {
+		State.find(query, callback)
+	}
+
 }
