@@ -14,7 +14,7 @@ export class PartnerController {
         if (!(companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo && status )) {
                 return failureResponse("All fill is requied", null, res);
             }
-            this.partnerService.filterPartner({companyName , domainName},(err: Error, partner: IPartner) =>{
+            this.partnerService.filterPartner({companyName},(err: Error, partner: IPartner) =>{
                 if(err){
                     return mongoError(err, res);
                 }
