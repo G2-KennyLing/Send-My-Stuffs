@@ -16,4 +16,9 @@ export default class StateService {
 		State.findOne(query, callback)
 	}
 
+	public updateState(stateParams: IState, callback: any) {
+		const query = { _id: stateParams._id }
+		State.findOneAndUpdate(query, stateParams, callback)
+	}
+
 }

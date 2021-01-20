@@ -16,5 +16,9 @@ export class StateRoutes {
 		app.get('/detail-state/:id', (req: Request, res: Response) => {
 			this.statesController.getDetailStates(req, res)
 		})
+
+		app.put('/update-state/:id', (req: Request, res: Response) => {
+			this.statesController.updateState(req, res)
+		})
 	}
 }
