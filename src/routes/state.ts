@@ -12,5 +12,9 @@ export class StateRoutes {
 		app.get('/states', (req: Request, res: Response) => {
 			this.statesController.getListStates(req, res)
 		})
+
+		app.get('/detail-state/:id', (req: Request, res: Response) => {
+			this.statesController.getDetailStates(req, res)
+		})
 	}
 }

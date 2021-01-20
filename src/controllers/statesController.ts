@@ -43,4 +43,18 @@ export class StateController {
 			}
 		})
 	}
+
+	public getDetailStates(req: Request, res: Response) {
+		const detailStateId = { _id: req.params.id };
+		this.stateService.filterState(detailStateId, (err: Error, stateData: IState) => {
+			if (err) {
+				mongoError(err, res)
+			}
+			if (!stateData) {
+				failureResponse("State is not found", {}, res)
+			}else {
+				successResponse("Get state successful", stateData, res)
+			}
+		})
+	}
 }

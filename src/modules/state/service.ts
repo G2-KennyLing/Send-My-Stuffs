@@ -9,7 +9,11 @@ export default class StateService {
 	}
 
 	public filterStates(query: any, callback: any) {
-		State.find(query, callback)
+		State.find(query, callback).populate('country')
+	}
+
+	public filterState(query: any, callback: any) {
+		State.findOne(query, callback)
 	}
 
 }
