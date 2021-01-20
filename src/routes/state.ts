@@ -13,8 +13,8 @@ export class StateRoutes {
 			this.statesController.getListStates(req, res)
 		})
 
-		app.get('/detail-state/:id', (req: Request, res: Response) => {
-			this.statesController.getDetailStates(req, res)
+		app.get('/state/:id', (req: Request, res: Response) => {
+			this.statesController.getState(req, res)
 		})
 	}
 }
