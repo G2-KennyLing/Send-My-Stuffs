@@ -1,17 +1,16 @@
 import { ModificationNote } from '../common/model';
 
-enum Status {
-	"ACTIVE" = 0,
-	"INACTIVE" = 1
+enum stateStatus {
+	'ACTIVE' = 0,
+	'INACTIVE'
 }
 export interface IState {
 	_id?: String;
 	stateName: String;
-	countryName: String;
-	countryCode: String;
+	country: String;
 	fipsCode: Number;
-	ISO2: String;
-	Status?: Status;
+	iso2: String;
+	status?: stateStatus;
 	modificationNotes?: ModificationNote[];
 }
 

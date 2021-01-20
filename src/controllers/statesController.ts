@@ -8,14 +8,13 @@ export class StateController {
 	private stateService: StateService = new StateService(); 
 
 	public createStates(req: Request, res: Response) {
-		const { stateName, countryName, countryCode, fipsCode, ISO2 } = req.body;
-		if (stateName && countryName && countryCode && fipsCode && ISO2) {
+		const { stateName, country, fipsCode, iso2 } = req.body;
+		if (stateName && country && fipsCode && iso2) {
 			const stateParams: IState = {
 				stateName: stateName,
-				countryName: req.params.countryName,
-				countryCode: req.params.countryCode,
+				country: req.params.country,
 				fipsCode: fipsCode,
-				ISO2: ISO2,
+				iso2: iso2,
 				modificationNotes: [{
 					modifiedOn: new Date(),
 					modifiedBy: null,
@@ -44,7 +43,7 @@ export class StateController {
 		})
 	}
 
-	public getDetailStates(req: Request, res: Response) {
+	public getState(req: Request, res: Response) {
 		const detailStateId = { _id: req.params.id };
 		this.stateService.filterState(detailStateId, (err: Error, stateData: IState) => {
 			if (err) {
@@ -54,6 +53,28 @@ export class StateController {
 				failureResponse("State is not found", {}, res)
 			}else {
 				successResponse("Get state successful", stateData, res)
+			}
+		})
+	}
+
+	public updateState(req: Request, res: Response) {
+		const { stateName, country, fipsCode, iso2, status } = req.body;
+		if(!(stateName && country && fipsCode && iso2 && status)) {
+			insufficientParameters(res)
+		} const stateParams: IState = {
+			stateName: stateName,
+			country: req.params.country,
+			fipsCode: fipsCode,
+			iso2: iso2
+		}
+		this.stateService.updateState(stateParams, (err: any, stateData: IState) => {
+			if(err) {
+				mongoError(err, res)
+			}
+			if(!stateData) {
+				failureResponse("Update state failed", {}, res)
+			}else{
+				successResponse("Update state successful", { stateData }, res)
 			}
 		})
 	}

@@ -12,15 +12,8 @@ const schema = new StateSchema ({
 		trim: true,
 		uppercase: true
 	},
-	// action: {
-	// 	type: String
-	// },
-	countryName: [{
-		type: Schema.Types.ObjectId,
-		ref: "country", 
-		required: true
-	}],
-	countryCode: [{
+	action: String,
+	country: [{
 		type: Schema.Types.ObjectId,
 		ref: "country", 
 		required: true
@@ -30,12 +23,12 @@ const schema = new StateSchema ({
 		required: true,
 		trim: true
 	},
-	ISO2: {
+	iso2: {
 		type: String,
 		required: true,
 		trim: true
 	},
-	Status: {
+	status: {
 		type: Number,
 		enum: [0, 1],
 		required: true,
