@@ -2,15 +2,14 @@ import * as mongoose from 'mongoose';
 import { ModificationNote } from '../common/model';
 
 const Schema = mongoose.Schema;
-const airportSchema = mongoose.Schema;
+const AirportSchema = mongoose.Schema;
 
-const schema = new airportSchema({
+const schema = new AirportSchema({
     airportName: {
         type: String,
         trim: true,
         required: true,
         unique: true,
-        // lowercase:true
         uppercase: true
     },
     portCode: { 
