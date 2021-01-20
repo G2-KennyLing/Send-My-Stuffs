@@ -32,7 +32,7 @@ export class AirportController {
                 modificationNotes: [{
                     modifiedOn: new Date(Date.now()),
                     modifiedBy: null,
-                    modificationNote: 'New ariport created'
+                    modificationNote: 'New ariport successful'
                 }]
             };
             this.airportService.createAirport(airportParams, (err: Error, airportData: IAirport) =>{
