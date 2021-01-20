@@ -22,7 +22,7 @@ export class SeaportController {
                 modificationNotes: [{
                     modifiedOn: new Date(Date.now()),
                     modifiedBy: null,
-                    modificationNote: 'New Seaport created'
+                    modificationNote: 'New seaport created'
                 }]
             };
             this.seaportService.createSeaport(seaportParams, (err: any, seaportData: ISeaport) => {
@@ -38,6 +38,64 @@ export class SeaportController {
         }
     }
    
+    public getListSeaports(req: Request, res: Response) {
+        const seaport_Filter = {};
+		this.seaportService.filterSeaports(seaport_Filter, (err: any, seaportData: ISeaport) => {
+			if (err) {
+				return mongoError(err, res);
+			}else {
+				successResponse("Get List seaport successfull", seaportData, res)
+			}
+		})
+    }
 
+    public getSeaport(req: Request, res: Response) {
+        const seaportFilter = { _id: req.params.id };
+        this.seaportService.filterSeaport(seaportFilter, (err: any, seaportData: ISeaport) => {
+            if (err) {
+                mongoError(err, res);
+            } else {
+                successResponse('Get seaport successfull', seaportData, res);
+            }
+        });
+    
+}
+
+    public updateSeaport(req: Request, res: Response) {
+        const {seaportName,portCode,latitude,longitude,status,country} = req.body;
+        if (seaportName && portCode && latitude && longitude && status && country )  {
+            const seaportfilter  = { _id: req.params.id };
+            this.seaportService.filterSeaport(seaportfilter, (err: any, seaportData: ISeaport) => {
+                if (err) {
+                    return mongoError(err, res);
+                }
+                if (seaportData) {
+                    const seaportParams: ISeaport = {
+                        _id: req.params.id,
+                        seaportName: req.body.seaportName ? req.body.seaportName : seaportData.seaportName,
+                        portCode: req.body.portCode ? req.body.portCode : seaportData.portCode,
+                        latitude: req.body.latitude ? req.body.latitude : seaportData.latitude,
+                        longitude: req.body.longitude ? req.body.longitude : seaportData.longitude,
+                        status: req.body.status ? req.body.status : seaportData.status,
+                        country: req.body.country ? req.body.country : seaportData.country,
+                        modificationNotes: [{
+                            modifiedOn: new Date(Date.now()),
+                            modifiedBy: null,
+                            modificationNote: 'New Seaport created'
+                        }]
+                    };
+                    this.seaportService.updateSeaport(seaportParams, (err: any) => {
+                        if (err) {
+                            mongoError(err, res);
+                        } else {
+                        successResponse("Update seaport successful", seaportParams, res);
+                        }
+                    });
+                } else {
+                    failureResponse("Invalid seaport", null, res);
+                }
+        });
+        }
+    }
   
 }

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { insufficientParameters, mongoError, successResponse, failureResponse } from '../modules/common/service';
-import { IPartner } from '../modules/partners/model';
-import PartnerService from '../modules/partners/service';
+import { IPartner } from '../modules/partner/model';
+import PartnerService from '../modules/partner/service';
 import e = require('express');
 
 export class PartnerController {
@@ -58,7 +58,7 @@ export class PartnerController {
 
     public getListPartners(req: Request, res: Response) {
         const partnerFilter = {};
-        this.partnerService.filterAllPartners(partnerFilter, (err: any, partnerData: IPartner) => {
+        this.partnerService.filterPartners(partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
                 mongoError(err, res);
             } else {

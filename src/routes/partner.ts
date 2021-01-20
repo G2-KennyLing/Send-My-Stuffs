@@ -3,7 +3,7 @@ import { Application, Request, Response } from 'express';
 import { PartnerController } from '../controllers/partnerController';
 import { AuthController } from '../controllers/authController';
 
-export class PartnersRoutes {
+export class PartnerRoutes {
 
     private partnerController: PartnerController = new PartnerController();
     private authController: AuthController = new AuthController();
@@ -23,7 +23,7 @@ export class PartnersRoutes {
             this.partnerController.getPartner(req, res);
         });
 
-        app.put('/partner/:id',isSignIn, (req: Request, res: Response) => {
+        app.put('/partner/:id', isSignIn, (req: Request, res: Response) => {
             this.partnerController.updatePartner(req, res);
         });
     }
