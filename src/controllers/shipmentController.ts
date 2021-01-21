@@ -1,66 +1,29 @@
 import { ModificationNote } from "./../modules/common/model";
 import { Request, Response } from "express";
-import {
-  insufficientParameters,
-  mongoError,
-  successResponse,
-  failureResponse,
+import {insufficientParameters,mongoError, successResponse,failureResponse,
 } from "../modules/common/service";
 import ShipmentService from "../modules/shipment/service";
 import IShipment from "../modules/shipment/model";
 export default class ShipmentController {
 
   private Service: ShipmentService;
-
   constructor() {
     this.Service = new ShipmentService();
   }
 
   public createShipment(req: Request, res: Response) {
-    const {
-      shipmentNo,
-      from,
-      to,
-      vesselName,
-      voyage,
-      cargoDescription,
-      departureDate,
-      landingDate,
-    } = req.body;
-    if (
-      !(
-        shipmentNo &&
-        from &&
-        to &&
-        cargoDescription &&
-        departureDate &&
-        landingDate
-      )
-    )
+    const {shipmentNo,from,to,vesselName,voyage,cargoDescription,departureDate,landingDate,} = req.body;
+    if (!(shipmentNo && from && to && cargoDescription && departureDate && landingDate))
       return insufficientParameters(res);
+
     if (!((vesselName && !voyage) || (!vesselName && voyage)))
-      return failureResponse(
-        "can not choose both transport method",
-        { voyage, vesselName },
-        res
-      );
+      return failureResponse("Can not choose both transport method",{ voyage, vesselName },res);
+
     this.Service.create(
-      {
-        shipmentNo,
-        from,
-        to,
-        vesselName,
-        voyage,
-        cargoDescription,
-        departureDate,
-        landingDate,
-      },
+      {shipmentNo,from,to,vesselName,voyage,cargoDescription,departureDate,landingDate,},
       (err, newShipment) => {
         if (err) return mongoError(err, res);
-        return successResponse(
-          "Create new shipment successful",
-          newShipment,
-          res
+        return successResponse("Create new shipment successful",newShipment, res
         );
       }
     );
