@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { insufficientParameters, mongoError, successResponse, failureResponse } from '../modules/common/service';
-import { IUser } from '../modules/users/model';
-import UserService from '../modules/users/service';
+import { IUser } from '../modules/user/model';
+import UserService from '../modules/user/service';
 import Nodemailer from "../helpers/verifyEmail";
 const jwt = require("jsonwebtoken");
 import e = require('express');
@@ -71,7 +71,7 @@ export class UserController {
         
     }
 
-    public getAllUser(req: Request, res: Response){
+    public getListUsers(req: Request, res: Response){
         const {userType} = req.query;
         let query = {};
         if(userType) {

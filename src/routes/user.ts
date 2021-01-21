@@ -2,7 +2,7 @@ import { Application, Request, Response } from 'express';
 import { UserController } from '../controllers/userController';
 import { AuthController } from '../controllers/authController';
 
-export class UsersRoutes {
+export class UserRoutes {
 
     private userController: UserController = new UserController();
     private authController: AuthController = new AuthController();
@@ -18,14 +18,18 @@ export class UsersRoutes {
         });
 
         app.get("/users", isSignIn, (req: Request, res: Response) =>{
-            this.userController.getAllUser(req, res);
+            this.userController.getListUsers(req, res);
         });
 
         app.get("/user/:id", isSignIn, (req: Request, res: Response) =>{
             this.userController.getUser(req, res);
         });
 
+<<<<<<< HEAD:src/routes/users.ts
         app.post("/user/forgot-password", isSignIn, (req: Request, res: Response) =>{
+=======
+        app.post("/user/forgot-password", isSignIn,(req: Request, res: Response) =>{
+>>>>>>> develop:src/routes/user.ts
             this.userController.forgotPassword(req, res);
         })
         
