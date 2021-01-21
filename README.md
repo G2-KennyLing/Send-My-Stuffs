@@ -2,9 +2,10 @@
 Nodejs, Express, MongoDB, TypeScript
 # Installed
 ```bash
-$ npm install express body-parser mongoose nodemon
-$ npm install --save @types/express @types/express @types/body-parser @types/mongoose @types/nodemon
+$ npm install express body-parser nodemon
+$ npm install --save @types/express @types/body-parser @types/mongoose @types/nodemon
 $ npm install -D typescript ts-node
+$ npm install mongoose@5.10.19
 ```
 
 # Set the scripts
