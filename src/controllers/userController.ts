@@ -219,5 +219,30 @@ export class UserController {
             return successResponse("Change password successful", userData, res);
           });
         });
-      }
+    }
+
+    public deleteUser(req: Request, res: Response){
+        const _id = req.params.id;
+        //@ts-ignore
+        const byUser = req.user ;
+        this.userService.filterUser({_id},(err: Error, user: IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            if(user._id != byUser._id){
+                if(byUser.companyRole <=3){
+                    return failureResponse("Access denied, you can't update", null, res);
+                }
+            }
+            this.userService.updateUserSync(_id, 
+                {$set:{deletedAt: new Date()}},  
+            (err: Error, user: IUser) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("Delete user successful", user, res)
+            })
+        })
+        
+    }
 }
