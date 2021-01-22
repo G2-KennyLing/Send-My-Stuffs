@@ -133,7 +133,7 @@ export class PartnerController {
         const _id = req.params.id;
         this.partnerService.filterPartner({_id}, (err: any, partnerData: IPartner) => {
             if (err) {
-                return mongoError(err, res);
+                return failureResponse("Partner not exist", null, res);
             }
             if (partnerData){
             this.partnerService.updatePartnerDelete(_id,{$set:{deletedAt: new Date()}},  
@@ -141,7 +141,7 @@ export class PartnerController {
                 if(err){
                     return mongoError(err, res);
                 }
-                return successResponse("Delete user successful", partnerData, res)
+                return successResponse("Delete partner successful", partnerData, res)
             })
         }
         })
