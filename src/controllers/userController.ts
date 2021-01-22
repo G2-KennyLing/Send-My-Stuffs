@@ -208,7 +208,7 @@ export class UserController {
             subject: "FORGOT PASSWORD",
             html: this.mailer.forgotPasswordTemplate(forgotLink),
           });
-          return successResponse("The request has been resolved", sendMail, res);
+          return successResponse(`An e-mail has been sent to ${email}`, sendMail, res);
         } catch (error) {
           mongoError(error, res);
         }

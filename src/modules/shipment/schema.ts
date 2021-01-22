@@ -40,7 +40,7 @@ const shipmentSchema = new Schema({
     type: Number,
     enum: [0, 1, 2, 3],
     required: true,
-    default: 1,
+    default: 0,
   },
   ModificationNote: {
     type: [ModificationNote],
@@ -48,7 +48,7 @@ const shipmentSchema = new Schema({
       {
         modifiedOn: new Date(),
         modifiedBy: "",
-        modificationNote: "create new shipment",
+        modificationNote: "Create new shipment",
       },
     ],
   },

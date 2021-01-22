@@ -17,19 +17,19 @@ export class UserRoutes {
             this.userController.createUser(req, res);
         });
 
-        app.get("/users", isSignIn, (req: Request, res: Response) =>{
+        app.get('/users', isSignIn, (req: Request, res: Response) =>{
             this.userController.getListUsers(req, res);
         });
 
-        app.get("/user/:id", isSignIn, (req: Request, res: Response) =>{
+        app.get('/user/:id', isSignIn, (req: Request, res: Response) =>{
             this.userController.getUser(req, res);
         });
 
-        app.post("/user/forgot-password", isSignIn,(req: Request, res: Response) =>{
+        app.post('/forgot-password', isSignIn, (req: Request, res: Response) =>{
             this.userController.forgotPassword(req, res);
         })
         
-        app.post("/user/reset-password", isSignIn, (req: Request, res: Response) =>{
+        app.post('/user/reset-password', isSignIn, (req: Request, res: Response) =>{
             this.userController.resetPassword(req, res);
         })
 
