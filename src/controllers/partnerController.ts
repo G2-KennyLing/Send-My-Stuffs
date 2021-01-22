@@ -57,7 +57,7 @@ export class PartnerController {
     }
 
     public getListPartners(req: Request, res: Response) {
-        const partnerFilter = {};
+        const partnerFilter = {deletedAt: undefined};
         this.partnerService.filterPartners(partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
                 mongoError(err, res);
@@ -128,4 +128,23 @@ export class PartnerController {
             });
         }
     }
+
+    public deletePartner(req: Request, res: Response){
+        const _id = req.params.id;
+        this.partnerService.filterPartner({_id}, (err: any, partnerData: IPartner) => {
+            if (err) {
+                return mongoError(err, res);
+            }
+            if (partnerData){
+            this.partnerService.updatePartnerDelete(_id,{$set:{deletedAt: new Date()}},  
+            (err: Error, partnerData: IPartner) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("Delete user successful", partnerData, res)
+            })
+        }
+        })
+    }
+
 }

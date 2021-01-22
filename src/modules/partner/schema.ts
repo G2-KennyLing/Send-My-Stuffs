@@ -29,12 +29,12 @@ const Partner = new Schema({
     },
     country: {
         type: Schema.Types.ObjectId,
-        ref: "country",
+        ref: "countries",
         required: true,
     },
     city: {
         type: Schema.Types.ObjectId,
-        ref: "country",
+        ref: "countries",
         required: true,
     },
     addressLineFirst: {
