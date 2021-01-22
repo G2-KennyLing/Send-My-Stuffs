@@ -9,11 +9,11 @@ export default class ShipmentService {
 }
 
   public filterShipments(query: any, callback: any) {
-    return Shipment.find(query, callback);
+    return Shipment.find(query, callback).populate('from','countryName').populate('to','countryName');
   }
 
   public filterShipment(query: any, callback: any) {
-    Shipment.findOne(query, callback);
+    Shipment.findOne(query, callback).populate('from','countryName').populate('to','countryName');
   }
 
   public updateShipment(shipmentParams: IShipment, callback: any) {
