@@ -10,12 +10,12 @@ const shipmentSchema = new Schema({
   },
   from: {
     type: Schema.Types.ObjectId,
-    ref: "country",
+    ref: "countries",
     required: true,
   },
   to: {
     type: Schema.Types.ObjectId,
-    ref: "country",
+    ref: "countries",
     required: true,
   },
   departureDate: {
