@@ -26,5 +26,9 @@ export class SeaportRoutes {
         app.put('/seaport/:id', isSignIn,(req: Request, res: Response) => {
             this.seaportController.updateSeaport(req, res);
         }); 
+
+        app.delete('/seaport/:id', (req: Request, res: Response) => {
+            this.seaportController.isDelete(req, res);
+        }); 
     }
 }

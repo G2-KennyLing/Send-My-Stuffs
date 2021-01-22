@@ -18,5 +18,13 @@ export default class SeaportService {
         const query = { _id: seaportParams._id };
         Seaports.findOneAndUpdate(query, seaportParams,{new: true}, callback);
     }
-   
+    public deleteSeoport(_id: String ,query: any, callback: any){
+        Seaports.findByIdAndUpdate(_id, query,{new: true}, callback);
+    }
+
+    public isDelete(_id: String, callback: any) {
+        const query = { _id: _id };
+        Seaports.deleteOne(query, callback);
+    }
+
 }
