@@ -21,4 +21,9 @@ export default class PartnerService {
         Partner.findOneAndUpdate(query, partnerParams, callback);
     }
 
+    public deletePartner(_id: String, callback: any) {
+        const query = { _id: _id };
+        Partner.deleteOne(query, callback);
+    }
+
 }

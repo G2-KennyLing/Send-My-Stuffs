@@ -66,7 +66,11 @@ const Partner = new Schema({
         enum: [0,1],
         default: 0,
     },
-    modification_notes: [ModificationNote]
+    deletedAt:{
+        type:Date,
+        default: undefined
+    },
+    modificationNotes: [ModificationNote]
 });
 
 export default mongoose.model('Partners', Partner);

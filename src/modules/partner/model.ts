@@ -23,5 +23,6 @@ export interface IPartner {
     peer: Number,
     logo: String,
     status: status,
-    modification_notes: ModificationNote[]
+    deletedAt?: Date;
+    modificationNotes: ModificationNote[]
 }

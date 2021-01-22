@@ -40,7 +40,7 @@ export class PartnerController {
                 peer,
                 logo,
                 status,
-                modification_notes: [{
+                modificationNotes: [{
                     modifiedOn: new Date(Date.now()),
                     modifiedBy: null,
                     modificationNote: 'New partner created'
@@ -107,7 +107,7 @@ export class PartnerController {
                         peer : peer ? req.body.peer : partnerData.peer,
                         logo : logo ? req.body.logo : partnerData.logo,
                         status : status ? req.body.status : partnerData.status,
-                        modification_notes: [
+                        modificationNotes: [
                             {
                                 modifiedOn: new Date(Date.now()),
                                 modifiedBy: null,
