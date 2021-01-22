@@ -9,7 +9,7 @@ export default class PartnerService {
     }
 
     public filterPartners(query: any, callback: any) {
-        return Partner.find(query, callback).populate('country').populate('city').populate('salesID');
+        return Partner.find(query, callback).populate('country', 'countryName').populate('city').populate('salesID');
     }
 
     public filterPartner(query: any, callback: any) {
