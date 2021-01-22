@@ -21,13 +21,13 @@ export default class ShipmentRoutes {
       app.get('/shipment/:id', isSignIn, (req: Request, res: Response) => {
         this.shipmentController.getShipment(req, res);
       });
-
-      app.get('/shipment/overview', isSignIn, (req: Request, res: Response) => {
-        this.shipmentController.overviewShipment(req, res);
-      });
       
       app.put('/shipment/:id', isSignIn, (req: Request, res: Response) => {
         this.shipmentController.updateShipment(req, res);
+      });
+
+      app.get('/shipment/overview', isSignIn, (req: Request, res: Response) => {
+        this.shipmentController.overviewShipment(req, res);
       });
   }
 }
