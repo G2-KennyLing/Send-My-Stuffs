@@ -12,7 +12,8 @@ export interface IAirport {
 	latitude: string;
 	longitude?: String
 	status?: statusAriport;
-    country: String;
+	country: String;
+	deletedAt?:Date;
     isDeleted?: Boolean;
     modificationNotes: ModificationNote[]
 }

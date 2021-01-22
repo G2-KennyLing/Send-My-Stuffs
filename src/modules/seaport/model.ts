@@ -8,6 +8,7 @@ export interface ISeaport {
     longitude: String;
     status?: statusSeaport;
     country: String;
+    deletedAt?:Date;
     isDeleted?: Boolean;
     modificationNotes: ModificationNote[]
 }

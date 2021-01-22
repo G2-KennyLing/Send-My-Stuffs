@@ -28,6 +28,10 @@ const schema = new seaportSchema({
 		enum: [0, 1],
 		default: 0
     },
+    deletedAt:{
+        type:Date,
+        default: undefined
+    },
     isDeleted: {
         type: Boolean,
         default: false
