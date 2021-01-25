@@ -67,6 +67,7 @@ export class StateController {
 				}
 				if (stateData) {
 					const stateParams: IState = {
+						_id: req.params.id, 
 						stateName: stateName ? stateName : stateData.stateName,
 						action: action ? action : stateData.action,
 						country: country ? country : stateData.country,
