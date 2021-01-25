@@ -8,6 +8,14 @@ export class CountryController {
 
 	public createCountry(req: Request, res: Response) {
 		const { countryCode, countryName, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
+		if(!(countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers)){
+			return failureResponse("fields are required", {}, res);
+		}
+		this.countryService.filterCountry({countryName}, (err: Error, country: ICountry) => {
+			if (country) {
+				return failureResponse("Country already exits", null, res)
+			}
+		})
 		if (countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers) {
 			const countryParams: ICountry = {
 				countryCode: req.body.countryCode,
