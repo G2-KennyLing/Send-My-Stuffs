@@ -58,28 +58,39 @@ export class StateController {
 	}
 
 	public updateState(req: Request, res: Response) {
-		const updateStateId = { _id: req.params.id }
 		const { stateName, action, country, fipsCode, iso2, status } = req.body;
-		if (!(stateName && action && country && fipsCode && iso2 && status)) {
-			return insufficientParameters(res)
-		} const stateParams: IState = {
-			stateName: stateName,
-			action: action,
-			country: country,
-			fipsCode: fipsCode,
-			iso2: iso2,
-			status: status
+		if (stateName && action && country && fipsCode && iso2 && status) {
+			const updateStateId = { _id: req.params.id }
+			this.stateService.filterStates(updateStateId, (err: any, stateData: IState) => {
+				if (err) {
+					mongoError(err, res)
+				}
+				if (stateData) {
+					const stateParams: IState = {
+						stateName: stateName ? stateName : stateData.stateName,
+						action: action ? action : stateData.action,
+						country: country ? country : stateData.country,
+						fipsCode: fipsCode ? fipsCode : stateData.fipsCode,
+						iso2: iso2 ? iso2 : stateData.iso2,
+						status: status ? status : stateData.status,
+						modificationNotes: [{
+							modifiedOn: new Date(Date.now()),
+    						modifiedBy: null,
+    						modificationNote: "State data updated",
+						}]
+					}
+					this.stateService.updateState(stateParams, (err: any) => {
+						if (err) {
+							mongoError(err, res)
+						} else {
+							successResponse("Update state successful", stateParams, res)
+						}
+					});
+				} else {
+					failureResponse("Parameter invalid", null, res)
+				}
+			})
 		}
-		this.stateService.updateState(stateParams, (err: any, stateData: IState) => {
-			if (err) {
-				mongoError(err, res)
-			}
-			if (!stateData) {
-				return failureResponse("Update state failed", {}, res)
-			} else {
-				successResponse("Update state successful", { stateData }, res)
-			}
-		})
 	}
 
 	public isDelete(req: Request, res: Response) {
