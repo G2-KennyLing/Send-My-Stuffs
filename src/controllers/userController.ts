@@ -68,7 +68,7 @@ export class UserController {
                 return successResponse("Create user successful", newUser, res);
             })
         })
-        
+
     }
 
     public getListUsers(req: Request, res: Response){
