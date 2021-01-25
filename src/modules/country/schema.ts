@@ -32,10 +32,10 @@ const schema = new CountrySchema ({
 		type: Schema.Types.ObjectId,
 		ref: 'seaPort'
 	}],
-	airPorts: {
+	airPorts: [{
 		type: Schema.Types.ObjectId,
 		ref: 'airPort'
-	},
+	}],
 	agents: {
 		type: String,
 		trim: true,
