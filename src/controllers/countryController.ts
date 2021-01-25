@@ -8,15 +8,15 @@ export class CountryController {
 	private countryService: CountryService = new CountryService();
 
 	public createCountry(req: Request, res: Response) {
-		const { countryCode, countryName, region, timeZone, seaPorts, agents, customers } = req.body;
-		if (countryCode && countryName && region && timeZone && seaPorts && agents && customers) {
+		const { countryCode, countryName, region, timeZone, seaPorts, airPorts , agents, customers } = req.body;
+		if (countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers) {
 			const countryParams: ICountry = {
 				countryCode: countryCode,
 				countryName: countryName,
 				region: region,
 				timeZone: timeZone,
 				seaPorts: seaPorts,
-				// airPorts: airPorts,
+				airPorts: airPorts,
 				agents: agents,
 				customers: customers,
 				modificationNotes: [{
@@ -74,7 +74,7 @@ export class CountryController {
 						region: region ? region : countryData.region,
 						timeZone: timeZone ? timeZone : countryData.timeZone,
 						seaPorts: seaPorts ? seaPorts : countryData.seaPorts,
-						airPorts: airPorts,
+						airPorts: airPorts ? airPorts : countryData.airPorts,
 						agents: agents ? agents : countryData.agents,
 						customers: customers ? customers : countryData.customers,
 						modificationNotes: [{

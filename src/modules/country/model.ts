@@ -7,7 +7,7 @@ export interface ICountry {
 	region: String;
 	timeZone: Date;
 	seaPorts: String;
-	airports: String;
+	airPorts: String;
 	agents: String;
 	customers: String;
 	modificationNotes: [ModificationNote];
