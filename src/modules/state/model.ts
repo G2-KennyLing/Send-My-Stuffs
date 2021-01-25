@@ -7,6 +7,7 @@ enum stateStatus {
 export interface IState {
 	_id?: String;
 	stateName: String;
+	action?: String;
 	country: String;
 	fipsCode: Number;
 	iso2: String;

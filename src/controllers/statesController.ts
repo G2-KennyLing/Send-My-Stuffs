@@ -4,15 +4,15 @@ import { IState } from "../modules/state/model";
 import StateService from "../modules/state/service";
 
 export class StateController {
-
 	private stateService: StateService = new StateService(); 
 
 	public createStates(req: Request, res: Response) {
-		const { stateName, country, fipsCode, iso2 } = req.body;
-		if (stateName && country && fipsCode && iso2) {
+		const { stateName, action, country, fipsCode, iso2 } = req.body;
+		if (stateName && action && country && fipsCode && iso2) {
 			const stateParams: IState = {
 				stateName: stateName,
-				country: req.params.country,
+				action: action,
+				country: country,
 				fipsCode: fipsCode,
 				iso2: iso2,
 				modificationNotes: [{
@@ -58,22 +58,25 @@ export class StateController {
 	}
 
 	public updateState(req: Request, res: Response) {
-		const { stateName, country, fipsCode, iso2, status } = req.body;
-		if(!(stateName && country && fipsCode && iso2 && status)) {
-			insufficientParameters(res)
+		const updateStateId = { _id: req.params.id }
+		const { stateName, action, country, fipsCode, iso2, status } = req.body;
+		if (!(stateName && action && country && fipsCode && iso2 && status)) {
+			return insufficientParameters(res)
 		} const stateParams: IState = {
 			stateName: stateName,
-			country: req.params.country,
+			action: action,
+			country: country,
 			fipsCode: fipsCode,
-			iso2: iso2
+			iso2: iso2,
+			status: status
 		}
 		this.stateService.updateState(stateParams, (err: any, stateData: IState) => {
-			if(err) {
+			if (err) {
 				mongoError(err, res)
 			}
-			if(!stateData) {
-				failureResponse("Update state failed", {}, res)
-			}else{
+			if (!stateData) {
+				return failureResponse("Update state failed", {}, res)
+			} else {
 				successResponse("Update state successful", { stateData }, res)
 			}
 		})

@@ -15,7 +15,7 @@ const schema = new StateSchema ({
 	action: String,
 	country: [{
 		type: Schema.Types.ObjectId,
-		ref: "country", 
+		ref: "countries", 
 		required: true
 	}],
 	fipsCode: {
