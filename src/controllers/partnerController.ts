@@ -12,15 +12,8 @@ export class PartnerController {
         // this check whether all the filds were send through the erquest or not
         const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
         if (!(companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo && status )) {
-                return failureResponse("All fill is requied", null, res);
+                return failureResponse("All fill is required", null, res);
             }
-            this.partnerService.filterPartner({companyName},(err: Error, partner: IPartner) =>{
-                if(err){
-                    return mongoError(err, res);
-                }
-                if(partner){
-                    return failureResponse("Partner already exist", null, res);
-                }
             const partnerParams: IPartner = {
                 companyName,
                 domainName,
@@ -46,13 +39,35 @@ export class PartnerController {
                     modificationNote: 'New partner created'
                 }]
             };
-            this.partnerService.createPartner(partnerParams, (err: any, partnerData: IPartner) => {
-                if (err) {
-                    mongoError(err, res);
-                } else {
-                    successResponse('Create partner successfull', partnerData, res);
+            this.partnerService.filterPartner({companyName},(err: Error, partner: IPartner) =>{
+                if(err){
+                    return mongoError(err, res);
                 }
+                if(partner){
+                    if(partner.deletedAt != undefined){
+                        partnerParams._id = partner._id;
+                        partnerParams.deletedAt = undefined;
+                        this.partnerService.updatePartner(partnerParams, (err: Error, partnerData: IPartner) => {
+                            if (err) {
+                                mongoError(err, res);
+                            } else {
+                                successResponse("Create partner successful", partnerParams, res);
+                            }
+                        })
+                    }
+                    else {
+                        return failureResponse("Partner already exist", null, res);
+                    }
+                }
+                else {
+                    this.partnerService.createPartner(partnerParams, (err: Error, partnerData: IPartner) => {
+                        if (err) {
+                            mongoError(err, res);
+                        } else {
+                        successResponse('Create partner successfull', partnerData, res);
+                        }
             })
+        }
         })
     }
 
