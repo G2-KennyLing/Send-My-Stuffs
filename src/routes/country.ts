@@ -18,11 +18,11 @@ export class CountryRoutes {
 			this.countryController.getListCountries(req, res);
 		})
 
-		app.get('/detail-country/:id', isSignIn, (req: Request, res: Response) => {
+		app.get('/country/:id', isSignIn, (req: Request, res: Response) => {
 			this.countryController.getCountry(req, res);
 		})
 
-		app.put('/update-country/:id', isSignIn, (req: Request, res: Response) => {
+		app.put('/country/:id', isSignIn, (req: Request, res: Response) => {
 			this.countryController.updateCountry(req, res);
 		})
 	}
