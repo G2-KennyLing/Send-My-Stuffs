@@ -42,4 +42,9 @@ export default class ShipmentService {
       },
     });
   }
+
+  public updateDeleteShipment(_id: String ,query: any, callback: any){
+    Shipment.findByIdAndUpdate(_id, query,{new: true}, callback);
+  }
+
 }

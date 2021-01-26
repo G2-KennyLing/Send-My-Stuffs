@@ -16,14 +16,6 @@ export default class ShipmentController {
 
     if (!((vesselName && !voyage) || (!vesselName && voyage)))
       return failureResponse("Can not choose both transport method", { voyage, vesselName }, res);
-
-    this.shipmentService.filterShipment({ shipmentNo }, (err: Error, shipmentData: IShipment) => {
-      if (err) {
-        return mongoError(err, res);
-      }
-      if (shipmentData) {
-        return failureResponse("Shipment already exists", null, res);
-      }
       const shipmentParams: IShipment = {
         shipmentNo,
         from,
@@ -39,14 +31,31 @@ export default class ShipmentController {
           modificationNote: 'New shipment created'
         }]
       };
-      this.shipmentService.createShipment(shipmentParams, (err: any, shipmentData: IShipment) => {
-        if (err) {
-          mongoError(err, res);
-        } else {
-          successResponse('Create shipment successfull', shipmentData, res);
+      this.shipmentService.filterShipment({shipmentNo},(err: Error, shipment: IShipment) =>{
+        if(err){
+            return mongoError(err, res);
         }
-      })
+        if(shipment){
+            if(shipment.deletedAt != undefined){
+                shipmentParams._id = shipment._id;
+                shipmentParams.deletedAt = undefined;
+                this.shipmentService.updateShipment(shipmentParams, (err: Error, shipmentData: IShipment) =>{
+                    if(err){
+                        return mongoError(err, res);
+                    }
+                    return successResponse("Create shipment successful", shipmentData, res);
+                })
+            } else
+            return failureResponse("Shipment already exist", null, res);
+        } else
+        this.shipmentService.createShipment(shipmentParams, (err: Error, shipmentData: IShipment) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            return successResponse("Create shipment successful", shipmentData, res);
+        })
     })
+
   }
 
 
@@ -124,4 +133,24 @@ export default class ShipmentController {
     };
     successResponse("Overview shipment in past 7 days", response, res);
   }
+
+  public deleteShipment(req: Request, res: Response){
+    const _id = req.params.id;
+    this.shipmentService.filterShipment({_id}, (err: any, shipmentData: IShipment) => {
+        if (err) {
+            return failureResponse("Shipment not exist", null, res);
+        }
+        if (shipmentData){
+        this.shipmentService.updateDeleteShipment(_id,{$set:{deletedAt: new Date()}},  
+        (err: Error, shipmentData: IShipment) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            return successResponse("Delete shipment successful", shipmentData, res)
+        })
+    }
+    })
+}
+
+
 }

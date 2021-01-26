@@ -42,6 +42,10 @@ const shipmentSchema = new Schema({
     required: true,
     default: 0,
   },
+  deletedAt:{
+    type:Date,
+    default: undefined
+  },
   ModificationNote: {
     type: [ModificationNote],
     default: [
