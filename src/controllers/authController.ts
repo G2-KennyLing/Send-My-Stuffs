@@ -28,7 +28,7 @@ export class AuthController {
         return failureResponse("Email does not exist", null, res);
       }
       if (!bcrypt.compareSync(password, user.password)) {
-        return failureResponse("Password and email are not match", null, res);
+        return failureResponse("Password is not match", null, res);
       }
       const token = jwt.sign({ user }, process.env.JWT_TOKEN, {
         expiresIn: "1d",
