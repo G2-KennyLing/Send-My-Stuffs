@@ -32,5 +32,9 @@ export class UserRoutes {
         app.post('/user/reset-password', isSignIn, (req: Request, res: Response) =>{
             this.userController.resetPassword(req, res);
         })
+
+        app.delete("/user/:id", isSignIn, (req: Request, res: Response) =>{
+            this.userController.deleteUser(req, res);
+        })
     }
 }
