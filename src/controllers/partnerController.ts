@@ -58,7 +58,9 @@ export class PartnerController {
 
     public getListPartners(req: Request, res: Response) {
         const partnerFilter = {};
-        this.partnerService.filterPartners(partnerFilter, (err: any, partnerData: IPartner) => {
+        const { page = 1, limit = 10 } = req.query;
+        const param = { page : page, limit : limit };
+        this.partnerService.filterPartners(param, partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
                 mongoError(err, res);
             } else {
