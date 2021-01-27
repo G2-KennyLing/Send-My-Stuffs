@@ -9,7 +9,9 @@ export default class ShipmentService {
 }
 
   public filterShipments(query: any, callback: any) {
-    return Shipment.find(query, callback).populate('from','countryName').populate('to','countryName');
+    let limit = 5;
+    let page = 1;
+    return Shipment.find(query, callback).populate('from','countryName').populate('to','countryName').limit(limit * 1).skip((page - 1) * limit);
   }
 
   public filterShipment(query: any, callback: any) {

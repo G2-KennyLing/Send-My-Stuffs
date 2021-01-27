@@ -60,7 +60,7 @@ export default class ShipmentController {
 
 
   public getListShipments(req: Request, res: Response) {
-    const shipmentFilter = {};
+    const shipmentFilter = {deletedAt: undefined};
     this.shipmentService.filterShipments(shipmentFilter, (err: any, shipmentData: IShipment) => {
       if (err) {
         mongoError(err, res);
