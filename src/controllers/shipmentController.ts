@@ -61,13 +61,15 @@ export default class ShipmentController {
 
   public getListShipments(req: Request, res: Response) {
     const shipmentFilter = {deletedAt: undefined};
-    this.shipmentService.filterShipments(shipmentFilter, (err: any, shipmentData: IShipment) => {
+    const { page = 1, limit = 10 } = req.query;
+    const param = { page : page, limit : limit };
+    this.shipmentService.filterShipments(param, shipmentFilter , (err: any, shipmentData: IShipment) => {
       if (err) {
         mongoError(err, res);
       } else {
         successResponse("Get list shipments successful", shipmentData, res);
       }
-    });
+    })
   }
 
   public getShipment(req: Request, res: Response) {

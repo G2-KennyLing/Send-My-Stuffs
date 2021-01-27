@@ -8,10 +8,10 @@ export default class ShipmentService {
     _session.save(callback);
 }
 
-  public filterShipments(query: any, callback: any) {
-    let limit = 5;
-    let page = 1;
-    return Shipment.find(query, callback).populate('from','countryName').populate('to','countryName').limit(limit * 1).skip((page - 1) * limit);
+  public filterShipments(param: any, query: any, callback: any) {
+    const limit =  param.limit;
+    const page = param.page;
+    Shipment.find(query, callback).populate('from','countryName').populate('to','countryName').limit(limit * 1 ).skip((page - 1) * limit);
   }
 
   public filterShipment(query: any, callback: any) {
