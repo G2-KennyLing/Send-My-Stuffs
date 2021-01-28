@@ -28,8 +28,8 @@ export class UserRoutes {
         app.post('/forgot-password', isSignIn, (req: Request, res: Response) =>{
             this.userController.forgotPassword(req, res);
         })
-        
-        app.post('/user/reset-password', isSignIn, (req: Request, res: Response) =>{
+
+        app.post("/user/reset-password", isSignIn, (req: Request, res: Response) =>{
             this.userController.resetPassword(req, res);
         })
 
