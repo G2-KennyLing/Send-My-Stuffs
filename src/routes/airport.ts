@@ -18,5 +18,10 @@ export class AirportRoutes {
         app.get('/airports', isSignIn,(req: Request, res: Response) => {
             this.airportController.getListAirports(req, res);
         }); 
+
+        app.get('/airport/:id', isSignIn,(req: Request, res: Response) => {
+            this.airportController.getAirport(req, res);
+        }); 
+
     }
 }
