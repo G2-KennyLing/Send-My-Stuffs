@@ -11,7 +11,16 @@ export class PartnerController {
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
         const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
-        if (companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo && status ) {
+        if (!(companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo && status )) {
+                return failureResponse("All fill is requied", null, res);
+            }
+            this.partnerService.filterPartner({companyName},(err: Error, partner: IPartner) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                if(partner){
+                    return failureResponse("Partner already exist", null, res);
+                }
             const partnerParams: IPartner = {
                 companyName,
                 domainName,
@@ -43,11 +52,8 @@ export class PartnerController {
                 } else {
                     successResponse('Create partner successfull', partnerData, res);
                 }
-            });
-        } else {
-            // error response if some fields are missing in request body
-            insufficientParameters(res);
-        }
+            })
+        })
     }
 
     public getListPartners(req: Request, res: Response) {

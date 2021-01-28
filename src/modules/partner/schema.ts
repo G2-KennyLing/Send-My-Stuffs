@@ -29,12 +29,12 @@ const Partner = new Schema({
     },
     country: {
         type: Schema.Types.ObjectId,
-        ref: "country",
+        ref: "countries",
         required: true,
     },
     city: {
         type: Schema.Types.ObjectId,
-        ref: "country",
+        ref: "countries",
         required: true,
     },
     addressLineFirst: {
@@ -69,4 +69,4 @@ const Partner = new Schema({
     modification_notes: [ModificationNote]
 });
 
-export default mongoose.model('Partners', Partner);
+export default mongoose.model('partners', Partner);
