@@ -23,5 +23,9 @@ export class AirportRoutes {
             this.airportController.getAirport(req, res);
         }); 
 
+        app.put('/airport/:id', isSignIn,(req: Request, res: Response) => {
+            this.airportController.updateAirport(req, res);
+        });
+
     }
 }

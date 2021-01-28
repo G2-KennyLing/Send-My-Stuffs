@@ -68,6 +68,43 @@ export class AirportController {
     
     } 
 
+    public updateAirport(req: Request, res: Response){
+        const {airportName,portCode,latitude,longitude,status,country} = req.body;
+        const airport_Filter = { _id: req.params.id };
+        if(!(airportName && portCode && latitude && longitude && status && country)){
+            return insufficientParameters(res)
+        }
+        
+        this.airportService.filterAirport(airport_Filter,  (err: Error, ariportData: IAirport) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            if(!ariportData){
+                return failureResponse("Airport is not found", null, res);
+            }
+            const ariportParams :IAirport = {
+                _id: req.params.id,
+                airportName: req.body.airportName,
+                portCode: req.body.portCode,
+                latitude: req.body.latitude,
+                longitude: req.body.longitude,
+                status: req.body.status,
+                country: req.body.country,
+                modificationNotes: [{
+                    modifiedOn: new Date(Date.now()),
+                    modifiedBy: null,
+                    modificationNote: 'New Airport Created'
+                }]
+            }
+            this.airportService.updateAirport(ariportParams, (err: Error, airportData: IAirport) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("Update Airport successful", airportData, res);
+            })
+        })
+    }
+
 
 }
 

@@ -16,5 +16,9 @@ export default class AirportService {
 		Airports.find(query, callback);
     }
 
+    public updateAirport(airportParams: IAirport, callback: any) {
+        const query = { _id: airportParams._id };
+        Airports.findOneAndUpdate(query, airportParams,{new: true}, callback);
+    }
    
 }
