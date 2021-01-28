@@ -18,14 +18,14 @@ export class StateController {
 				modificationNotes: [{
 					modifiedOn: new Date(),
 					modifiedBy: null,
-					modificationNote: "Created State Success" 
+					modificationNote: "Created state successful" 
 				}]
 			}
 			this.stateService.createStates(stateParams, (err: any, stateData: IState) => {
 				if (err) {
 					mongoError(err, res)
 				}else {
-					successResponse('Created State Success', stateData, res)
+					successResponse('Created state successful', stateData, res)
 				}
 			})
 		} else {
