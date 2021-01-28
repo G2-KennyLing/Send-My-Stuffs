@@ -8,12 +8,12 @@ export default class CountryService {
 		_session.save(callback);
 	}
 
-	public filterCountries(query: any, callback: any) {
-		Country.find(query, callback);
+	public filterCountries(query: any, callback?: any) {
+		return Country.find(query, callback).populate('seaPorts', 'seaportName').populate('airPorts', 'airportName');
 	}
 
 	public filterCountry(query: any, callback: any) {
-		Country.findOne(query, callback)
+		Country.findOne(query, callback).populate('seaPorts', 'seaportName').populate('airPorts', 'airportName')
 	}
 
 	public updateCountry(countryParams: ICountry, callback: any) {
