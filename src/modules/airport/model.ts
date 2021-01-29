@@ -14,6 +14,5 @@ export interface IAirport {
 	status?: statusAriport;
 	country: String;
 	deletedAt?:Date;
-    isDeleted?: Boolean;
     modificationNotes: ModificationNote[]
 }

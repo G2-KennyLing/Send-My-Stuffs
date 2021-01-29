@@ -34,10 +34,6 @@ const schema = new AirportSchema({
         type:Date,
         default: undefined
     },
-    isDeleted: {
-        type: Boolean,
-        default: false
-    },
     modificationNotes: [ModificationNote]
 });
 
