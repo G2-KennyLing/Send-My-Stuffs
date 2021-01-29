@@ -9,7 +9,6 @@ export interface ISeaport {
     status?: statusSeaport;
     country: String;
     deletedAt?:Date;
-    isDeleted?: Boolean;
     modificationNotes: ModificationNote[]
 }
 

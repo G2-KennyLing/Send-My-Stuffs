@@ -32,11 +32,6 @@ const schema = new seaportSchema({
         type:Date,
         default: undefined
     },
-    isDeleted: {
-        type: Boolean,
-        default: false
-    },
-
     modificationNotes: [ModificationNote]
 });
 
