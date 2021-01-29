@@ -9,11 +9,11 @@ export default class AirportService {
     }
 
     public filterAirport(query: any, callback: any) {
-        Airports.findOne(query, callback);
+        Airports.findOne(query, callback).populate('country', 'countryName');
     }
 
     public filterAriports(query: any, callback: any) {
-		Airports.find(query, callback);
+		Airports.find(query, callback).populate('country', 'countryName');
     }
 
     public updateAirport(airportParams: IAirport, callback: any) {
