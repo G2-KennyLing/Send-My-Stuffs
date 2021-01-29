@@ -10,6 +10,7 @@ import { PartnerRoutes } from "../routes/partner";
 import { CountryRoutes } from "../routes/country";
 import { SeaportRoutes } from "../routes/seaport";
 import { AirportRoutes } from "../routes/airport";
+import { StateRoutes } from "../routes/state";
 import { CommonRoutes } from "../routes/common";
 import ShipmentRoute from "../routes/shipment";
 
@@ -24,6 +25,7 @@ class App {
    private CountryRoutes: CountryRoutes = new CountryRoutes();
    private SeaportRoutes: SeaportRoutes = new SeaportRoutes();
    private AirportRoutes: AirportRoutes = new AirportRoutes();
+   private StateRoutes: StateRoutes = new StateRoutes();
    private commonRoutes: CommonRoutes = new CommonRoutes();
 
    constructor() {
@@ -37,13 +39,19 @@ class App {
       this.SeaportRoutes.route(this.app);
       this.AirportRoutes.route(this.app);
       this.ShipmentRoutes.route(this.app);
+      this.StateRoutes.route(this.app);
       this.commonRoutes.route(this.app);
    }
 
    private config(): void {
       this.app.use(bodyParser.json());
       this.app.use(bodyParser.urlencoded({ extended: false }));
-      this.app.use(cors());
+      const headers = {
+         origin: "http://localhost:4200",
+         credentials: true,
+         method: "GET,POST,PUT,PATCH,DELETE,HEAD",
+       };
+      this.app.use(cors(headers));
       this.app.use(cookieParser());
       require("dotenv").config();
    }

@@ -3,41 +3,22 @@ import IShipment from "./model";
 import Shipment from "./schema";
 
 export default class ShipmentService {
-  public create(shipment: IShipment, callback?: any) {
-    const newShipment = new Shipment(shipment);
-    return newShipment.save(callback);
+  public createShipment(shipmentParams: IShipment, callback: any) {
+    const _session = new Shipment(shipmentParams);
+    _session.save(callback);
+}
+
+  public filterShipments(query: any, callback: any) {
+    return Shipment.find(query, callback);
   }
 
-  public filterShipments(callback?: any) {
-    return Shipment.find({}).populate("from").populate("to").exec(callback);
+  public filterShipment(query: any, callback: any) {
+    Shipment.findOne(query, callback);
   }
 
-  public updateShipment(
-    _id: String,
-    updateFields: IShipment,
-    modifyNote: ModificationNote,
-    callback
-  ) {
-    return Shipment.findByIdAndUpdate(
-      _id,
-      {
-        $set: updateFields,
-        $push: { ModificationNote: modifyNote },
-      },
-      {
-        new: true,
-      }
-    )
-      .populate("from")
-      .populate("to")
-      .exec(callback);
-  }
-
-  public filterShipment(_id: String, callback) {
-    return Shipment.findById(_id)
-      .populate("from")
-      .populate("to")
-      .exec(callback);
+  public updateShipment(shipmentParams: IShipment, callback: any) {
+    const query = { _id: shipmentParams._id };
+    Shipment.findOneAndUpdate(query, shipmentParams, callback);
   }
 
   public getOverviewDepature() {
