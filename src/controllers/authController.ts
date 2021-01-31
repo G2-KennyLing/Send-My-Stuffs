@@ -54,7 +54,7 @@ export class AuthController {
     if (!req.cookies) {
       return failureResponse("Unauthorized, access denied", null, res);
     }
-    const token = req.headers.token;
+    const token = req.cookies.token;
     if (!token) {
       return failureResponse("Unauthorized, access denied", null, res);
     }
