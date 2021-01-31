@@ -11,7 +11,7 @@ export class PartnerController {
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
         const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
-        if (!(companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo && status )) {
+        if (!(companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo )) {
                 return failureResponse("All fill is required", null, res);
             }
             const partnerParams: IPartner = {
