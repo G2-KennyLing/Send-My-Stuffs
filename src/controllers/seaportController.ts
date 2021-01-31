@@ -103,15 +103,15 @@ export class SeaportController {
         const _id = req.params.id ;
         this.seaportService.filterSeaport({_id}, (err: any, seaportData: ISeaport) =>{
             if(err){
-                 mongoError(err, res);
+                return mongoError(err, res);
             } if(!seaportData){
-                failureResponse("Seoport is not found", null, res);
+                return failureResponse("Seoport is not found", null, res);
             }
             this.seaportService.deleteSeoport(_id, {$set:{deletedAt: new Date()}}, (err: Error, seaportData: ISeaport) =>{
                 if(err){
-                     mongoError(err, res);
+                    return mongoError(err, res);
                 }
-                    successResponse("Delete Seoport Successful", seaportData, res)
+                    return successResponse("Delete Seoport Successful", seaportData, res)
             })
         })
         
