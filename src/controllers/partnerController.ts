@@ -49,9 +49,9 @@ export class PartnerController {
                         partnerParams.deletedAt = undefined;
                         this.partnerService.updatePartner(partnerParams, (err: Error, partnerData: IPartner) => {
                             if (err) {
-                                mongoError(err, res);
+                               return mongoError(err, res);
                             } else {
-                                successResponse("Create partner successful", partnerParams, res);
+                               return successResponse("Create partner successful", partnerParams, res);
                             }
                         })
                     }
@@ -62,9 +62,9 @@ export class PartnerController {
                 else {
                     this.partnerService.createPartner(partnerParams, (err: Error, partnerData: IPartner) => {
                         if (err) {
-                            mongoError(err, res);
+                           return mongoError(err, res);
                         } else {
-                        successResponse('Create partner successfull', partnerData, res);
+                           return successResponse('Create partner successfull', partnerData, res);
                         }
             })
         }
@@ -75,9 +75,9 @@ export class PartnerController {
         const partnerFilter = {deletedAt: undefined};
         this.partnerService.filterPartners(partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
-                mongoError(err, res);
+               return mongoError(err, res);
             } else {
-                successResponse("Get list partners successful", partnerData, res);
+               return successResponse("Get list partners successful", partnerData, res);
             }
         });
     }
@@ -86,9 +86,9 @@ export class PartnerController {
         const partnerFilter = { _id: req.params.id };
         this.partnerService.filterPartner(partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
-                mongoError(err, res);
+                return mongoError(err, res);
             } else {
-                successResponse("Get partner detail successful", partnerData, res);
+                return successResponse("Get partner detail successful", partnerData, res);
             }
         });
     }
@@ -132,13 +132,13 @@ export class PartnerController {
                     };
                     this.partnerService.updatePartner(partnerParams, (err: any) => {
                         if (err) {
-                            mongoError(err, res);
+                           return mongoError(err, res);
                         } else {
-                            successResponse("Update partner successful", partnerParams, res);
+                           return successResponse("Update partner successful", partnerParams, res);
                         }
                     });
                 } else {
-                    failureResponse("Invalid partner", null, res);
+                   return failureResponse("Invalid partner", null, res);
                 }
             });
         }
