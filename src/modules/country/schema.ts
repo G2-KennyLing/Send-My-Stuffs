@@ -2,8 +2,9 @@ import * as mongoose from 'mongoose';
 import { ModificationNote } from '../common/model';
 const Schema = mongoose.Schema;
 
-// const CountrySchema = mongoose.Schema;		
-const CountrySchema = new Schema ({
+const CountrySchema = mongoose.Schema;	
+
+const schema = new CountrySchema ({
 	countryCode: {
 		type: String,
 		trim: true,
@@ -29,23 +30,22 @@ const CountrySchema = new Schema ({
 	},
 	seaPorts: [{
 		type: Schema.Types.ObjectId,
-		ref: 'seaPort'
-	}],
-	airPorts: {
-		type: String,
-		trim: true,
+		ref: 'seaports',
 		required: true
-	},
+	}],
+	airPorts: [{
+		type: Schema.Types.ObjectId,
+		ref: 'airports',
+		required: true
+	}],
 	agents: {
 		type: String,
 		trim: true,
 		required: true
 	}, 
-	customers: {
-		
-	},
+	customers: String,
 	modificationNotes: [ModificationNote]
 });
 
-export default mongoose.model('country', CountrySchema);
+export default mongoose.model('countries', schema);
 

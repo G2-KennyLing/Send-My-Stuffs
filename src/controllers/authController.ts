@@ -5,8 +5,8 @@ import {
   successResponse,
   failureResponse,
 } from "../modules/common/service";
-import { IUser } from "../modules/users/model";
-import UserService from "../modules/users/service";
+import { IUser } from "../modules/user/model";
+import UserService from "../modules/user/service";
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -28,7 +28,7 @@ export class AuthController {
         return failureResponse("Email does not exist", null, res);
       }
       if (!bcrypt.compareSync(password, user.password)) {
-        return failureResponse("Password and email are not match", null, res);
+        return failureResponse("Password is not match", null, res);
       }
       const token = jwt.sign({ user }, process.env.JWT_TOKEN, {
         expiresIn: "1d",
@@ -54,7 +54,7 @@ export class AuthController {
     if (!req.cookies) {
       return failureResponse("Unauthorized, access denied", null, res);
     }
-    const token = req.cookies.token;
+    const token = req.headers.token;
     if (!token) {
       return failureResponse("Unauthorized, access denied", null, res);
     }
@@ -123,5 +123,9 @@ export class AuthController {
     }
     next();
   }
-  
+  public signOut(req: Request, res: Response){
+    res.clearCookie("token");
+    res.clearCookie("refreshToken");
+    return successResponse("Sign out successful", null, res);
+  }
 }

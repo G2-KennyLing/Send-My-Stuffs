@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { insufficientParameters, mongoError, successResponse, failureResponse } from '../modules/common/service';
-import { IUser } from '../modules/users/model';
-import UserService from '../modules/users/service';
+import { IUser } from '../modules/user/model';
+import UserService from '../modules/user/service';
 import Nodemailer from "../helpers/verifyEmail";
 const jwt = require("jsonwebtoken");
 import e = require('express');
@@ -37,30 +37,40 @@ export class UserController {
                 default: return failureResponse("Access denied, you can't create", null, res);
             }
         }
+        const userParams: IUser = { 
+            name,
+            telephone,
+            mobile,
+            email,
+            password: bcrypt.hashSync(password, 10),
+            dateOfBirth,
+            companyName,
+            companyRole,
+            userType,
+            lastActivity: new Date(),
+            modificationNotes: [{
+                modifiedBy: byUser,
+                modifiedOn: new Date(),
+                modificationNote: 'Create new user',
+            }]
+        }
         this.userService.filterUser({email},(err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
             }
             if(user){
+                if(user.deletedAt != undefined){
+                    userParams._id = user._id;
+                    userParams.deletedAt = undefined;
+                    this.userService.updateUser(userParams, (err: Error, userData: IUser) =>{
+                        if(err){
+                            return mongoError(err, res);
+                        }
+                        return successResponse("Create user successful", userData, res);
+                    })
+                } else
                 return failureResponse("Email is already use", null, res);
-            }
-            const userParams: IUser = { 
-                name,
-                telephone,
-                mobile,
-                email,
-                password: bcrypt.hashSync(password, 10),
-                dateOfBirth,
-                companyName,
-                companyRole,
-                userType,
-                lastActivity: new Date(),
-                modificationNotes: [{
-                    modifiedBy: byUser,
-                    modifiedOn: new Date(),
-                    modificationNote: 'Create new user',
-                }]
-            }
+            } else
             this.userService.createUser(userParams, (err: Error, newUser: IUser) =>{
                 if(err){
                     return mongoError(err, res);
@@ -68,12 +78,23 @@ export class UserController {
                 return successResponse("Create user successful", newUser, res);
             })
         })
-        
+
     }
 
-    public getAllUser(req: Request, res: Response){
+    public getListUsers(req: Request, res: Response){
         const {userType} = req.query;
-        this.userService.filterUsers({deletedAt: undefined, userType},  (err: Error, user: IUser) =>{
+        let query = {};
+        if(userType) {
+            if(Array.isArray(userType)) {
+                query = {"$in": [0,1]};
+            }
+            else {
+                query = userType==="USER" ? 0 : userType === "PARTNER"?1: userType;
+            }
+        }else{
+            query = {"$in": [0,1]};
+        }
+        this.userService.filterUsers({deletedAt: undefined, userType: query},  (err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
             }
@@ -93,6 +114,7 @@ export class UserController {
             return successResponse("Get user detail successful", user, res);
         })
     }
+    
     public updateUser(req: Request, res: Response){
         const {name,
             telephone,
@@ -186,20 +208,20 @@ export class UserController {
             subject: "FORGOT PASSWORD",
             html: this.mailer.forgotPasswordTemplate(forgotLink),
           });
-          return successResponse("The request has been resolved", sendMail, res);
+          return successResponse(`An e-mail has been sent to ${email}`, sendMail, res);
         } catch (error) {
           mongoError(error, res);
         }
     }
 
     public resetPassword(req: Request, res: Response) {
-        const { newPasword, token } = req.body;
+        const { newPassword, token } = req.body;
         jwt.verify(token, process.env.JWT_FORGOTPASSWORD_TOKEN, (err, decoded) => {
           if (err) {
             return failureResponse("Forgot password token is not valid", null, res);
           }
           const user = decoded.user;
-          user.password = bcrypt.hashSync(newPasword, 10);
+          user.password = bcrypt.hashSync(newPassword, 10);
           this.userService.updateUser(user, (err: Error, userData: IUser) => {
             if (err) {
               return mongoError(err, res);
@@ -207,5 +229,30 @@ export class UserController {
             return successResponse("Change password successful", userData, res);
           });
         });
-      }
+    }
+
+    public deleteUser(req: Request, res: Response){
+        const _id = req.params.id;
+        //@ts-ignore
+        const byUser = req.user ;
+        this.userService.filterUser({_id},(err: Error, user: IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            if(user._id != byUser._id){
+                if(byUser.companyRole <=3){
+                    return failureResponse("Access denied, you can't update", null, res);
+                }
+            }
+            this.userService.updateUserSync(_id, 
+                {$set:{deletedAt: new Date()}},  
+            (err: Error, user: IUser) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("Delete user successful", user, res)
+            })
+        })
+        
+    }
 }

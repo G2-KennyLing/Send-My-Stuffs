@@ -1,13 +1,14 @@
 import { ModificationNote } from "../common/model";
 
 export interface ICountry {
-	id?: String;
+	_id?: String;
 	countryCode: String;
 	countryName: String;
 	region: String;
 	timeZone: Date;
-	seaPorts?: String
+	seaPorts: String;
 	airPorts: String;
 	agents: String;
 	customers: String;
+	modificationNotes: [ModificationNote];
 }
