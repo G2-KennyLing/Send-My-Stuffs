@@ -30,20 +30,20 @@ const schema = new CountrySchema ({
 	},
 	seaPorts: [{
 		type: Schema.Types.ObjectId,
-		ref: 'seaPort'
+		ref: 'seaports',
+		required: true
 	}],
-	airPorts: {
+	airPorts: [{
 		type: Schema.Types.ObjectId,
-		ref: 'airPort'
-	},
+		ref: 'airports',
+		required: true
+	}],
 	agents: {
 		type: String,
 		trim: true,
 		required: true
 	}, 
-	customers: {
-		
-	},
+	customers: String,
 	modificationNotes: [ModificationNote]
 });
 

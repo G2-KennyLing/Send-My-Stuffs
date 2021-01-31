@@ -73,4 +73,4 @@ const Partner = new Schema({
     modificationNotes: [ModificationNote]
 });
 
-export default mongoose.model('Partners', Partner);
+export default mongoose.model('partners', Partner);
