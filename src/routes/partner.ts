@@ -11,7 +11,7 @@ export class PartnerRoutes {
     public route(app: Application) {
         const isSignIn = this.authController.isSignIn;
 
-        app.post('/partner',  (req: Request, res: Response) => {
+        app.post('/partner', isSignIn, (req: Request, res: Response) => {
             this.partnerController.createPartner(req, res);
         });
 
