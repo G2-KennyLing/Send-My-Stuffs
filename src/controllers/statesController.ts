@@ -23,13 +23,13 @@ export class StateController {
 			}
 			this.stateService.createStates(stateParams, (err: any, stateData: IState) => {
 				if (err) {
-					mongoError(err, res)
+					return mongoError(err, res)
 				}else {
-					successResponse('Created state successful', stateData, res)
+					return successResponse('Created state successful', stateData, res)
 				}
 			})
 		} else {
-			insufficientParameters(res)
+			return insufficientParameters(res)
 		}
 	}
 
@@ -38,7 +38,7 @@ export class StateController {
 			if (err) {
 				return mongoError(err, res)
 			}else {
-				successResponse("Get list state successful", stateData, res)
+				return successResponse("Get list state successful", stateData, res)
 			}
 		})
 	}
@@ -47,12 +47,12 @@ export class StateController {
 		const detailStateId = { _id: req.params.id };
 		this.stateService.filterState(detailStateId, (err: Error, stateData: IState) => {
 			if (err) {
-				mongoError(err, res)
+				return mongoError(err, res)
 			}
 			if (!stateData) {
-				failureResponse("State is not found", {}, res)
+				return failureResponse("State is not found", {}, res)
 			}else {
-				successResponse("Get state successful", stateData, res)
+				return successResponse("Get state successful", stateData, res)
 			}
 		})
 	}
@@ -63,7 +63,7 @@ export class StateController {
 			const updateStateId = { _id: req.params.id }
 			this.stateService.filterStates(updateStateId, (err: any, stateData: IState) => {
 				if (err) {
-					mongoError(err, res)
+					return mongoError(err, res)
 				}
 				if (stateData) {
 					const stateParams: IState = {
@@ -82,13 +82,13 @@ export class StateController {
 					}
 					this.stateService.updateState(stateParams, (err: any) => {
 						if (err) {
-							mongoError(err, res)
+							return mongoError(err, res)
 						} else {
-							successResponse("Update state successful", stateParams, res)
+							return successResponse("Update state successful", stateParams, res)
 						}
 					});
 				} else {
-					failureResponse("Parameter invalid", null, res)
+					return failureResponse("Parameter invalid", null, res)
 				}
 			})
 		}
@@ -99,15 +99,15 @@ export class StateController {
         const _id = req.params.id ;
         this.stateService.filterState({_id}, (err: any, stateData: IState) =>{
             if(err){
-                 mongoError(err, res);
+                return mongoError(err, res);
             } if(!stateData){
-                failureResponse("State is not found", null, res);
+                return failureResponse("State is not found", null, res);
             }
             this.stateService.deleteState(_id, {$set:{deletedAt: new Date()}}, (err: Error, stateData: IState) =>{
                 if(err){
-                    mongoError(err, res);
+                    return mongoError(err, res);
                 }
-                    successResponse("Delete state successful", stateData, res)
+                	return successResponse("Delete state successful", stateData, res)
             })
         })
         
