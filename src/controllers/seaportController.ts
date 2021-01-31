@@ -11,7 +11,9 @@ export class SeaportController {
         const {seaportName,portCode,latitude,longitude,status,country} = req.body;
         
         if(!(seaportName && portCode && latitude && longitude && status && country)){
-            return failureResponse("All fill is requied", null, res);
+            if(status !=0 && status ==1){
+                return failureResponse("All fill is requied", null, res);
+            }
         }
       
         this.seaportService.filterSeaport({seaportName},(err: Error, seaportData: ISeaport) =>{
@@ -36,9 +38,9 @@ export class SeaportController {
             };
             this.seaportService.createSeaport(seaportParams, (err: Error, seaportData: ISeaport) =>{
                 if(err){
-                     mongoError(err, res);
+                    return mongoError(err, res);
                 }
-                 successResponse("Create Seaport successful", seaportData, res);
+                return successResponse("Create Seaport successful", seaportData, res);
             })
         })
         
@@ -50,7 +52,7 @@ export class SeaportController {
 			if (err) {
 				return mongoError(err, res);
 			}else {
-				successResponse("Get List seaport successfull", seaportData, res)
+				return successResponse("Get List seaport successfull", seaportData, res)
 			}
 		})
     }
@@ -59,9 +61,9 @@ export class SeaportController {
         const seaportFilter = { _id: req.params.id };
         this.seaportService.filterSeaport(seaportFilter, (err: any, seaportData: ISeaport) => {
             if (err) {
-                mongoError(err, res);
+                return mongoError(err, res);
             } else {
-                successResponse('Get seaport successfull', seaportData, res);
+                return successResponse('Get seaport successfull', seaportData, res);
             }
         });
     
@@ -96,9 +98,9 @@ export class SeaportController {
                 };
                 this.seaportService.updateSeaport(seaportParams, (err: any) => {
                     if (err) {
-                        mongoError(err, res);
+                        return mongoError(err, res);
                     } else {
-                        successResponse("Update seaport successful", seaportParams, res);
+                        return successResponse("Update seaport successful", seaportParams, res);
                     }
                 });
             });  
