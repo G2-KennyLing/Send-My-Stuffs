@@ -26,5 +26,10 @@ export class PartnerRoutes {
         app.put('/partner/:id', isSignIn, (req: Request, res: Response) => {
             this.partnerController.updatePartner(req, res);
         });
+
+        app.delete("/partner/:id", isSignIn, (req: Request, res: Response) =>{
+            this.partnerController.deletePartner(req, res);
+        });
+
     }
 }
