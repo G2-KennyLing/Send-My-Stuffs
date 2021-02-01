@@ -26,6 +26,11 @@ export default class ShipmentRoutes {
         this.shipmentController.updateShipment(req, res);
       });
 
+      app.delete("/shipment/:id", isSignIn, (req: Request, res: Response) =>{
+        this.shipmentController.deleteShipment(req, res);
+    });
+
+
       app.get('/shipment/overview', isSignIn, (req: Request, res: Response) => {
         this.shipmentController.overviewShipment(req, res);
       });

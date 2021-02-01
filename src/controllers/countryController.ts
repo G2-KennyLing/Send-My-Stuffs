@@ -8,7 +8,15 @@ export class CountryController {
 	private countryService: CountryService = new CountryService();
 
 	public createCountry(req: Request, res: Response) {
-		const { countryCode, countryName, region, timeZone, seaPorts, airPorts , agents, customers } = req.body;
+		const { countryCode, countryName, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
+		if(!(countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers)){
+			return failureResponse("Fields are required", {}, res);
+		}
+		this.countryService.filterCountry({countryName}, (err: Error, country: ICountry) => {
+			if (country) {
+				return failureResponse("Country already exist", null, res)
+			}
+		})
 		if (countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers) {
 			const countryParams: ICountry = {
 				countryCode: countryCode,
@@ -27,22 +35,22 @@ export class CountryController {
 			}; 
 			this.countryService.createCountry(countryParams, (err: any, countryData: ICountry) => {
 				if (err) {
-					mongoError(err, res)
+					return mongoError(err, res)
 				} else {
-					successResponse('Country created successful', countryData, res);
+					return successResponse('Country created successful', countryData, res);
 				}
 			});
 		} else {
-			insufficientParameters(res);
+			return insufficientParameters(res);
 		}
 	}
 
 	public getListCountries(req: Request, res: Response) {
 		this.countryService.filterCountries( (err: any, countryData: ICountry) => {
 			if (err) {
-				mongoError(err, res);
+				return mongoError(err, res);
 			}else {
-				successResponse("Get list countries successful", countryData, res)
+				return successResponse("Get list countries successful", countryData, res)
 			}
 		})
 	}
@@ -51,9 +59,9 @@ export class CountryController {
 		const detailCountryId = { _id: req.params.id };
 		this.countryService.filterCountry( detailCountryId, (err: any, countryData: ICountry) => {
 			if (!countryData) {
-				failureResponse("Detail country not found", countryData, res)
+				return failureResponse("Detail country not found", countryData, res)
 			}else {
-				successResponse("Get detail country successful", countryData, res)
+				return successResponse("Get detail country successful", countryData, res)
 			}
 		});
 	}
@@ -85,13 +93,13 @@ export class CountryController {
 					};
 					this.countryService.updateCountry(countryParams, (err: any) => {
 						if(err){
-							mongoError(err, res)
+							return mongoError(err, res)
 						} else {
-							successResponse("Update country successful", countryParams, res)
+							return successResponse("Update country successful", countryParams, res)
 						}
 					});
 				}else {
-					failureResponse("invalid country", null, res)
+					return failureResponse("invalid country", null, res)
 				}
 			})	
 		} 

@@ -51,10 +51,10 @@ export class AuthController {
   }
 
   public isSignIn(req: Request, res: Response, next: NextFunction) {
-    if (!req.cookies) {
+    if (!req.headers.cookie) {
       return failureResponse("Unauthorized, access denied", null, res);
     }
-    const token = req.headers.token;
+    const token = req.headers.cookie.split("token=")[1];
     if (!token) {
       return failureResponse("Unauthorized, access denied", null, res);
     }
