@@ -134,7 +134,7 @@ export class PartnerController {
                         if (err) {
                            return mongoError(err, res);
                         } else {
-                           return successResponse("Update partner successful", partnerParams, res);
+                           return successResponse("Update partner successfully", partnerParams, res);
                         }
                     });
                 } else {
