@@ -9,10 +9,10 @@ export default class SeaportService {
     }
 
     public filterSeaports(query: any, callback: any) {
-		Seaports.find(query, callback);
+		Seaports.find(query, callback).populate('country', 'countryName');
     }
     public filterSeaport(query: any, callback: any) {
-        Seaports.findOne(query, callback);
+        Seaports.findOne(query, callback).populate('country', 'countryName');
     }
     public updateSeaport(seaportParams: ISeaport, callback: any) {
         const query = { _id: seaportParams._id };

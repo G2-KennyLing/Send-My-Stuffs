@@ -11,7 +11,9 @@ export class PartnerController {
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
         const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
-        if (companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo && status ) {
+        if (!(companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo )) {
+                return failureResponse("All fill is required", null, res);
+            }
             const partnerParams: IPartner = {
                 companyName,
                 domainName,
@@ -31,32 +33,51 @@ export class PartnerController {
                 peer,
                 logo,
                 status,
-                modification_notes: [{
+                modificationNotes: [{
                     modifiedOn: new Date(Date.now()),
                     modifiedBy: null,
                     modificationNote: 'New partner created'
                 }]
             };
-            this.partnerService.createPartner(partnerParams, (err: any, partnerData: IPartner) => {
-                if (err) {
-                    mongoError(err, res);
-                } else {
-                    successResponse('Create partner successfull', partnerData, res);
+            this.partnerService.filterPartner({companyName},(err: Error, partner: IPartner) =>{
+                if(err){
+                    return mongoError(err, res);
                 }
-            });
-        } else {
-            // error response if some fields are missing in request body
-            insufficientParameters(res);
+                if(partner){
+                    if(partner.deletedAt != undefined){
+                        partnerParams._id = partner._id;
+                        partnerParams.deletedAt = undefined;
+                        this.partnerService.updatePartner(partnerParams, (err: Error, partnerData: IPartner) => {
+                            if (err) {
+                               return mongoError(err, res);
+                            } else {
+                               return successResponse("Create partner successful", partnerParams, res);
+                            }
+                        })
+                    }
+                    else {
+                        return failureResponse("Partner already exist", null, res);
+                    }
+                }
+                else {
+                    this.partnerService.createPartner(partnerParams, (err: Error, partnerData: IPartner) => {
+                        if (err) {
+                           return mongoError(err, res);
+                        } else {
+                           return successResponse('Create partner successfull', partnerData, res);
+                        }
+            })
         }
+        })
     }
 
     public getListPartners(req: Request, res: Response) {
-        const partnerFilter = {};
+        const partnerFilter = {deletedAt: undefined};
         this.partnerService.filterPartners(partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
-                mongoError(err, res);
+               return mongoError(err, res);
             } else {
-                successResponse("Get list partners successful", partnerData, res);
+               return successResponse("Get list partners successful", partnerData, res);
             }
         });
     }
@@ -65,9 +86,9 @@ export class PartnerController {
         const partnerFilter = { _id: req.params.id };
         this.partnerService.filterPartner(partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
-                mongoError(err, res);
+                return mongoError(err, res);
             } else {
-                successResponse("Get partner detail successful", partnerData, res);
+                return successResponse("Get partner detail successful", partnerData, res);
             }
         });
     }
@@ -101,7 +122,7 @@ export class PartnerController {
                         peer : peer ? req.body.peer : partnerData.peer,
                         logo : logo ? req.body.logo : partnerData.logo,
                         status : status ? req.body.status : partnerData.status,
-                        modification_notes: [
+                        modificationNotes: [
                             {
                                 modifiedOn: new Date(Date.now()),
                                 modifiedBy: null,
@@ -111,15 +132,34 @@ export class PartnerController {
                     };
                     this.partnerService.updatePartner(partnerParams, (err: any) => {
                         if (err) {
-                            mongoError(err, res);
+                           return mongoError(err, res);
                         } else {
-                            successResponse("Update partner successful", partnerParams, res);
+                           return successResponse("Update partner successful", partnerParams, res);
                         }
                     });
                 } else {
-                    failureResponse("Invalid partner", null, res);
+                   return failureResponse("Invalid partner", null, res);
                 }
             });
         }
     }
+
+    public deletePartner(req: Request, res: Response){
+        const _id = req.params.id;
+        this.partnerService.filterPartner({_id}, (err: any, partnerData: IPartner) => {
+            if (err) {
+                return failureResponse("Partner not exist", null, res);
+            }
+            if (partnerData){
+            this.partnerService.updatePartnerDelete(_id,{$set:{deletedAt: new Date()}},  
+            (err: Error, partnerData: IPartner) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("Delete partner successful", partnerData, res)
+            })
+        }
+        })
+    }
+
 }
