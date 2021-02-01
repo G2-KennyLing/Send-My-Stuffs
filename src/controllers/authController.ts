@@ -47,9 +47,6 @@ export class AuthController {
   }
 
   public isSignIn(req: Request, res: Response, next: NextFunction) {
-    if (!req.headers.token) {
-      return failureResponse("Unauthorized, access denied", null, res);
-    }
     const token = req.headers.token;
     if (!token) {
       return failureResponse("Unauthorized, access denied", null, res);
