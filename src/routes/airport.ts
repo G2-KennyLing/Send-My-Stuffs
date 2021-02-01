@@ -27,5 +27,9 @@ export class AirportRoutes {
             this.airportController.updateAirport(req, res);
         });
 
+        app.delete('/airport/:id',isSignIn, (req: Request, res: Response) => {
+            this.airportController.isDelete(req, res);
+        }); 
+
     }
 }
