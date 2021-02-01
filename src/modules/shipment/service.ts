@@ -8,12 +8,14 @@ export default class ShipmentService {
     _session.save(callback);
 }
 
-  public filterShipments(query: any, callback: any) {
-    return Shipment.find(query, callback);
+  public filterShipments(param: any, query: any, callback: any) {
+    const limit =  param.limit;
+    const page = param.page;
+    Shipment.find(query, callback).populate('from','countryName').populate('to','countryName').limit(limit * 1 ).skip((page - 1) * limit);
   }
 
   public filterShipment(query: any, callback: any) {
-    Shipment.findOne(query, callback);
+    Shipment.findOne(query, callback).populate('from','countryName').populate('to','countryName');
   }
 
   public updateShipment(shipmentParams: IShipment, callback: any) {
@@ -42,4 +44,9 @@ export default class ShipmentService {
       },
     });
   }
+
+  public updateDeleteShipment(_id: String ,query: any, callback: any){
+    Shipment.findByIdAndUpdate(_id, query,{new: true}, callback);
+  }
+
 }
