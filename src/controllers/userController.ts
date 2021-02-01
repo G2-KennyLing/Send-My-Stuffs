@@ -119,13 +119,12 @@ export class UserController {
         const {name,
             telephone,
             mobile,
-            password,
             dateOfBirth,
             companyName,
             companyRole,
             userType} = req.body;
         const _id = req.params.id;
-        if(!(name && telephone && mobile && password && dateOfBirth && companyName)){
+        if(!(name && telephone && mobile && dateOfBirth && companyName)){
             return insufficientParameters(res)
         }
         //@ts-ignore
@@ -152,7 +151,7 @@ export class UserController {
                 telephone,
                 mobile,
                 email: user.email,
-                password: bcrypt.hashSync(password, 10),
+                password: user.password,
                 dateOfBirth,
                 companyName,
                 companyRole,

@@ -36,5 +36,9 @@ export class UserRoutes {
         app.delete("/user/:id", isSignIn, (req: Request, res: Response) =>{
             this.userController.deleteUser(req, res);
         })
+
+        app.put("/user/update/:id", isSignIn, (req: Request, res: Response) =>{
+            this.userController.updateUser(req, res);
+        })
     }
 }
