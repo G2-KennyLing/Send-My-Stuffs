@@ -65,9 +65,9 @@ export default class ShipmentController {
     const param = { page : page, limit : limit };
     this.shipmentService.filterShipments(param, shipmentFilter , (err: any, shipmentData: IShipment) => {
       if (err) {
-        mongoError(err, res);
+       return mongoError(err, res);
       } else {
-        successResponse("Get list shipments successful", shipmentData, res);
+       return successResponse("Get list shipments successful", shipmentData, res);
       }
     })
   }
@@ -76,9 +76,9 @@ export default class ShipmentController {
     const shipmentFilter = { _id: req.params.id };
     this.shipmentService.filterShipment(shipmentFilter, (err: any, shipmentData: IShipment) => {
       if (err) {
-        mongoError(err, res);
+       return mongoError(err, res);
       } else {
-        successResponse("Get shipment detail successful", shipmentData, res);
+       return successResponse("Get shipment detail successful", shipmentData, res);
       }
     });
   }
@@ -115,13 +115,13 @@ export default class ShipmentController {
         }
         this.shipmentService.updateShipment(shipmentParams, (err: any) => {
           if (err) {
-            mongoError(err, res);
+            return mongoError(err, res);
           } else {
-            successResponse("Update shipment successful", shipmentParams, res);
+            return successResponse("Update shipment successful", shipmentParams, res);
           }
         });
       } else {
-        failureResponse("Invalid shipment", null, res);
+        return failureResponse("Invalid shipment", null, res);
       }
     });
   }
@@ -133,7 +133,7 @@ export default class ShipmentController {
       departure,
       landing,
     };
-    successResponse("Overview shipment in past 7 days", response, res);
+   return successResponse("Overview shipment in past 7 days", response, res);
   }
 
   public deleteShipment(req: Request, res: Response){

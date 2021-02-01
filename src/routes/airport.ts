@@ -13,6 +13,19 @@ export class AirportRoutes {
 
         app.post('/airport', isSignIn, (req: Request, res: Response) => {
             this.airportController.createAirport(req, res);
-        });      
+        }); 
+        
+        app.get('/airports', isSignIn,(req: Request, res: Response) => {
+            this.airportController.getListAirports(req, res);
+        }); 
+
+        app.get('/airport/:id', isSignIn,(req: Request, res: Response) => {
+            this.airportController.getAirport(req, res);
+        }); 
+
+        app.put('/airport/:id', isSignIn,(req: Request, res: Response) => {
+            this.airportController.updateAirport(req, res);
+        });
+
     }
 }
