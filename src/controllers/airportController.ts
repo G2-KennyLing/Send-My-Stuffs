@@ -109,7 +109,24 @@ export class AirportController {
         })
     }
 
+    public isDelete(req: Request, res: Response) {
 
+        const _id = req.params.id ;
+        this.airportService.filterAirport({_id}, (err: any, airportData: IAirport) =>{
+            if(err){
+                return mongoError(err, res);
+            } if(!airportData){
+                return failureResponse("Airport is not found", null, res);
+            }
+            this.airportService.deleteAirport(_id, {$set:{deletedAt: new Date()}}, (err: Error, airportData: IAirport) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                    return successResponse("Delete Airport Successful", airportData, res)
+            })
+        })
+        
+    }
 }
 
 
