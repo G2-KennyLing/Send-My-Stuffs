@@ -25,7 +25,7 @@ export class CityController {
             }
             const cityParams: ICity = {
                 cityName: req.body.cityName,
-                icons: req.body.portCode,
+                icons: req.body.icons,
                 country: req.body.country,
                 status: req.body.status,
                 modificationNotes: [{
