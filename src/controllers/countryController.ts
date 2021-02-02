@@ -46,14 +46,14 @@ export class CountryController {
 	}
 
 	public getListCountries(req: Request, res: Response) {
-		this.countryService.filterCountries( (err: any, countryData: ICountry) => {
-			if (err) {
-				return mongoError(err, res);
-			}else {
-				return successResponse("Get list countries successful", countryData, res)
-			}
-		})
-	}
+        const countryFilter = {};
+        this.countryService.filterCountries(countryFilter, (err: any, countryData: ICountry) => {
+            if (err) {
+               return mongoError(err, res);
+            }
+            return successResponse("Get list country successful", countryData, res);
+        })
+    }
 
 	public getCountry(req: Request, res: Response) {
 		const detailCountryId = { _id: req.params.id };

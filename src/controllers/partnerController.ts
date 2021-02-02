@@ -78,10 +78,9 @@ export class PartnerController {
         this.partnerService.filterPartners(param, partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
                return mongoError(err, res);
-            } else {
-               return successResponse("Get list partners successful", partnerData, res);
             }
-        });
+            return successResponse("Get list partners successful", partnerData, res);
+        })
     }
 
     public getPartner(req: Request, res: Response) {
