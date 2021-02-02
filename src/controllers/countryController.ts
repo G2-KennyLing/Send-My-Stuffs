@@ -50,9 +50,8 @@ export class CountryController {
 		this.countryService.filterCountries(countryFilter, (err: any, countryData: ICountry) => {
 			if (err) {
 				return mongoError(err, res);
-			}else {
-				return successResponse("Get list countries successful", countryData, res)
 			}
+			return successResponse("Get list countries successful", countryData, res)
 		})
 	}
 
