@@ -18,7 +18,6 @@ const Partner = new Schema({
         unique: true,
         trim: true,
     },
-    workGroup: String,
     partnerType: String,
     industry: String,
     taxID: {
