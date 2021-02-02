@@ -11,7 +11,7 @@ export default class PartnerService {
     public filterPartners(param: any,query: any, callback: any) {
         const limit =  param.limit;
         const page = param.page;
-        return Partner.find(query, callback).populate('country', 'countryName').populate('city').populate('salesID').limit(limit * 1 ).skip((page - 1) * limit);;
+        Partner.find(query, callback).populate('country', 'countryName').populate('city').populate('salesID').limit(limit * 1 ).skip((page - 1) * limit);;
     }
 
     public filterPartner(query: any, callback: any) {
