@@ -7,10 +7,10 @@ export default class CityService {
         _session.save(callback);
     }
     public filterCity(query: any, callback: any) {
-        City.findOne(query, callback);
+        City.findOne(query, callback).populate('country','countryName');
     }
 
     public filterCities(query: any, callback: any) {
-        City.find(query, callback);
+        City.find(query, callback).populate('country','countryName');
     }
 }
