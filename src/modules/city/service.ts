@@ -1,12 +1,12 @@
 import { ICity } from './model';
-import Citys from './schema';
+import City from './schema';
 
 export default class CityService {
     public createCity(cityParams: ICity, callback: any) {
-        const _session = new Citys(cityParams);
+        const _session = new City(cityParams);
         _session.save(callback);
     }
     public filterCity(query: any, callback: any) {
-        Citys.findOne(query, callback);
+        City.findOne(query, callback);
     }
 }
