@@ -50,7 +50,7 @@ export class CityController {
             if(err){
                 return mongoError (err ,res);
             }else{
-                return  failureResponse("Get List seaport successfull", cityData, res)
+                return  failureResponse("Get List city successfull", cityData, res)
             }
         })
     }
