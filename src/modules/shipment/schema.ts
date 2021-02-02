@@ -10,12 +10,12 @@ const shipmentSchema = new Schema({
   },
   from: {
     type: Schema.Types.ObjectId,
-    ref: "country",
+    ref: "countries",
     required: true,
   },
   to: {
     type: Schema.Types.ObjectId,
-    ref: "country",
+    ref: "countries",
     required: true,
   },
   departureDate: {
@@ -41,6 +41,10 @@ const shipmentSchema = new Schema({
     enum: [0, 1, 2, 3],
     required: true,
     default: 0,
+  },
+  deletedAt:{
+    type:Date,
+    default: undefined
   },
   ModificationNote: {
     type: [ModificationNote],

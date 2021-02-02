@@ -72,8 +72,10 @@ export class PartnerController {
     }
 
     public getListPartners(req: Request, res: Response) {
+        const { page = 1, limit = 10 } = req.query;
+        const param = { page : page, limit : limit };
         const partnerFilter = {deletedAt: undefined};
-        this.partnerService.filterPartners(partnerFilter, (err: any, partnerData: IPartner) => {
+        this.partnerService.filterPartners(param, partnerFilter, (err: any, partnerData: IPartner) => {
             if (err) {
                return mongoError(err, res);
             } else {
@@ -134,7 +136,7 @@ export class PartnerController {
                         if (err) {
                            return mongoError(err, res);
                         } else {
-                           return successResponse("Update partner successful", partnerParams, res);
+                           return successResponse("Update partner successfully", partnerParams, res);
                         }
                     });
                 } else {

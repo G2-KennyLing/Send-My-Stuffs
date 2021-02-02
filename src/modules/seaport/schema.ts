@@ -28,9 +28,9 @@ const schema = new seaportSchema({
 		enum: [0, 1],
 		default: 0
     },
-    isDeleted: {
-        type: Boolean,
-        default: false
+    deletedAt:{
+        type:Date,
+        default: undefined
     },
     modificationNotes: [ModificationNote]
 });

@@ -36,12 +36,8 @@ export class AuthController {
       const refreshToken = jwt.sign({ user }, process.env.JWT_REFRESH_TOKEN, {
         expiresIn: "7d",
       });
-      res.cookie("token", token, {
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
-      });
-      res.cookie("refreshToken", refreshToken, {
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-      });
+      res.setHeader("token", token);
+      res.setHeader("refreshToken", refreshToken);
       return successResponse(
         "Sign In successful",
         { user, token, refreshToken },
@@ -51,10 +47,7 @@ export class AuthController {
   }
 
   public isSignIn(req: Request, res: Response, next: NextFunction) {
-    if (!req.cookies) {
-      return failureResponse("Unauthorized, access denied", null, res);
-    }
-    const token = req.cookies.token;
+    const token = req.headers.token;
     if (!token) {
       return failureResponse("Unauthorized, access denied", null, res);
     }
@@ -124,8 +117,8 @@ export class AuthController {
     next();
   }
   public signOut(req: Request, res: Response){
-    res.clearCookie("token");
-    res.clearCookie("refreshToken");
+    delete req.headers["token"];
+    delete req.headers["refreshToken"];
     return successResponse("Sign out successful", null, res);
   }
 }

@@ -50,7 +50,13 @@ class App {
    private config(): void {
       this.app.use(bodyParser.json());
       this.app.use(bodyParser.urlencoded({ extended: false }));
-      this.app.use(cors());
+      const headers = {
+         origin: "http://localhost:4200",
+         method: "GET,POST,PUT,PATCH,DELETE,HEAD",
+         preflightContinue: false,
+         optionsSuccessStatus: 204
+       };
+      this.app.use(cors(headers));
       this.app.use(cookieParser());
       require("dotenv").config();
    }
