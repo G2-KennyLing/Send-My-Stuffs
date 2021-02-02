@@ -10,14 +10,13 @@ export class PartnerController {
 
     public createPartner(req: Request, res: Response) {
         // this check whether all the filds were send through the erquest or not
-        const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
-        if (!(companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo )) {
+        const { companyName, domainName, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
+        if (!(companyName && domainName  && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo )) {
                 return failureResponse("All fill is required", null, res);
             }
             const partnerParams: IPartner = {
                 companyName,
                 domainName,
-                workGroup,
                 partnerType,
                 industry,
                 taxID,
@@ -95,8 +94,8 @@ export class PartnerController {
     }
 
     public updatePartner(req: Request, res: Response) {
-        const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
-        if (!(companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo ))  {
+        const { companyName, domainName, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
+        if (!(companyName && domainName  && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo ))  {
             return insufficientParameters(res)
         }
             const partnerFilter = { _id: req.params.id };
@@ -109,7 +108,6 @@ export class PartnerController {
                         _id: partnerData._id,
                         companyName,
                         domainName,
-                        workGroup,
                         partnerType,
                         industry,
                         taxID,
