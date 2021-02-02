@@ -43,4 +43,16 @@ export class CityController {
         })
         
     }
+
+    public getlistCity(req: Request, res: Response){
+        const city_Filter = {deletedAt:undefined};
+        this.cityService.filterCities(city_Filter, (err: any, cityData: ICity) =>{
+            if(err){
+                return mongoError (err ,res);
+            }else{
+                return  failureResponse("Get List city successfull", cityData, res)
+            }
+        })
+    }
+
 }
