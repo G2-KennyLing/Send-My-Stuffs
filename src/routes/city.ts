@@ -16,7 +16,7 @@ export class CityRoutes {
         }); 
 
         app.get('/cities', isSignIn, (req: Request, res: Response) => {
-            this.cityController.getlistCity(req, res);
+            this.cityController.getListCities(req, res);
         }); 
         
 

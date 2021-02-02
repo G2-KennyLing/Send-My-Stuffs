@@ -2,9 +2,8 @@ import * as mongoose from 'mongoose';
 import { ModificationNote } from '../common/model';
 
 const Schema = mongoose.Schema;
-const CitySchema = mongoose.Schema;
 
-const schema = new CitySchema({
+const schema = new Schema({
     cityName: {
         type: String,
         trim: true,
@@ -30,4 +29,4 @@ const schema = new CitySchema({
     modificationNotes: [ModificationNote]
 });
 
-export default mongoose.model('cities', schema);
+export default mongoose.model('city', schema);

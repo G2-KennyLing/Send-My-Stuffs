@@ -25,7 +25,7 @@ export class CityController {
             }
             const cityParams: ICity = {
                 cityName: req.body.cityName,
-                icons: req.body.portCode,
+                icons: req.body.icons,
                 country: req.body.country,
                 status: req.body.status,
                 modificationNotes: [{
@@ -44,7 +44,7 @@ export class CityController {
         
     }
 
-    public getlistCity(req: Request, res: Response){
+    public getListCities(req: Request, res: Response){
         const city_Filter = {deletedAt:undefined};
         this.cityService.filterCities(city_Filter, (err: any, cityData: ICity) =>{
             if(err){

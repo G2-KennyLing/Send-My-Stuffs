@@ -18,7 +18,6 @@ const Partner = new Schema({
         unique: true,
         trim: true,
     },
-    workGroup: String,
     partnerType: String,
     industry: String,
     taxID: {
@@ -47,7 +46,7 @@ const Partner = new Schema({
     },
     telephone: String,
     facsimile: {
-        type: Number,
+        type: String,
         required: true,
         unique: true,
         trim: true,
