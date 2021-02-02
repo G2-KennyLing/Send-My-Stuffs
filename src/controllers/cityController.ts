@@ -44,7 +44,7 @@ export class CityController {
         
     }
 
-    public getlistCity(req: Request, res: Response){
+    public getListCities(req: Request, res: Response){
         const city_Filter = {deletedAt:undefined};
         this.cityService.filterCities(city_Filter, (err: any, cityData: ICity) =>{
             if(err){
