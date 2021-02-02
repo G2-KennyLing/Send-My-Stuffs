@@ -16,7 +16,7 @@ export interface IPartner {
     addressLineFirst: String;
     addressLineSecond: String;
     telephone: String;
-    facsimile: Number;
+    facsimile: String;
     salesID: String;
     wallet: Number;
     user: Number;

@@ -47,7 +47,7 @@ const Partner = new Schema({
     },
     telephone: String,
     facsimile: {
-        type: Number,
+        type: String,
         required: true,
         unique: true,
         trim: true,
