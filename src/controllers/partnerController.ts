@@ -97,7 +97,9 @@ export class PartnerController {
 
     public updatePartner(req: Request, res: Response) {
         const { companyName, domainName, workGroup, partnerType, industry, taxID, country, city, addressLineFirst, addressLineSecond, telephone, facsimile, salesID, wallet, user, peer, logo, status } = req.body;
-        if (companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo && status )  {
+        if (!(companyName && domainName && workGroup && partnerType && industry && taxID && country && city && addressLineFirst && addressLineSecond && telephone && facsimile && salesID && wallet && user && peer && logo ))  {
+            return insufficientParameters(res)
+        }
             const partnerFilter = { _id: req.params.id };
             this.partnerService.filterPartner(partnerFilter, (err: any, partnerData: IPartner) => {
                 if (err) {
@@ -105,25 +107,25 @@ export class PartnerController {
                 }
                 if (partnerData) {
                     const partnerParams: IPartner = {
-                        _id: req.params.id,
-                        companyName : companyName ? req.body.companyName : partnerData.companyName,
-                        domainName : domainName ? req.body.domainName : partnerData.domainName,
-                        workGroup : workGroup ? req.body.workGroup : partnerData.workGroup,
-                        partnerType : partnerType ? req.body.partnerType : partnerData.partnerType,
-                        industry : industry ? req.body.industry : partnerData.industry,
-                        taxID : taxID ? req.body.taxID : partnerData.taxID,
-                        country : country ? req.body.country : partnerData.country,
-                        city : city ? req.body.city : partnerData.city,
-                        addressLineFirst : addressLineFirst ? req.body.addressLineFirst : partnerData.addressLineFirst,
-                        addressLineSecond : addressLineSecond ? req.body.addressLineSecond : partnerData.addressLineSecond,
-                        telephone : telephone ? req.body.telephone : partnerData.telephone,
-                        facsimile : facsimile ? req.body.facsimile : partnerData.facsimile,
-                        salesID : salesID ? req.body.salesID : partnerData.salesID,
-                        wallet : wallet ? req.body.wallet : partnerData.wallet,
-                        user : user ? req.body.user : partnerData.user,
-                        peer : peer ? req.body.peer : partnerData.peer,
-                        logo : logo ? req.body.logo : partnerData.logo,
-                        status : status ? req.body.status : partnerData.status,
+                        _id: partnerData._id,
+                        companyName,
+                        domainName,
+                        workGroup,
+                        partnerType,
+                        industry,
+                        taxID,
+                        country,
+                        city,
+                        addressLineFirst,
+                        addressLineSecond,
+                        telephone,
+                        facsimile,
+                        salesID,
+                        wallet,
+                        user,
+                        peer,
+                        logo,
+                        status,
                         modificationNotes: [
                             {
                                 modifiedOn: new Date(Date.now()),
@@ -143,7 +145,6 @@ export class PartnerController {
                    return failureResponse("Invalid partner", null, res);
                 }
             });
-        }
     }
 
     public deletePartner(req: Request, res: Response){
