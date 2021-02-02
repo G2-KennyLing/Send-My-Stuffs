@@ -8,9 +8,7 @@ export class CityController {
 
     public createCity(req: Request, res: Response){
         const {cityName,icons,country,status} = req.body;
-        //check edit
         if(!(cityName && icons && country &&status && country)){
-            //Check Status
              if(status != 0 && status == 1){
                 return failureResponse("All fill is requied", null, res);
               }
@@ -45,12 +43,12 @@ export class CityController {
     }
 
     public getListCities(req: Request, res: Response){
-        const city_Filter = {deletedAt:undefined};
-        this.cityService.filterCities(city_Filter, (err: any, cityData: ICity) =>{
+        const cityFilter = {deletedAt:undefined};
+        this.cityService.filterCities(cityFilter, (err: any, cityData: ICity) =>{
             if(err){
                 return mongoError (err ,res);
             }else{
-                return  failureResponse("Get List city successfull", cityData, res)
+                return  successResponse("Get List city successfull", cityData, res)
             }
         })
     }
