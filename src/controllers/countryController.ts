@@ -46,7 +46,8 @@ export class CountryController {
 	}
 
 	public getListCountries(req: Request, res: Response) {
-		this.countryService.filterCountries( (err: any, countryData: ICountry) => {
+		const countryFilter = {};
+		this.countryService.filterCountries(countryFilter, (err: any, countryData: ICountry) => {
 			if (err) {
 				return mongoError(err, res);
 			}else {
