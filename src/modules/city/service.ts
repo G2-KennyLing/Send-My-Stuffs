@@ -9,4 +9,8 @@ export default class CityService {
     public filterCity(query: any, callback: any) {
         Citys.findOne(query, callback);
     }
+
+    public filterCities(query: any, callback: any) {
+        Citys.find(query, callback);
+    }
 }
