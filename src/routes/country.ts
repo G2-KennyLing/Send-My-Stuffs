@@ -18,6 +18,10 @@ export class CountryRoutes {
 			this.countryController.getListCountries(req, res);
 		})
 
+		app.get('/country/cities/:countryId', isSignIn, (req: Request, res: Response) => {
+			this.countryController.getCityByCountry(req, res);
+		})
+
 		app.get('/country/:id', isSignIn, (req: Request, res: Response) => {
 			this.countryController.getCountry(req, res);
 		})

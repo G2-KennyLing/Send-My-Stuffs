@@ -12,10 +12,10 @@ const schema = new Schema({
         uppercase: true
     },
     icons: String,
-    country: [{
+    country: {
         type: Schema.Types.ObjectId, 
         ref: 'countries',
-    }],
+    },
 
     status: {
 		type: Number,
@@ -29,4 +29,4 @@ const schema = new Schema({
     modificationNotes: [ModificationNote]
 });
 
-export default mongoose.model('city', schema);
+export default mongoose.model('cities', schema);

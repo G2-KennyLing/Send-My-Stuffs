@@ -11,11 +11,11 @@ export default class PartnerService {
     public filterPartners(param: any,query: any, callback: any) {
         const limit =  param.limit;
         const page = param.page;
-        Partners.find(query, callback).populate('country', 'countryName').populate('city').populate('salesID').limit(limit * 1 ).skip((page - 1) * limit);;
+        Partners.find(query, callback).populate('country', 'countryName').populate({path:'city', populate:{path:'city'}}).populate('salesID').limit(limit * 1 ).skip((page - 1) * limit);;
     }
 
     public filterPartner(query: any, callback: any) {
-        Partners.findOne(query, callback).populate('country', 'countryName').populate('city').populate('salesID');
+        Partners.findOne(query, callback).populate('country', 'countryName').populate({path:'city', populate:{path:'city'}}).populate('salesID');
     }
 
     public updatePartner(partnerParams: IPartner, callback: any) {

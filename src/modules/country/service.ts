@@ -1,5 +1,6 @@
 import { ICountry } from './model';
 import Countries  from './schema';
+import Cities from '../city/schema';
 
 export default class CountryService {
 
@@ -9,11 +10,15 @@ export default class CountryService {
 	}
 
 	public filterCountries(query: any, callback: any) {
-		Countries.find(query, callback).populate('seaPorts', 'seaportName').populate('airPorts', 'airportName');
+		Countries.find(query, callback).populate('city','cityName').populate('seaPorts', 'seaportName').populate('airPorts', 'airportName');
+	}
+
+	public filterCitiesByCountryId(query: any, callback: any){
+		Cities.find(query, callback);
 	}
 
 	public filterCountry(query: any, callback: any) {
-		Countries.findOne(query, callback).populate('seaPorts', 'seaportName').populate('airPorts', 'airportName')
+		Countries.findOne(query, callback).populate('city','cityName').populate('seaPorts', 'seaportName').populate('airPorts', 'airportName')
 	}
 
 	public updateCountry(countryParams: ICountry, callback: any) {
