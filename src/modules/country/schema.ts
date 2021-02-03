@@ -18,6 +18,11 @@ const schema = new CountrySchema ({
 		required: true,
 		unique: true
 	},
+	city: [{
+		type: Schema.Types.ObjectId,
+		ref: 'cities',
+		required: true
+	}],
 	region: {
 		type: String,
 		trim: true,

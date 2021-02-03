@@ -2,14 +2,15 @@ import { ModificationNote } from './../modules/common/model';
 import { Request, Response } from 'express';
 import { insufficientParameters, mongoError, successResponse, failureResponse } from '../modules/common/service';
 import { ICountry } from '../modules/country/model';
+import { ICity } from '../modules/city/model';
 import CountryService from '../modules/country/service';
 
 export class CountryController {
 	private countryService: CountryService = new CountryService();
 
 	public createCountry(req: Request, res: Response) {
-		const { countryCode, countryName, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
-		if(!(countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers)){
+		const { countryCode, countryName, city, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
+		if(!(countryCode && countryName && city && region && timeZone && seaPorts && airPorts && agents && customers)){
 			return failureResponse("Fields are required", {}, res);
 		}
 		this.countryService.filterCountry({countryName}, (err: Error, country: ICountry) => {
@@ -17,10 +18,11 @@ export class CountryController {
 				return failureResponse("Country already exist", null, res)
 			}
 		})
-		if (countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers) {
+		if (countryCode && countryName && city && region && timeZone && seaPorts && airPorts && agents && customers) {
 			const countryParams: ICountry = {
 				countryCode: countryCode,
 				countryName: countryName,
+				city: city,
 				region: region,
 				timeZone: timeZone,
 				seaPorts: seaPorts,
@@ -45,6 +47,19 @@ export class CountryController {
 		}
 	}
 
+	public getCityByCountry(req: Request, res: Response) {
+		const cityFilter = { country: req.params.countryId };
+		this.countryService.filterCitiesByCountryId(cityFilter, (err: any, cityData: ICity) => {
+			if (!cityData) {
+				return failureResponse("City not found",cityData , res)
+			}
+			else {
+			 return successResponse("Get list city by country successful", cityData, res);
+			}
+		})
+
+	}
+
 	public getListCountries(req: Request, res: Response) {
         const countryFilter = {};
         this.countryService.filterCountries(countryFilter, (err: any, countryData: ICountry) => {
@@ -67,8 +82,8 @@ export class CountryController {
 	}
 
 	public updateCountry(req: Request, res: Response) {
-		const { countryCode, countryName, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
-		if (countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers) {
+		const { countryCode, countryName, city, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
+		if (countryCode && countryName & city && region && timeZone && seaPorts && airPorts && agents && customers) {
 			const updateCountryId = { _id: req.params.id };
 			this.countryService.filterCountry(updateCountryId, (err: any, countryData: ICountry) => {
 				 if(err) {
@@ -79,6 +94,7 @@ export class CountryController {
 						_id: req.params.id, 
 						countryCode: countryCode ? countryCode : countryData.countryCode,
 						countryName: countryName ? countryName : countryData.countryName,
+						city: city ? city : countryData.city,
 						region: region ? region : countryData.region,
 						timeZone: timeZone ? timeZone : countryData.timeZone,
 						seaPorts: seaPorts ? seaPorts : countryData.seaPorts,
