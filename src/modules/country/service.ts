@@ -14,7 +14,7 @@ export default class CountryService {
 	}
 
 	public filterCitiesByCountryId(query: any, callback: any){
-		Cities.find(query, callback);
+		Cities.find(query, callback).populate('city','cityName');
 	}
 
 	public filterCountry(query: any, callback: any) {
