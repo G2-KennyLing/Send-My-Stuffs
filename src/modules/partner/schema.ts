@@ -33,7 +33,7 @@ const Partner = new Schema({
     },
     city: {
         type: Schema.Types.ObjectId,
-        ref: "countries",
+        ref: "cities",
         required: true,
     },
     addressLineFirst: {
