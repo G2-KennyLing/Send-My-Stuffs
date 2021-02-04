@@ -17,7 +17,8 @@ import ShipmentRoute from "../routes/shipment";
 
 class App {
   public app: express.Application;
-  public mongoUrl: string = "mongodb://localhost:27017/" + environment.getDBName();
+//   public mongoUrl: string = "mongodb://localhost:27017/" + environment.getDBName();
+  public mongoUrl: string = "mongodb+srv://leotechasia:tottistore@leotech-asia.ekxyk.mongodb.net/send-my-stuffs?retryWrites=true&w=majority";
 
    private AuthRoutes: AuthRoutes = new AuthRoutes();
    private UserRoutes: UserRoutes = new UserRoutes();
