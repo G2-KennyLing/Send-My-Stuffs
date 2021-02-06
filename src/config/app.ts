@@ -44,7 +44,7 @@ class App {
       this.app.use(bodyParser.json());
       this.app.use(bodyParser.urlencoded({ extended: false }));
       const headers = {
-         origin: "http://localhost:4200",
+         origin: "*",
          credentials: true,
          method: "GET,POST,PUT,PATCH,DELETE,HEAD",
        };
