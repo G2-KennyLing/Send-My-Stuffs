@@ -52,13 +52,12 @@ class App {
       this.app.use(bodyParser.json());
       this.app.use(bodyParser.urlencoded({ extended: false }));
       const headers = {
-         //origin: "*",
+         origin: "*",
          credentials: true,
-         origin: true,
          method: "GET,POST,PUT,PATCH,DELETE,HEAD",
          preflightContinue: false,
          allowedHeaders:"Access-Control-Allow-Headers,Access-Control-Allow-Origin,Access-Control-Request-Method,Access-Control-Request-Headers,Origin,Cache-Control,Content-Type,X-Token,X-Refresh-Token",
-         optionsSuccessStatus: 204
+         optionsSuccessStatus: 200
        };
       this.app.use(cors(headers));
       this.app.use(cookieParser());
