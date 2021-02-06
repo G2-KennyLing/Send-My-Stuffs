@@ -10,12 +10,15 @@ import { PartnerRoutes } from "../routes/partner";
 import { CountryRoutes } from "../routes/country";
 import { SeaportRoutes } from "../routes/seaport";
 import { AirportRoutes } from "../routes/airport";
+import { CityRoutes } from "../routes/city";
+import { StateRoutes } from "../routes/state";
 import { CommonRoutes } from "../routes/common";
 import ShipmentRoute from "../routes/shipment";
 
 class App {
   public app: express.Application;
-  public mongoUrl: string = "mongodb://localhost:27017/" + environment.getDBName();
+//   public mongoUrl: string = "mongodb://localhost:27017/" + environment.getDBName();
+  public mongoUrl: string = "mongodb+srv://leotechasia:tottistore@leotech-asia.ekxyk.mongodb.net/send-my-stuffs?retryWrites=true&w=majority";
 
    private AuthRoutes: AuthRoutes = new AuthRoutes();
    private UserRoutes: UserRoutes = new UserRoutes();
@@ -24,6 +27,8 @@ class App {
    private CountryRoutes: CountryRoutes = new CountryRoutes();
    private SeaportRoutes: SeaportRoutes = new SeaportRoutes();
    private AirportRoutes: AirportRoutes = new AirportRoutes();
+   private StateRoutes: StateRoutes = new StateRoutes();
+   private CityRoutes: CityRoutes = new CityRoutes();
    private commonRoutes: CommonRoutes = new CommonRoutes();
 
    constructor() {
@@ -36,7 +41,10 @@ class App {
       this.CountryRoutes.route(this.app);
       this.SeaportRoutes.route(this.app);
       this.AirportRoutes.route(this.app);
+      this.CityRoutes.route(this.app);
       this.ShipmentRoutes.route(this.app);
+      this.StateRoutes.route(this.app);
+      this.commonRoutes.route(this.app);
       this.commonRoutes.route(this.app);
    }
 
@@ -47,6 +55,8 @@ class App {
          origin: "*",
          credentials: true,
          method: "GET,POST,PUT,PATCH,DELETE,HEAD",
+         preflightContinue: false,
+         optionsSuccessStatus: 204
        };
       this.app.use(cors(headers));
       this.app.use(cookieParser());

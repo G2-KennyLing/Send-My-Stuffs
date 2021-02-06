@@ -1,82 +1,124 @@
+import { ModificationNote } from './../modules/common/model';
 import { Request, Response } from 'express';
 import { insufficientParameters, mongoError, successResponse, failureResponse } from '../modules/common/service';
 import { ICountry } from '../modules/country/model';
+import { ICity } from '../modules/city/model';
 import CountryService from '../modules/country/service';
 
 export class CountryController {
 	private countryService: CountryService = new CountryService();
 
 	public createCountry(req: Request, res: Response) {
-		const { countryCode, countryName, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
-		if (countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers) {
+		const { countryCode, countryName, city, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
+		if(!(countryCode && countryName && city && region && timeZone && seaPorts && airPorts && agents && customers)){
+			return failureResponse("Fields are required", {}, res);
+		}
+		this.countryService.filterCountry({countryName}, (err: Error, country: ICountry) => {
+			if (country) {
+				return failureResponse("Country already exist", null, res)
+			}
+		})
+		if (countryCode && countryName && city && region && timeZone && seaPorts && airPorts && agents && customers) {
 			const countryParams: ICountry = {
-				countryCode: req.body.countryCode,
-				countryName: req.body.countryName,
-				region: req.body.region,
-				timeZone: req.body.timeZone,
-				seaPorts: req.params.seaPorts,
-				airPorts: req.body.airPorts,
-				agents: req.body.agents,
-				customers: req.body.customers,
+				countryCode: countryCode,
+				countryName: countryName,
+				city: city,
+				region: region,
+				timeZone: timeZone,
+				seaPorts: seaPorts,
+				airPorts: airPorts,
+				agents: agents,
+				customers: customers,
+				modificationNotes: [{
+					modifiedOn: new Date(Date.now()),
+					modifiedBy: null,
+					modificationNote: "Create country successful",
+				}]
 			}; 
 			this.countryService.createCountry(countryParams, (err: any, countryData: ICountry) => {
 				if (err) {
-					mongoError(err, res)
+					return mongoError(err, res)
 				} else {
-					successResponse('Country created successfull', countryData, res);
+					return successResponse('Country created successful', countryData, res);
 				}
 			});
 		} else {
-			insufficientParameters(res);
+			return insufficientParameters(res);
 		}
 	}
 
-	public getListCountries(req: Request, res: Response) {
-		this.countryService.filterCountries({}, (err: any, countryData: ICountry) => {
-			if (err) {
-				return mongoError(err, res);
-			}else {
-				successResponse("Get list countries successfull", countryData, res)
+	public getCityByCountry(req: Request, res: Response) {
+		const cityFilter = { country: req.params.countryId };
+		this.countryService.filterCitiesByCountryId(cityFilter, (err: any, cityData: ICity) => {
+			if (!cityData) {
+				return failureResponse("City not found",cityData , res)
+			}
+			else {
+			 return successResponse("Get list city by country successful", cityData, res);
 			}
 		})
+
 	}
+
+	public getListCountries(req: Request, res: Response) {
+        const countryFilter = {};
+        this.countryService.filterCountries(countryFilter, (err: any, countryData: ICountry) => {
+            if (err) {
+               return mongoError(err, res);
+            }
+            return successResponse("Get list country successful", countryData, res);
+        })
+    }
 
 	public getCountry(req: Request, res: Response) {
 		const detailCountryId = { _id: req.params.id };
 		this.countryService.filterCountry( detailCountryId, (err: any, countryData: ICountry) => {
 			if (!countryData) {
-				failureResponse("Detail country not found", countryData, res)
+				return failureResponse("Detail country not found", countryData, res)
 			}else {
-				successResponse("Get detail country successfull", countryData, res)
+				return successResponse("Get detail country successful", countryData, res)
 			}
 		});
 	}
 
 	public updateCountry(req: Request, res: Response) {
-		const updateCountryId = { _id: req.params.id };
-		const { countryCode, countryName, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
-		if (!(countryCode && countryName && region && timeZone && seaPorts && airPorts && agents && customers)) {
-			return insufficientParameters(res)
-		} const countryParams: ICountry = {
-			_id: req.params.id, 
-			countryCode: countryCode,
-			countryName: countryName,
-			region: region,
-			timeZone: timeZone,
-			seaPorts: seaPorts,
-			airPorts: airPorts,
-			agents: agents,
-			customers: customers
-		}
-		this.countryService.updateCountry(countryParams, (err: any, countryData: ICountry) => {
-			if (err) {
-				return mongoError(err, res)
-			} 
-			if (!countryData) {
-				return failureResponse("Update Country Failed", {}, res)
-			} else {
-				successResponse("Update Country successful", { countryData }, res)
-			}
-		})
+		const { countryCode, countryName, city, region, timeZone, seaPorts, airPorts, agents, customers } = req.body;
+		if (countryCode && countryName & city && region && timeZone && seaPorts && airPorts && agents && customers) {
+			const updateCountryId = { _id: req.params.id };
+			this.countryService.filterCountry(updateCountryId, (err: any, countryData: ICountry) => {
+				 if(err) {
+					return mongoError(err, res)
+				 }
+				 if(countryData) {
+					const countryParams: ICountry = {
+						_id: req.params.id, 
+						countryCode: countryCode ? countryCode : countryData.countryCode,
+						countryName: countryName ? countryName : countryData.countryName,
+						city: city ? city : countryData.city,
+						region: region ? region : countryData.region,
+						timeZone: timeZone ? timeZone : countryData.timeZone,
+						seaPorts: seaPorts ? seaPorts : countryData.seaPorts,
+						airPorts: airPorts ? airPorts : countryData.airPorts,
+						agents: agents ? agents : countryData.agents,
+						customers: customers ? customers : countryData.customers,
+						modificationNotes: [{
+							modifiedOn: new Date(Date.now()),
+    						modifiedBy: null,
+    						modificationNote: "Country data updated",
+						}]
+					};
+					this.countryService.updateCountry(countryParams, (err: any) => {
+						if(err){
+							return mongoError(err, res)
+						} else {
+							return successResponse("Update country successful", countryParams, res)
+						}
+					});
+				}else {
+					return failureResponse("invalid country", null, res)
+				}
+			})	
+		} 
+		
 	}
 }

@@ -16,5 +16,6 @@ export default interface IShipment {
   voyage?: String;
   cargoDescription: String;
   status?: Status;
+  deletedAt?: Date;
   ModificationNote?: [ModificationNote];
 }

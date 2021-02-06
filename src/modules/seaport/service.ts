@@ -9,14 +9,22 @@ export default class SeaportService {
     }
 
     public filterSeaports(query: any, callback: any) {
-		Seaports.find(query, callback);
+		Seaports.find(query, callback).populate('country', 'countryName');
     }
     public filterSeaport(query: any, callback: any) {
-        Seaports.findOne(query, callback);
+        Seaports.findOne(query, callback).populate('country', 'countryName');
     }
     public updateSeaport(seaportParams: ISeaport, callback: any) {
         const query = { _id: seaportParams._id };
         Seaports.findOneAndUpdate(query, seaportParams,{new: true}, callback);
     }
-   
+    public deleteSeoport(_id: String ,query: any, callback: any){
+        Seaports.findByIdAndUpdate(_id, query,{new: true}, callback);
+    }
+
+    public isDelete(_id: String, callback: any) {
+        const query = { _id: _id };
+        Seaports.deleteOne(query, callback);
+    }
+
 }

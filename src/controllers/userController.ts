@@ -37,30 +37,40 @@ export class UserController {
                 default: return failureResponse("Access denied, you can't create", null, res);
             }
         }
+        const userParams: IUser = { 
+            name,
+            telephone,
+            mobile,
+            email,
+            password: bcrypt.hashSync(password, 10),
+            dateOfBirth,
+            companyName,
+            companyRole,
+            userType,
+            lastActivity: new Date(),
+            modificationNotes: [{
+                modifiedBy: byUser,
+                modifiedOn: new Date(),
+                modificationNote: 'Create new user',
+            }]
+        }
         this.userService.filterUser({email},(err: Error, user: IUser) =>{
             if(err){
                 return mongoError(err, res);
             }
             if(user){
+                if(user.deletedAt != undefined){
+                    userParams._id = user._id;
+                    userParams.deletedAt = undefined;
+                    this.userService.updateUser(userParams, (err: Error, userData: IUser) =>{
+                        if(err){
+                            return mongoError(err, res);
+                        }
+                        return successResponse("Create user successful", userData, res);
+                    })
+                } else
                 return failureResponse("Email is already use", null, res);
-            }
-            const userParams: IUser = { 
-                name,
-                telephone,
-                mobile,
-                email,
-                password: bcrypt.hashSync(password, 10),
-                dateOfBirth,
-                companyName,
-                companyRole,
-                userType,
-                lastActivity: new Date(),
-                modificationNotes: [{
-                    modifiedBy: byUser,
-                    modifiedOn: new Date(),
-                    modificationNote: 'Create new user',
-                }]
-            }
+            } else
             this.userService.createUser(userParams, (err: Error, newUser: IUser) =>{
                 if(err){
                     return mongoError(err, res);
@@ -68,7 +78,7 @@ export class UserController {
                 return successResponse("Create user successful", newUser, res);
             })
         })
-        
+
     }
 
     public getListUsers(req: Request, res: Response){
@@ -109,13 +119,12 @@ export class UserController {
         const {name,
             telephone,
             mobile,
-            password,
             dateOfBirth,
             companyName,
             companyRole,
             userType} = req.body;
         const _id = req.params.id;
-        if(!(name && telephone && mobile && password && dateOfBirth && companyName)){
+        if(!(name && telephone && mobile && dateOfBirth && companyName)){
             return insufficientParameters(res)
         }
         //@ts-ignore
@@ -142,7 +151,7 @@ export class UserController {
                 telephone,
                 mobile,
                 email: user.email,
-                password: bcrypt.hashSync(password, 10),
+                password: user.password,
                 dateOfBirth,
                 companyName,
                 companyRole,
@@ -219,5 +228,30 @@ export class UserController {
             return successResponse("Change password successful", userData, res);
           });
         });
-      }
+    }
+
+    public deleteUser(req: Request, res: Response){
+        const _id = req.params.id;
+        //@ts-ignore
+        const byUser = req.user ;
+        this.userService.filterUser({_id},(err: Error, user: IUser) =>{
+            if(err){
+                return mongoError(err, res);
+            }
+            if(user._id != byUser._id){
+                if(byUser.companyRole <=3){
+                    return failureResponse("Access denied, you can't update", null, res);
+                }
+            }
+            this.userService.updateUserSync(_id, 
+                {$set:{deletedAt: new Date()}},  
+            (err: Error, user: IUser) =>{
+                if(err){
+                    return mongoError(err, res);
+                }
+                return successResponse("Delete user successful", user, res)
+            })
+        })
+        
+    }
 }

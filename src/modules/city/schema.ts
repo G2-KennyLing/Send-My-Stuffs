@@ -2,29 +2,21 @@ import * as mongoose from 'mongoose';
 import { ModificationNote } from '../common/model';
 
 const Schema = mongoose.Schema;
-const AirportSchema = mongoose.Schema;
 
-const schema = new AirportSchema({
-    airportName: {
+const schema = new Schema({
+    cityName: {
         type: String,
         trim: true,
         required: true,
         unique: true,
         uppercase: true
     },
-    portCode: { 
-        type: String,
-        trim: true,
-        required: true,
-        unique: true,
-        uppercase: true
-    },
-    country: [{
+    icons: String,
+    country: {
         type: Schema.Types.ObjectId, 
         ref: 'countries',
-    }],
-    latitude: String,
-    longitude: String,
+    },
+
     status: {
 		type: Number,
 		enum: [0, 1],
@@ -37,4 +29,4 @@ const schema = new AirportSchema({
     modificationNotes: [ModificationNote]
 });
 
-export default mongoose.model('airports', schema);
+export default mongoose.model('cities', schema);

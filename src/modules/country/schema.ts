@@ -18,6 +18,11 @@ const schema = new CountrySchema ({
 		required: true,
 		unique: true
 	},
+	city: [{
+		type: Schema.Types.ObjectId,
+		ref: 'cities',
+		required: true
+	}],
 	region: {
 		type: String,
 		trim: true,
@@ -30,20 +35,20 @@ const schema = new CountrySchema ({
 	},
 	seaPorts: [{
 		type: Schema.Types.ObjectId,
-		ref: 'seaPort'
+		ref: 'seaports',
+		required: true
 	}],
-	airPorts: {
+	airPorts: [{
 		type: Schema.Types.ObjectId,
-		ref: 'airPort'
-	},
+		ref: 'airports',
+		required: true
+	}],
 	agents: {
 		type: String,
 		trim: true,
 		required: true
 	}, 
-	customers: {
-		
-	},
+	customers: String,
 	modificationNotes: [ModificationNote]
 });
 

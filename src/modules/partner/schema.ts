@@ -18,7 +18,6 @@ const Partner = new Schema({
         unique: true,
         trim: true,
     },
-    workGroup: String,
     partnerType: String,
     industry: String,
     taxID: {
@@ -29,12 +28,12 @@ const Partner = new Schema({
     },
     country: {
         type: Schema.Types.ObjectId,
-        ref: "country",
+        ref: "countries",
         required: true,
     },
     city: {
         type: Schema.Types.ObjectId,
-        ref: "country",
+        ref: "cities",
         required: true,
     },
     addressLineFirst: {
@@ -47,7 +46,7 @@ const Partner = new Schema({
     },
     telephone: String,
     facsimile: {
-        type: Number,
+        type: String,
         required: true,
         unique: true,
         trim: true,
@@ -66,7 +65,11 @@ const Partner = new Schema({
         enum: [0,1],
         default: 0,
     },
-    modification_notes: [ModificationNote]
+    deletedAt:{
+        type:Date,
+        default: undefined
+    },
+    modificationNotes: [ModificationNote]
 });
 
-export default mongoose.model('Partners', Partner);
+export default mongoose.model('partners', Partner);
